@@ -1,0 +1,232 @@
+@import "default.css";
+
+#login-box {
+	position:absolute;
+	left:50%;
+	top:50%;
+	margin-left: -210px;
+	margin-top:-176px;
+	width:333px;
+	height: 352px;
+	padding: 58px 76px 0 76px;
+	color: #ebebeb;
+	font: 12px Arial, Helvetica, sans-serif;
+	background: url(../img/login-box-backg.png) no-repeat left top;
+}
+#login-box img {
+	border:none;
+}
+#login-box h2 {
+	padding:0;
+	margin:0;
+	color: #ebebeb;
+	font: bold 44px "Calibri", Arial;
+}
+#login-box-name {
+	float: left;
+	display:inline;
+	width:80px;
+	text-align: right;
+	padding: 14px 10px 0 0;
+	margin:0 0 7px 0;
+}
+#login-box-field {
+	float: left;
+	display:inline;
+	width:230px;
+	margin:0;
+	margin:0 0 7px 0;
+}
+.form-login  {
+	width: 205px;
+	padding: 10px 4px 6px 3px;
+	border: 1px solid #0d2c52;
+	background-color:#1e4f8a;
+	font-size: 16px;
+	color: #ebebeb;
+}
+
+.login-box-options  {
+	clear:both;
+	padding-left:87px;
+	font-size: 11px;
+}
+.login-box-options a {
+	color: #ebebeb;
+	font-size: 11px;
+}
+.login-box-options a:hover{
+	color: #00FFFF;
+	font-size: 11px;
+}
+#login-box-name{
+	margin-top:20px;
+}
+#login-box-field{
+	margin-top:20px;
+}
+
+.bt-enviar{
+	background: url('../img/login-btn2.png') no-repeat 0 -1px;
+	width:103px;
+	height:42px;
+	margin:20px 90px;
+	border:none;
+}
+.bt-enviar:hover{
+	background: url('../img/login-btn2.png') no-repeat 0 -44px;
+	width:103px;
+	height:42px;
+	margin:20px 90px;
+	border:none;
+}
+
+#cadastro{
+	position:relative;
+	display:inline;
+	width:100px;
+	height:10px;
+}
+#lembrarSenha{
+	position:relative;
+	display:inline;
+	width:100px;
+	height:10px;
+	margin-left: 50px;
+}
+#logo{
+	position:absolute;
+}
+#showCad{
+	position: absolute; 
+	width:100%;
+	height: 700px; 
+	background-color: rgba(0, 0, 0, 0.71);  
+	display: none;
+	border-radius: 10px; 
+	box-shadow: 0px 0px 13px 2px; 
+	padding: 20px;
+	overflow:hidden;
+	font-size:25px;
+}
+
+#showCad2{
+	position: absolute; 
+	width:100%;
+	height: 700px; 
+	background-color: rgba(0, 0, 0, 0.71);  
+	display: none;
+	border-radius: 10px; 
+	box-shadow: 0px 0px 13px 2px; 
+	padding: 20px;
+	overflow:hidden;
+	font-size:25px;
+}
+#showCad2 p{
+	font-size: 17px;
+}
+
+#showCad2 legend,label{
+	display:inline;
+	font-size: 20px;
+}
+.direita{
+	float:right;
+}
+.meuform{
+	 height: 30px;
+	 padding: 6px 5px;
+	 display: inline;
+	 margin-bottom: 10px;
+	 font-family: 'Helvetica Neue', Helvetica, Verdana, sans-serif;
+	 color: #7988a3;
+	 font-size: 1.0em;
+	 -webkit-border-radius: 4px;
+	 -moz-border-radius: 4px;
+	 border-radius: 4px;
+	 background-color: #fff;
+	 background-image: -webkit-gradient(linear, left top, left bottom, from(#edf3f9), to(#fff));
+	 background-image: -webkit-linear-gradient(top, #edf3f9, #fff);
+	 background-image: -moz-linear-gradient(top, #edf3f9, #fff);
+	 background-image: -ms-linear-gradient(top, #edf3f9, #fff);
+	 background-image: -o-linear-gradient(top, #edf3f9, #fff);
+	 background-image: linear-gradient(top, #edf3f9, #fff);
+	 -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px rgba(255, 255, 255, 0.4);
+	 -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px rgba(255, 255, 255, 0.4);
+	 box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px rgba(255, 255, 255, 0.4);
+	 -webkit-transition: all 0.25s linear;
+	 -moz-transition: all 0.25s linear;
+	 transition: all 0.25s linear;
+	 border: 1px solid;
+	 border-color: #abbce8 #c3cae0 #b9c8ef;
+}
+.meuform:focus {
+  outline: none;
+  color: #525864;
+  border-color: #84c0ee;
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), 0 0 7px #96c7ec;
+  -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), 0 0 7px #96c7ec;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), 0 0 7px #96c7ec;
+}
+.meuform:hover {
+  outline: none;
+  color: #525864;
+  border-color: #84c0ee;
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), 0 0 7px #96c7ec;
+  -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), 0 0 7px #96c7ec;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), 0 0 7px #96c7ec;
+}
+.br-enviar{
+	width: 100px;
+	height: 35px;
+	padding:10px;
+	font-size:18px;
+	background: rgb(88, 170, 213);
+	border:none;
+	margin-left: 60px;
+	color: #fff;
+	font-weight: bold;
+}
+.br-enviar:hover{
+	background: rgb(42, 112, 148);
+	cursor:pointer;
+}
+.arredonda{
+	-webkit-border-radius: 7px;
+	-moz-border-radius: 7px;
+	border-radius: 7px;
+}
+#aligform{
+	position:absolute;
+	width: 700px;
+	height: 400px;
+	top:50%;
+	left:50%;
+	padding:20px;
+	margin: -200px -350px;
+	background: #FFF;
+	-moz-box-shadow: 0px 10px 15px #CACACA;
+	-webkit-box-shadow: 0px 10px 15px #CACACA;
+	-o-box-shadow: 0px 10px 15px #CACACA;
+	box-shadow: 0px 10px 15px #CACACA;
+}
+#botaoFechar,#botaoFechar2{
+	background: url('../img/close.png') no-repeat 0 0;
+	width: 112px;
+	height:48px;
+	position:absolute;
+	font-size:25px;
+	top:3%;
+	left:600px;
+	cursor:pointer;
+}
+#botaoFechar:hover,#botaoFechar2:hover{
+	background: url('../img/close.png') no-repeat 0 -52px;
+	width: 112px;
+	height:48px;
+	position:absolute;
+	font-size:25px;
+	top:3%;
+	left:600px;
+	cursor:pointer;
+}

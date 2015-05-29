@@ -1,0 +1,175 @@
+#wall_container
+{
+	text-align:left;
+	background-color:#FFFFFF;
+	padding:10px;
+	width:580px;
+	margin-top: -20px;
+}
+
+#content
+{
+margin-top:10px;
+}
+textarea
+{
+border:solid 1px #333;
+resize: none;
+}
+
+/* status body */
+
+.stbody
+{
+
+margin-bottom:10px;
+border:solid 1px #dedede;
+overflow:auto;
+padding:10px;
+}
+.stimg
+{
+float:left;
+height:58px;
+width:58px;
+border:solid 1px #dedede;
+padding:3px;
+}
+.sttext
+{
+margin-left:60px;
+height:auto;
+word-wrap:break-word;
+overflow:hidden;
+padding:5px;
+display:block;
+font-size:12px;
+width:470px;
+}
+.sttext b
+{
+color:#006699;
+}
+.boxPost{
+	width:100%;
+	height:auto;
+	clear:both;
+	
+}
+.sttime
+{
+font-size:12px;
+color:#999;
+font-family:Arial, Helvetica, sans-serif;
+margin-top:5px;
+}
+.sttime a{
+	color:#999;
+}
+.sttime a:hover{
+	color:blue;
+}
+.stdelete 
+{
+font-weight:bold;
+
+cursor:pointer;
+}
+#stexpandbox
+{
+margin-top:10px;
+}
+#stexpandbox img
+{
+border:solid 1px #dedede;
+padding:3px;
+}
+/* Comment */
+.commentcontainer{
+	width:100%;
+}
+.stcommentbody
+{
+border-bottom:solid 1px #fff;
+background-color:#f2f2f2;
+padding:1px;
+width:100%;
+overflow:auto;
+}
+.EditarComment{
+	display:inline;
+	color:#000;
+	font-size:12px;
+}
+.postC{
+	display:inline;
+	color:#000;
+	font-size:12px;
+}
+.stcommentimg
+{
+float:left;
+height:41px;
+width:41px;
+border:solid 1px #dedede;
+padding:2px;
+}
+.stcommenttext
+{
+margin-left:45px;
+min-height:50px;
+word-wrap:break-word;
+overflow:hidden;
+padding:3px;
+display:block;
+font-size:11px;
+width:480px;
+
+}
+.stcommenttext b
+{
+color:#006699;
+}
+
+.stcommenttime
+{
+font-size:12px;
+color:#999;
+font-family:Arial, Helvetica, sans-serif;
+
+}
+.stcommentdelete 
+{
+font-weight:bold;
+cursor:pointer;
+}
+.commentupdate
+{
+background-color:#f2f2f2;
+width:100%;
+padding:5px;
+border:1px solid #DAD6D6;
+}
+.comment
+{
+width:475px;
+height:55px;
+font-size:14px
+}
+/* faceb image*/
+.small_face
+{
+width:35px;height:35px
+}
+.big_face
+{
+width:50px;height:50px
+}
+#flashmessage
+{
+height:15px;
+margin-top:10px;
+font-size:11px;
+color:#333;
+
+}
