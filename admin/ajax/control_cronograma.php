@@ -3,14 +3,14 @@
 	date_default_timezone_set("America/Sao_Paulo");
 	
 	$operation =	isset($_POST['operation']) ? $_POST['operation']:"";
-	$case =			isset($_POST['case']) ? $_POST['case']:"";
+	$case =		isset($_POST['case']) ? $_POST['case']:"";
 	
 	if($operation == "CRUD"){
 		
-		$start = 			isset($_POST['start']) ? $_POST['start']:"";
-		$end = 				isset($_POST['end']) ? $_POST['end']:"";
-		$allday =			isset($_POST['allday']) ? $_POST['allday']:"";
-		$idGrupo = 			isset($_POST['idGrupo']) ? $_POST['idGrupo']:"";
+		$start =                isset($_POST['start']) ? $_POST['start']:"";
+		$end = 			isset($_POST['end']) ? $_POST['end']:"";
+		$allday =		isset($_POST['allday']) ? $_POST['allday']:"";
+		$idGrupo = 		isset($_POST['idGrupo']) ? $_POST['idGrupo']:"";
 		$participantes = 	isset($_POST['participantes']) ? $_POST['participantes']:"";
 		$nomeEvento = 		isset($_POST['nomeEvento']) ? $_POST['nomeEvento']:"";
 		$descricao = 		isset($_POST['descricao']) ? $_POST['descricao']:"";
@@ -100,6 +100,8 @@
 					$Cronograma = new Cronograma(); 
 					
 					$Cronograma->idEvento = (int)$idEvento;
+                                        $Cronograma->uid = (int)$id_users;
+                                        $Cronograma->idgrupo = (int)$idGrupo;
 					
 					$result = $Cronograma->deleteCronograma();
 					if($result != false){
@@ -278,13 +280,16 @@
 		$idEvento =	isset($_POST['idEvento']) ? $_POST['idEvento']:"";
 		$Checked =	isset($_POST['Checked']) ? $_POST['Checked']:"";
 		$Delete =	isset($_POST['Delete']) ? $_POST['Delete']:"";
-		
+		$idGrupo = 		isset($_POST['idGrupo']) ? $_POST['idGrupo']:"";
+                
 		if($Delete == "true"){
 			require_once('../includes/Cronograma.class.php');
 			try {
 				$Cronograma = new Cronograma(); 
 				$Cronograma->idEvento = (int)$idEvento;
-				
+				$Cronograma->idgrupo = (int)$idGrupo;
+                                $Cronograma->uid = (int)$id_users;
+                                
 				$result = $Cronograma->deleteCronograma();
 				
 				if($result){

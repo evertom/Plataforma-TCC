@@ -367,9 +367,12 @@
 		function Delete(){
 			
 			var idEvento = $("#idevento").val();
+                        var idGrupo = $("#idgrupo").val();
+                        
 			if(idEvento != "" && idEvento != null){
 				var valores = "operation=CRUD&case=DELETE";
 				valores += "&idEvento="+idEvento;
+                                valores += "&idGrupo="+idGrupo;
 				var ok = false;
 				$.ajax
 				({

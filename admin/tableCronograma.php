@@ -153,7 +153,7 @@
 				type: "POST", //metodo POST
 				dataType: 'json',
 				url: "ajax/control_cronograma.php",
-				data: {operation: "UpdateTable", idEvento:id, Checked : checked, Delete: del},
+				data: {operation: "UpdateTable", idGrupo: IDGRUPO, idEvento:id, Checked : checked, Delete: del},
 				success: function(data)
 				{
 					if(data.msg == true){

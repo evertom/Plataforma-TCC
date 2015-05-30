@@ -25,7 +25,7 @@ class Cronograma extends Conexao{
 	public function insertCronograma(){
 		try{
 			if(parent::getPDO() == null){
-              //caso não tenha conecta-se com o banco de dados
+              //caso nï¿½o tenha conecta-se com o banco de dados
                parent::conectar();
 			}
 			
@@ -66,7 +66,7 @@ class Cronograma extends Conexao{
 	{
 		try{
 			if(parent::getPDO() == null){
-              //caso não tenha conecta-se com o banco de dados
+              //caso nï¿½o tenha conecta-se com o banco de dados
                parent::conectar();
 			}
 			
@@ -99,36 +99,39 @@ class Cronograma extends Conexao{
 		}
 	}
 	
-	public function deleteCronograma()
-	{
-		try{
-			if(parent::getPDO() == null){
-              //caso não tenha conecta-se com o banco de dados
-               parent::conectar();
-			}
+	public function deleteCronograma(){
+            
+            
+            try{
+		if(parent::getPDO() == null){
+                    //caso nÃ£o tenha conecta-se com o banco de dados
+                    parent::conectar();
+                }
 		
-			$stmt = $this->pdo->prepare('DELETE FROM evento WHERE idEvento = :pidEvento');
-			$stmt->bindValue(':pidEvento', $this->idEvento, PDO::PARAM_INT);
+                $stmt = $this->pdo->prepare('DELETE FROM evento WHERE idEvento = :pidEvento');
+                $stmt->bindValue(':pidEvento', $this->idEvento, PDO::PARAM_INT);
+
+                if($stmt->execute()){
+                    $this->msg = "Um evento foi deletado, por favor, verifique o cronograma!!!";
+                    $this->sendMsg();
+                    parent::desconectar();
+                    return true;
+                }else{
+                    parent::desconectar();
+                    return false;
+                }
 			
-			if($stmt->execute()){
-				parent::desconectar();
-				return true;
-			}else{
-				parent::desconectar();
-				return false;
-			}
-			
-		}catch(PDOException $e){
-			echo $e->getMessage();
-			return false; 
-		}
-	}
+	}catch(PDOException $e){
+            echo $e->getMessage();
+            return false; 
+        }
+    }
 	
 	public function getCompleteEvents()
 	{
 		try{
 			if(parent::getPDO() == null){
-              //caso não tenha conecta-se com o banco de dados
+              //caso nï¿½o tenha conecta-se com o banco de dados
                parent::conectar();
 			}
 			
@@ -155,7 +158,7 @@ class Cronograma extends Conexao{
 	{
 		try{
 			if(parent::getPDO() == null){
-              //caso não tenha conecta-se com o banco de dados
+              //caso nï¿½o tenha conecta-se com o banco de dados
                parent::conectar();
 			}
 		
@@ -192,7 +195,7 @@ class Cronograma extends Conexao{
 	{
 		try{
 			if(parent::getPDO() == null){
-              //caso não tenha conecta-se com o banco de dados
+              //caso nï¿½o tenha conecta-se com o banco de dados
                parent::conectar();
 			}
 			
@@ -216,7 +219,7 @@ class Cronograma extends Conexao{
 	{
 		try{
 			if(parent::getPDO() == null){
-              //caso não tenha conecta-se com o banco de dados
+              //caso nï¿½o tenha conecta-se com o banco de dados
                parent::conectar();
 			}
 			
@@ -242,7 +245,7 @@ class Cronograma extends Conexao{
 	{
 		try{
 			if(parent::getPDO() == null){
-              //caso não tenha conecta-se com o banco de dados
+              //caso nï¿½o tenha conecta-se com o banco de dados
                parent::conectar();
 			}
 		
@@ -268,7 +271,7 @@ class Cronograma extends Conexao{
 	{
 		try{
 			if(parent::getPDO() == null){
-              //caso não tenha conecta-se com o banco de dados
+              //caso nï¿½o tenha conecta-se com o banco de dados
                parent::conectar();
 			}
 			
@@ -292,47 +295,47 @@ class Cronograma extends Conexao{
 	
 	public function sendMsg() 
 	{
-		try{
-			if(parent::getPDO() == null){
-              //caso não tenha conecta-se com o banco de dados
-               parent::conectar();
-			}
+            try{
+                if(parent::getPDO() == null){
+                    //caso nÃ£o tenha conecta-se com o banco de dados
+                    parent::conectar();
+                }
 			
-			$idgrupo = $this->idgrupo;
-			$myid = $this->uid;
-			$ok = true;
+                $idgrupo = $this->idgrupo;
+                $myid = $this->uid;
+                $ok = true;
+
+                $stmt = $this->pdo->query("SELECT * FROM grupo_has_users WHERE idgrupo = $idgrupo AND uid <> $myid");
+
+                if(count($stmt)){
+                    foreach($stmt as $res){
+                        $stmt2 = $this->pdo->prepare("INSERT INTO avisos(descricao, data, visto, uid, de)
+                        VALUES(:pmsg, current_date(),0, :puid ,$myid)");
+                        $stmt2->bindValue(':pmsg', $this->msg, PDO::PARAM_STR);
+                        $id = (int)$res['uid'];
+                        $stmt2->bindValue(':puid', $id, PDO::PARAM_INT);
+
+                        if(!$stmt2->execute()){
+                            $ok = false;
+                            parent::desconectar();
+                            break;
+                        }
+                    }
+                }else{
+                    parent::desconectar();
+                    return false;
+            }
 			
-			$stmt = $this->pdo->query("SELECT * FROM grupo_has_users WHERE idgrupo = $idgrupo AND uid <> $myid");
-			
-			if(count($stmt)){
-				foreach($stmt as $res){
-					$stmt2 = $this->pdo->prepare("INSERT INTO avisos(descricao, data, visto, uid, de)
-					VALUES(:pmsg, current_date(),0, :puid ,$myid)");
-					$stmt2->bindValue(':pmsg', $this->msg, PDO::PARAM_STR);
-					$id = (int)$res['uid'];
-					$stmt2->bindValue(':puid', $id, PDO::PARAM_INT);
-					
-					if(!$stmt2->execute()){
-						$ok = false;
-						parent::desconectar();
-						break;
-					}
-				}
-			}else{
-				parent::desconectar();
-				return false;
-			}
-			
-			if(!$ok){
-				return false;
-			}else{
-				return true;
-			}
-		}catch ( PDOException $e ) {
-			echo $e->getMessage ();
-			return false; 
-		}
-	}
+            if(!$ok){
+                return false;
+            }else{
+                return true;
+            }
+        }catch ( PDOException $e ) {
+            echo $e->getMessage ();
+            return false; 
+        }
+    }
 	
 }
 ?>
