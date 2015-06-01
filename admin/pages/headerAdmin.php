@@ -166,7 +166,7 @@
                         <li>
                             <a href="#">
                                 <div>
-                                    <i class="fa fa-comment fa-fw"></i> New Comment
+                                    <i class="fa fa-comment fa-fw"></i> <?php echo $tipo;?>
                                     <span class="pull-right text-muted small">4 minutes ago</span>
                                 </div>
                             </a>
