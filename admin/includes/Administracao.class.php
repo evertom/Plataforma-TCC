@@ -1,8 +1,6 @@
 <?php
-
 require_once('Conexao.class.php');
 require_once('Auxiliar.class.php');
-
 class Administracao extends Conexao {
 
     private $data = array();
@@ -29,11 +27,7 @@ class Administracao extends Conexao {
 
     public function InsereProf() {
         try {
-            if (parent::getPDO() == null) {
-                //caso n�o tenha conecta-se com o banco de dados
-                parent::conectar();
-            }
-
+            if (parent::getPDO() === null) {parent::conectar();}
             $stmt = $this->pdo->prepare('INSERT INTO users(username,password,email,prontuario,fotouser,descricao,cargo,tipo) VALUES(:pusername,:ppassword,:pemail,:pprontuario,:pfotouser,:pdescri,:pcargo,:ptipo)');
             $stmt->bindValue(':pusername', $this->nome, PDO::PARAM_STR);
             $stmt->bindValue(':ppassword', sha1(antiInjection($this->pass)), PDO::PARAM_STR);
@@ -45,23 +39,18 @@ class Administracao extends Conexao {
             $stmt->bindValue(':ptipo', $this->tipo, PDO::PARAM_INT);
 
             if ($stmt->execute()) {
-                parent::desconectar();
-                return true;
+                parent::desconectar();return true;
             } else {
-                parent::desconectar();
-                return false;
+                parent::desconectar();return false;
             }
         } catch (PDOException $e) {
-            echo $e->getMessage();
-            return null;
+            echo $e->getMessage();return null;
         }
     }
 
     public function InsertLike() {
         try {
-            if (parent::getPDO() == null) {
-                parent::conectar();
-            }
+            if (parent::getPDO() == null) {parent::conectar();}
 
             $stmt = $this->pdo->prepare('INSERT INTO likes(uid,msg_id) VALUES(:puid,:pmsg_id)');
             $stmt->bindValue(':puid', $this->iduser, PDO::PARAM_INT);
@@ -73,7 +62,6 @@ class Administracao extends Conexao {
                 foreach ($result as $res) {
                     $total = $res['total'];
                 }
-
                 parent::desconectar();
                 return $total;
             } else {
@@ -88,18 +76,13 @@ class Administracao extends Conexao {
 
     public function Unlike() {
         try {
-            if (parent::getPDO() == null) {
-                parent::conectar();
-            }
-
+            if (parent::getPDO() == null) {parent::conectar();}
             $stmt = $this->pdo->prepare('DELETE FROM likes WHERE uid = :puid AND msg_id = :pmsg_id');
             $stmt->bindValue(':puid', $this->iduser, PDO::PARAM_INT);
             $stmt->bindValue(':pmsg_id', $this->idmsg, PDO::PARAM_INT);
 
             if ($stmt->execute()) {
-
                 $result = $this->select("SELECT count(msg_id) as total FROM likes WHERE msg_id = " . $this->idmsg . "");
-
                 if (count($result)) {
                     foreach ($result as $res) {
                         $total = $res['total'];
@@ -107,7 +90,6 @@ class Administracao extends Conexao {
                 } else {
                     $total = 0;
                 }
-
                 parent::desconectar();
                 return $total;
             } else {
@@ -122,10 +104,7 @@ class Administracao extends Conexao {
 
     public function UpdateUserProfile() {
         try {
-            if (parent::getPDO() == null) {
-                //caso n�o tenha conecta-se com o banco de dados
-                parent::conectar();
-            }
+            if (parent::getPDO() == null) {parent::conectar();}
 
             $stmt = $this->pdo->prepare('UPDATE users SET username = :pusername ,password = :ppassword, email = :pemail, prontuario = :pprontuario, descricao = :pdescri, cargo = :pcargo WHERE uid = :puid');
             $stmt->bindValue(':pusername', $this->nome, PDO::PARAM_STR);
@@ -135,7 +114,6 @@ class Administracao extends Conexao {
             $stmt->bindValue(':pdescri', $this->descri, PDO::PARAM_STR);
             $stmt->bindValue(':pcargo', $this->cargo, PDO::PARAM_STR);
             $stmt->bindValue(':puid', $this->id_users, PDO::PARAM_INT);
-
 
             if ($stmt->execute()) {
                 @session_start();
@@ -160,10 +138,7 @@ class Administracao extends Conexao {
 
     public function InserePreProjeto() {
         try {
-            if (parent::getPDO() == null) {
-                //caso n�o tenha conecta-se com o banco de dados
-                parent::conectar();
-            }
+            if (parent::getPDO() == null) {parent::conectar();}
 
             $stmt = $this->pdo->prepare('UPDATE grupo SET objetivoGeral = :pobjetivoGeral, objetivoEspecifico = :pobjetivoEspecifico, justificativa = :pjustificativa,tipodePesquisa = :ptipodePesquisa, metodologia =  :pmetodologia,resultadoEsperado = :presultadoEsperado WHERE idgrupo = :pidgrupo');
 
@@ -196,10 +171,7 @@ class Administracao extends Conexao {
 
     public function RequerimentoProf() {
         try {
-            if (parent::getPDO() == null) {
-                //caso n�o tenha conecta-se com o banco de dados
-                parent::conectar();
-            }
+            if (parent::getPDO() == null) {parent::conectar();}
             $visto = 0;
             $aceito = 0;
             $stmt = $this->pdo->prepare('INSERT INTO grupo(dataCriacao,titulo,descricao) VALUES(current_date(),:ptitulo,:pdescricao)');
@@ -207,7 +179,10 @@ class Administracao extends Conexao {
             $stmt->bindValue(':pdescricao', $this->descri, PDO::PARAM_STR);
 
             if ($stmt->execute()) {
-
+                $IdGrupoCriado = $this->pdo->lastInsertId();
+                $diretorio = '../GerenciamentoGrupos/'.$IdGrupoCriado;
+                mkdir($diretorio);
+                
                 $pdo = new Conexao();
                 $resultado = $pdo->select("SELECT idgrupo FROM grupo ORDER BY idgrupo DESC LIMIT 1");
                 foreach ($resultado as $res) {
@@ -282,11 +257,7 @@ class Administracao extends Conexao {
 
     public function UpdateAviso() {
         try {
-            if (parent::getPDO() == null) {
-                //caso n�o tenha conecta-se com o banco de dados
-                parent::conectar();
-            }
-
+            if (parent::getPDO() == null) {parent::conectar();}
             $stmt = $this->pdo->prepare('UPDATE avisos SET visto = 1 WHERE uid = :pui');
             $stmt->bindValue(':pui', $this->id, PDO::PARAM_INT);
 
@@ -305,10 +276,7 @@ class Administracao extends Conexao {
 
     public function UpdateVistoGrupo() {
         try {
-            if (parent::getPDO() == null) {
-                //caso n�o tenha conecta-se com o banco de dados
-                parent::conectar();
-            }
+            if (parent::getPDO() == null) {parent::conectar();}
 
             $stmt = $this->pdo->prepare('UPDATE grupo SET visto = 1 WHERE idgrupo = :pidgrupo');
             $stmt->bindValue(':pidgrupo', $this->idgrupo, PDO::PARAM_INT);
@@ -362,10 +330,7 @@ class Administracao extends Conexao {
 
     public function RefazRequisicao() {
         try {
-            if (parent::getPDO() == null) {
-                //caso n�o tenha conecta-se com o banco de dados
-                parent::conectar();
-            }
+            if (parent::getPDO() == null) {parent::conectar();}
 
             $stmt = $this->pdo->prepare('UPDATE grupo SET descricao = :pdescri, revisando = 0 WHERE idgrupo = :pidgrupo');
             $stmt->bindValue(':pdescri', $this->texto, PDO::PARAM_STR);
@@ -401,10 +366,7 @@ class Administracao extends Conexao {
 
     public function RecusaOrientacao() {
         try {
-            if (parent::getPDO() == null) {
-                //caso n�o tenha conecta-se com o banco de dados
-                parent::conectar();
-            }
+            if (parent::getPDO() == null) {parent::conectar();}
 
             $stmt = $this->pdo->prepare('UPDATE grupo SET recusado = 1, aceito = 0 WHERE idgrupo = :pidgrupo');
             $stmt->bindValue(':pidgrupo', $this->idgrupo, PDO::PARAM_INT);
@@ -452,10 +414,7 @@ class Administracao extends Conexao {
 
     public function UpdatePostFeeds() {
         try {
-            if (parent::getPDO() == null) {
-                //caso n�o tenha conecta-se com o banco de dados
-                parent::conectar();
-            }
+            if (parent::getPDO() == null) {parent::conectar();}
 
             $stmt = $this->pdo->prepare('UPDATE messages SET message = :pmessage WHERE msg_id = :pmsg_id');
             $stmt->bindValue(':pmessage', $this->texto, PDO::PARAM_STR);
@@ -476,10 +435,7 @@ class Administracao extends Conexao {
 
     public function UpdateComentPostFeeds() {
         try {
-            if (parent::getPDO() == null) {
-                //caso n�o tenha conecta-se com o banco de dados
-                parent::conectar();
-            }
+            if (parent::getPDO() == null) {parent::conectar();}
 
             $stmt = $this->pdo->prepare('UPDATE comments SET comment = :pcomment WHERE com_id = :pcom_id');
             $stmt->bindValue(':pcomment', $this->texto, PDO::PARAM_STR);
@@ -500,9 +456,7 @@ class Administracao extends Conexao {
 
     public function MontaGrupo() {
         try {
-            if (parent::getPDO() == null) {
-                parent::conectar();
-            }
+            if (parent::getPDO() == null) {parent::conectar();}
 
             $stmt = $this->pdo->prepare('UPDATE grupo SET aceito = 1, recusado = 0, preProjeto = 1 WHERE idgrupo = :pidgrupo');
             $stmt->bindValue(':pidgrupo', $this->idgrupo, PDO::PARAM_INT);
@@ -513,8 +467,8 @@ class Administracao extends Conexao {
             $idprof = $this->idprof;
 
             if ($stmt->execute()) {
-
-                if ($id1 != "") {
+               
+                if ($id1 != ""){
                     $visto = 0;
                     $descricaoAv = "Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.";
                     $stmt = $this->pdo->prepare('INSERT INTO avisos(descricao,data,visto,uid,de)VALUES(:pdescricao,current_date(),:pvisto,:puid,:pde)');
@@ -524,9 +478,8 @@ class Administracao extends Conexao {
                     $stmt->bindValue(':pde', $idprof, PDO::PARAM_INT);
 
                     if ($stmt->execute()) {
-
                         if ($id2 != "") {
-
+                            
                             $stmt = $this->pdo->prepare('INSERT INTO avisos(descricao,data,visto,uid,de)VALUES(:pdescricao,current_date(),:pvisto,:puid,:pde)');
                             $stmt->bindValue(':pdescricao', $descricaoAv, PDO::PARAM_STR);
                             $stmt->bindValue(':pvisto', $visto, PDO::PARAM_INT);
@@ -570,10 +523,7 @@ class Administracao extends Conexao {
 
     public function MaisDetalhes() {
         try {
-            if (parent::getPDO() == null) {
-                //caso n�o tenha conecta-se com o banco de dados
-                parent::conectar();
-            }
+            if (parent::getPDO() == null) {parent::conectar();}
 
             $stmt = $this->pdo->prepare('UPDATE grupo SET aceito = 0, recusado = 0, visto = 0, revisando = 1 WHERE idgrupo = :pidgrupo');
             $stmt->bindValue(':pidgrupo', $this->idgrupo, PDO::PARAM_INT);
@@ -685,10 +635,7 @@ class Administracao extends Conexao {
 
     public function sendMsg() {
         try {
-            if (parent::getPDO() == null) {
-                //caso n�o tenha conecta-se com o banco de dados
-                parent::conectar();
-            }
+            if (parent::getPDO() == null) {parent::conectar();}
 
             $idgrupo = $this->idgrupo;
             $myid = $this->uid;
@@ -727,5 +674,4 @@ class Administracao extends Conexao {
     }
 
 }
-
 ?>
