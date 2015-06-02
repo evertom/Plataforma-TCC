@@ -62,7 +62,7 @@ require_once('verifica-logado.php');
                         async: false,
                         type: "POST", //metodo POST
                         dataType: 'json',
-                        url: "ajax/desistencia.php",
+                        url: "ajax/desistenciaProf.php",
                         beforeSend: function () {
                             loading_show();
                         },
@@ -70,11 +70,11 @@ require_once('verifica-logado.php');
                         success: function (data)
                         {
                             ok = data.msg;
-                            mensagem = data.escrita;
+                            mensagem = data.alerta;
                         },
                         error: function (data) {
-                            console.log(data);
-                            //$('.alert-danger').fadeIn('fast');
+                            //console.log(data);
+                            $('.alert-danger').fadeIn('fast');
                             ok = false;
                         },
                         complete: function () {
@@ -84,7 +84,7 @@ require_once('verifica-logado.php');
                     });
 
                     if (ok === true) {
-                        $('.alert-success').fadeIn('fast');
+                        $('.alert-success').append(mensagem).fadeIn('fast');
                         self.print();
                         limpa();
                     } else {
@@ -111,7 +111,6 @@ require_once('verifica-logado.php');
                         data: "idGrupo=" + idGrupo + "&myid=" + myId,
                         success: function (data)
                         {
-                           
                             $.each(data, function(i, obj){
                                 $('#alunosGrupo').append(obj.username+ ' / ');
                                 $('#idgrupo').val(obj.idgrupo);
@@ -204,7 +203,7 @@ require_once('verifica-logado.php');
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                            comunico que, a partir desta data, não serei mais o(a) responsável pela
-                                           <input type="radio" name="opcaoProf" id="opcaoProf" value="orientacao" > orientação / 
+                                           <input type="radio" name="opcaoProf" id="opcaoProf" value="orientacao" checked="checked"> orientação / 
                                            <input type="radio" name="opcaoProf" id="opcaoProf" value="orientacao" > coorientação do TCC do(a) aluno(a)
                                            <div id="alunosGrupo" style="display:inline;font-weight: bold;"></div>
                                         </div>
@@ -245,7 +244,6 @@ require_once('verifica-logado.php');
                                 <br/><br/><br/>
                                 <div class="alert alert-success alert-dismissable" style="display:none">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    Opera&ccedil;&atilde;o realizada com sucesso...
                                 </div>
                                 <div class="alert alert-danger alert-dismissable"  style="display:none">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

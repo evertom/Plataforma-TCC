@@ -29,7 +29,3 @@ if ($motiProf === "" && $motiGrupo === "") {
         echo json_encode($res);
     }
 }
-    
-
-
-

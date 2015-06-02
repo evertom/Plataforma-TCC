@@ -632,6 +632,46 @@ class Administracao extends Conexao {
             return null;
         }
     }
+    
+    public function desistenciaProf() {
+        try {
+            if (parent::getPDO() == null){parent::conectar();}
+            
+            $mensagemIntegrantes = "O(a) Professor(a) {$this->name} desfez parceria com seu grupo pelo seguinte motivo: {$this->descri}";
+
+            $stmt = $this->pdo->query("SELECT * "
+                    . "FROM users u "
+                    . "INNER JOIN grupo_has_users gu ON gu.uid = u.uid "
+                    . "WHERE gu.idgrupo = {$this->idgrupo} AND u.uid <> {$this->iduser}");
+
+            foreach($stmt as $res){
+                $stmt2 = $this->pdo->prepare("INSERT INTO avisos(descricao, data, visto, uid, de) "
+                        . "VALUES(:pmsg, current_date(),0, :puid ,{$this->iduser})");
+
+                $stmt2->bindValue(':pmsg', $mensagemIntegrantes, PDO::PARAM_STR);
+                $id = (int) $res['uid'];
+                $stmt2->bindValue(':puid', $id, PDO::PARAM_INT);    
+
+                if (!$stmt2->execute()){
+                    parent::desconectar();
+                    return false;
+                }
+            }
+            $stmt = $this->pdo->prepare('DELETE FROM grupo_has_users WHERE idgrupo = :pidgrupo');
+            $stmt->bindValue(':pidgrupo', $this->idgrupo, PDO::PARAM_INT);
+
+            if ($stmt->execute()){
+                parent::desconectar();
+                return true;
+            }else{
+                parent::desconectar();
+                return false;
+            }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
 
     public function sendMsg() {
         try {

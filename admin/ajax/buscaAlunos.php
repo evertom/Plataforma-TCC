@@ -1,5 +1,4 @@
 <?php
-
 $idGrupo =  isset($_POST['idGrupo']) ? $_POST['idGrupo']:'';
 $myid =     isset($_POST['myid']) ? $_POST['myid']:'';
 
