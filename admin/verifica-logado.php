@@ -16,4 +16,3 @@ if ($logado == "N" && $id_users == "") {
     echo "<script type='text/javascript'>location.href='../'</script>";
     exit();
 }
-?>

@@ -50,22 +50,18 @@ require_once('verifica-logado.php');
                 var url = "requisicao-negada.php";
                 window.location.href = url + "?id1=" + id1 + "&id2=" + id2 + "&id3=" + id3 + "&idgrupo=" + idgrupo + "&idprof=" + idProf;
             }
-            //funcao para mostrar o loading
             function loading_show() {
                 $('#loading').html("<img src='img/loader.gif'/>").fadeIn('fast');
             }
-            //funcao para esconder o loading
             function loading_hide() {
                 $('#loading').fadeOut('fast');
             }
-
             function limpa() {
                 $('#contact').find("textarea").val("");
                 $('#contact').find("input").each(function () {
                     $(this).val("");
                 });
             }
-
         </script>
     </head>
     <body>

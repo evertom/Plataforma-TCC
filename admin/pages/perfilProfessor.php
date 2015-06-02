@@ -158,7 +158,7 @@
                             }
                             ?>
                             <div class="huge"><?php echo $total; ?></div>
-                            <div>Grupos Rejeitados</div>
+                            <div>Grupos Recusados</div>
                         </div>
                     </div>
                 </div>

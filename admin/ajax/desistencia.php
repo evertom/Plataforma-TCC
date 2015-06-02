@@ -1,5 +1,4 @@
 <?php
-
 $iduser = isset($_POST['iduser']) ? $_POST['iduser'] : "";
 $motiProf = isset($_POST['motiProf']) ? $_POST['motiProf'] : "";
 $motiGrupo = isset($_POST['motiGrupo']) ? $_POST['motiGrupo'] : "";
