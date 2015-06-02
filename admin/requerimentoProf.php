@@ -45,21 +45,6 @@ if ($idProf == "" || $nomeProf == "") {
         <![endif]-->
         <script>
             $(document).ready(function () {
-                //evento do botao editar para chamar o form dinamico
-                $('.notificacoes').click(function () {
-                    $(this).find('span').fadeOut();
-                    //apos clicar nas configura��es damos um update nas notificacoes do usuario atual para nao exibir mais msg
-                    var user = <?php echo $id_users; ?>;
-                    $.ajax({
-                        type: "POST",
-                        url: "ajax/updateAviso.php",
-                        data: "user=" + user,
-                        success: function (html) {
-
-                        }
-                    });
-                });
-                
                 $("#contact").submit(function () {
                     loading_show();
                     //pegamos totos os valores do form

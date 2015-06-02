@@ -42,7 +42,6 @@ $id = isset($_GET['id']) ? $_GET['id']:"";
     <![endif]-->
 	<script>
 		$(document).ready(function(){
-			
 			$("#contact").submit(function(){
 				//pegamos totos os valores do form
 				var valores = $("#contact").serializeArray();

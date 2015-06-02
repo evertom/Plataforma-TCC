@@ -1,3 +1,21 @@
+<script>
+	$(document).ready(function () {
+		//evento do botao editar para chamar o form dinamico
+		$('.notificacoes').click(function () {
+			$(this).find('span').fadeOut();
+			//apos clicar nas configuracoes damos um update nas notificacoes do usuario atual para nao exibir mais msg
+			var user = <?php echo $id_users; ?>;
+			$.ajax({
+				type: "POST",
+				url: "ajax/updateAviso.php",
+				data: "user=" + user,
+				success: function (html) {
+
+				}
+			});
+		});
+	});
+</script>
 <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="sr-only">Toggle navigation</span>

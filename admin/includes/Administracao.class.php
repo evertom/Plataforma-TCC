@@ -657,7 +657,7 @@ class Administracao extends Conexao {
                     return false;
                 }
             }
-            $stmt = $this->pdo->prepare('DELETE FROM grupo_has_users WHERE idgrupo = :pidgrupo');
+            $stmt = $this->pdo->prepare('DELETE FROM grupo WHERE idgrupo = :pidgrupo');
             $stmt->bindValue(':pidgrupo', $this->idgrupo, PDO::PARAM_INT);
 
             if ($stmt->execute()){

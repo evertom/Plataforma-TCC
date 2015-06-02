@@ -28,22 +28,6 @@ require_once('verifica-logado.php');
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
         <script>
-             $(document).ready(function () {
-                //evento do botao editar para chamar o form dinamico
-                $('.notificacoes').click(function () {
-                    $(this).find('span').fadeOut();
-                    //apos clicar nas configuracoes damos um update nas notificacoes do usuario atual para nao exibir mais msg
-                    var user = <?php echo $id_users; ?>;
-                    $.ajax({
-                        type: "POST",
-                        url: "ajax/updateAviso.php",
-                        data: "user=" + user,
-                        success: function (html) {
-
-                        }
-                    });
-                });
-            });
             //funcao para rejeitar uma requisicao de orientacao
             function recusaGrupo(id1, id2, id3, idgrupo) {
                 var idProf = <?php echo $id_users; ?>;
