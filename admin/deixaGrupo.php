@@ -27,20 +27,29 @@ require_once('verifica-logado.php');
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <style type="text/css">
+        @media print {
+          .btn-danger,.page-header,.someImpresso{
+            visibility:hidden;
+          }                                 
+        }
+      </style>
         <script>
             $(document).ready(function () {
                 $("#contact").submit(function () {
-                    //pegamos totos os valores do form
-                    var valores = $("#contact").serializeArray();
+                  
+                    var valores =  $("#contact").serializeArray();
+                    console.log(valores);
                     var ok = false;
                     var id = null;
+                    var mensagem = "";
 
                     $.ajax
                     ({
                         async: false,
                         type: "POST", //metodo POST
                         dataType: 'json',
-                        url: "ajax/insertProf.php",
+                        url: "ajax/desistencia.php",
                         beforeSend: function () {
                             loading_show();
                         },
@@ -48,8 +57,10 @@ require_once('verifica-logado.php');
                         success: function (data)
                         {
                             ok = data.msg;
+                            mensagem = data.escrita;
                         },
                         error: function (data) {
+                            //console.log(data);
                             $('.alert-danger').fadeIn('fast');
                             ok = false;
                         },
@@ -59,11 +70,12 @@ require_once('verifica-logado.php');
                         }
                     });
 
-                    if (ok == true) {
+                    if (ok === true) {
                         $('.alert-success').fadeIn('fast');
+                        self.print();
                         limpa();
                     } else {
-                        $('.alert-danger').fadeIn('fast');
+                        $('.alert-danger').append(mensagem).fadeIn('fast');
                         limpa();
                     }
 
@@ -82,9 +94,6 @@ require_once('verifica-logado.php');
 
             function limpa() {
                 $('#contact').find("textarea").val("");
-                $('#contact').find("input").each(function () {
-                    $(this).val("");
-                });
             }
 
         </script>
@@ -108,56 +117,106 @@ require_once('verifica-logado.php');
                     <br/>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-8">
-                            <form method="post" class="reply" id="contact">
+                            <div class="someImpresso">
+                                 Preencha o formulário explicando o motivo de sua desistência deste Grupo<br/><br/>
+                            </div>
+                            <form method="post" class="desistencia" id="contact">
                                 <fieldset>
                                     <div class="row">
+                                        
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                             <div class="form-group input-group">
-                                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                                <input id="name" name="name" type="text" placeholder="Nome" value="" required class="form-control"></input>
+                                                Eu, 
+                                                <input id="name" style="border: none;width: 290px;font-weight: bold;"name="name" type="text" placeholder="Nome" value="<?php echo $nome_user ?>" required ></input>
+                                                
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                             <div class="form-group input-group">
-                                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                                <input class="form-control" type="email" id="email" name="email" placeholder="Email" value="" required></input>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div class="form-group input-group">
-                                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                                <input class="form-control" id="pass" name="pass" type="password"  placeholder="Senha" value="" required></input>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div class="form-group input-group">
-                                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                                <input class="form-control" id="prontuario" name="prontuario" type="text"  placeholder="Prontu&aacute;rio" value="" required></input>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div class="form-group input-group">
-                                                <span class="input-group-addon"><i class="fa fa-thumb-tack"></i></span>
-                                                <input class="form-control" id="cargo" name="cargo" type="text"  placeholder="Cargo" value="" required></input>
+                                                Prontuário  
+                                                <input id="prontuario" style="border: none;width: 220px;font-weight: bold;"name="prontuario" type="text" placeholder="Nome" value="<?php echo $prontuario_users ?>" required ></input>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            aluno(a) do Curso de Tecnologia em Análise e Desenvolvimento de Sistemas no Campus Bragança Paulista do IFSP, neste período letivo de <strong><?php echo date('d/m/Y');?></strong>
+                                            declaro, para os devidos fins:
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="form-group input-group">
+                                                <input  id="motiGrupo" name="motiGrupo" type="checkbox"></input>
+                                                Desistir do desenvolvimento do Trabalho de Conclusão de Curso no grupo formado pelos seguintes integrantes:
+                                                <?php
+                                                    require_once './includes/Conexao.class.php';
+                                                    $pdo = new Conexao();
+                                                    $sql = "SELECT gu.idgrupo "
+                                                            . "FROM grupo_has_users gu "
+                                                            . "WHERE gu.uid = ".$id_users."";
+                                                    $result = $pdo->select($sql);
+                                                    foreach ($result as $res){
+                                                        $idGrupo = $res['idgrupo'];
+                                                    }
+                                                    $sql = "SELECT u.username "
+                                                            . "FROM grupo_has_users gu "
+                                                            . "INNER JOIN users u ON u.uid = gu.uid"
+                                                            . " WHERE gu.idgrupo = {$idGrupo} "
+                                                            . "AND gu.uid <> {$id_users} "
+                                                            . "AND gu.tipo = 1";
+                                                    $resulte = $pdo->select($sql);
+                                                    $total = count($resulte);
+                                                    $aux = 1;
+                                                    foreach ($resulte as $res){
+                                                        if($total == $aux){
+                                                             echo "<strong>".$res['username']."</strong>";
+                                                        }else{
+                                                             echo "<strong>".$res['username']."</strong>, ";
+                                                        }
+                                                       $aux++;
+                                                    }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="form-group input-group">
+                                                <input  id="motiProf" name="motiProf" type="checkbox"></input>
+                                                Desistir da orientação do Trabalho de Conclusão de Curso do(a) professor(a)
+                                                <?php
+                                                    $sql = "SELECT u.username "
+                                                            . "FROM grupo_has_users gu "
+                                                            . "INNER JOIN users u ON u.uid = gu.uid"
+                                                            . " WHERE gu.idgrupo = {$idGrupo} "
+                                                            . "AND gu.tipo = 2";
+                                                    $resu = $pdo->select($sql);
+                                                    foreach ($resu as $res){
+                                                        echo '<strong>'.$res['username'].'</strong>';
+                                                    }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            Motivo:
                                             <textarea class="form-control" id="descri" name="descri" rows="3" cols="40" placeholder="Descri&ccedil;&atilde;o" required></textarea>
+                                            Bragança Paulista, <?php echo date('d');?> de <?php echo date('M');?> de <?php echo date('Y');?>
                                         </div>
                                     </div>
                                 </fieldset>
                                 <br/>
                                 <input id="acao" name="acao" type="hidden" value="inserir"></input>
-                                <button class="btn btn-primary pull-left" type="submit">Cadastrar</button>
-                                <div id="loading"></div>
+                                <input id="idgrupo" name="idgrupo" type="hidden" value="<?php echo  $idGrupo;?>"></input>
+                                <input id="iduser" name="iduser" type="hidden" value="<?php echo  $id_users;?>"></input>
+                                <button class="btn btn-danger pull-left" type="submit">Desistir</button>
+                                <div id="loading" class="someImpresso"></div>
                                 <br/><br/><br/>
                                 <div class="alert alert-success alert-dismissable" style="display:none">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -166,7 +225,7 @@ require_once('verifica-logado.php');
                                 <div class="alert alert-danger alert-dismissable"  style="display:none">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                    Falha no cadastro...
+                                    Falha na operação...
                                 </div>
                                 <div class="clearfix">
                                 </div>
@@ -177,17 +236,12 @@ require_once('verifica-logado.php');
                 </div>
                 <!-- /.container-fluid -->
                 <!-- /.row -->
-                <div class="row">
-
-                </div>
+                <div class="row"></div>
                 <!-- /.row -->
-
             </div>
             <!-- /#page-wrapper -->
-
         </div>
         <!-- /#wrapper -->
-
         <!-- jQuery -->
         <script src="js/jquery.min.js"></script>
 
