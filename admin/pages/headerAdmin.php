@@ -181,7 +181,7 @@
             </a>
             <ul class="dropdown-menu dropdown-alerts">
                 <li>
-                    <a href="GerenciamentoGrupos/PDFregulamentos/Regulamento-TCC.pdf" target="_blanck">
+                    <a href="GerenciamentoGrupos/PDFregulamentos/Regulamento-TCC.pdf" target="blanck">
                         <div>
                             <i class="fa fa-file-pdf-o"></i> Regulamento Completo TCC
                             <span class="pull-right text-muted small">PDF</span>
@@ -190,7 +190,7 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="GerenciamentoGrupos/PDFregulamentos/Proposta-de-conclusao-de-curso.pdf" target="_blanck">
+                    <a href="GerenciamentoGrupos/PDFregulamentos/Proposta-de-conclusao-de-curso.pdf" target="blanck">
                         <div>
                             <i class="fa fa-file-pdf-o"></i> Formulário de Proposta
                             <span class="pull-right text-muted small">PDF</span>
@@ -199,7 +199,7 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="GerenciamentoGrupos/PDFregulamentos/Termo-de-desistencia-de-orientacao-coorientado-do-grupo.pdf" target="_blanck">
+                    <a href="GerenciamentoGrupos/PDFregulamentos/Termo-de-desistencia-de-orientacao-coorientado-do-grupo.pdf" target="blanck">
                         <div>
                             <i class="fa fa-file-pdf-o"></i> Desisntência Professor
                             <span class="pull-right text-muted small">PDF</span>
@@ -208,7 +208,7 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="GerenciamentoGrupos/PDFregulamentos/Termo-de-desistencia-de-orientacao-coorientado-do-grupo-aluno.pdf" target="_blanck">
+                    <a href="GerenciamentoGrupos/PDFregulamentos/Termo-de-desistencia-de-orientacao-coorientado-do-grupo-aluno.pdf" target="blanck">
                         <div>
                             <i class="fa fa-file-pdf-o"></i> Desisntência Aluno
                             <span class="pull-right text-muted small">PDF</span>
@@ -217,7 +217,7 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="GerenciamentoGrupos/PDFregulamentos/Ata-de-defesa-da-monografia.pdf" target="_blanck">
+                    <a href="GerenciamentoGrupos/PDFregulamentos/Ata-de-defesa-da-monografia.pdf" target="blanck">
                         <div>
                             <i class="fa fa-file-pdf-o"></i> Ata de Defesa da Monografia
                             <span class="pull-right text-muted small">PDF</span>
@@ -226,7 +226,7 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="GerenciamentoGrupos/PDFregulamentos/Compromisso-etico.pdf" target="_blanck">
+                    <a href="GerenciamentoGrupos/PDFregulamentos/Compromisso-etico.pdf" target="blanck">
                         <div>
                             <i class="fa fa-file-pdf-o"></i> Compromisso Ético
                             <span class="pull-right text-muted small">PDF</span>
@@ -235,12 +235,19 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="GerenciamentoGrupos/PDFregulamentos/Termo-de-autorizacao-para-publicacao.pdf" target="_blanck">
+                    <a href="GerenciamentoGrupos/PDFregulamentos/Termo-de-autorizacao-para-publicacao.pdf" target="blanck">
                         <div>
                             <i class="fa fa-file-pdf-o"></i> Autorização para Publicação
                             <span class="pull-right text-muted small">PDF</span>
                         </div>
                     </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <center>
+                        <strong>Operações Automatizadas</strong>
+                        <i class="fa fa-angle-double-down"></i>
+                    </center>
                 </li>
                 <li class="divider"></li>
 		<li>
@@ -252,11 +259,13 @@
                     </a>
                 </li>
                 <li class="divider"></li>
-                <li>
-                    <center>
-                        <strong>Operações Automatizadas</strong>
-                        <i class="fa fa-angle-right"></i>
-                    </center>
+		<li>
+                    <a href="pdf_pre_projeto.php?idUser=<?php echo $id_users;?>" target="blanck">
+                        <div>
+                            <i class="fa fa-file-pdf-o"></i> Pré Projeto Preenchido
+                            <span class="pull-right text-muted small">Relatório PDF</span>
+                        </div>
+                    </a>
                 </li>
             </ul>
             <!-- /.dropdown-alerts -->
@@ -271,7 +280,7 @@
             </a>
             <ul class="dropdown-menu dropdown-alerts">
                 <li>
-                    <a href="GerenciamentoGrupos/PDFregulamentos/Regulamento-TCC.pdf" target="_blanck">
+                    <a href="GerenciamentoGrupos/PDFregulamentos/Regulamento-TCC.pdf" target="blanck">
                         <div>
                             <i class="fa fa-file-pdf-o"></i> Regulamento Completo TCC
                             <span class="pull-right text-muted small">PDF</span>
@@ -280,7 +289,7 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="GerenciamentoGrupos/PDFregulamentos/Proposta-de-conclusao-de-curso.pdf" target="_blanck">
+                    <a href="GerenciamentoGrupos/PDFregulamentos/Proposta-de-conclusao-de-curso.pdf" target="blanck">
                         <div>
                             <i class="fa fa-file-pdf-o"></i> Formulário de Proposta
                             <span class="pull-right text-muted small">PDF</span>
@@ -289,7 +298,7 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="GerenciamentoGrupos/PDFregulamentos/Termo-de-desistencia-de-orientacao-coorientado-do-grupo.pdf" target="_blanck">
+                    <a href="GerenciamentoGrupos/PDFregulamentos/Termo-de-desistencia-de-orientacao-coorientado-do-grupo.pdf" target="blanck">
                         <div>
                             <i class="fa fa-file-pdf-o"></i> Desisntência Professor
                             <span class="pull-right text-muted small">PDF</span>
@@ -298,7 +307,7 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="GerenciamentoGrupos/PDFregulamentos/Termo-de-desistencia-de-orientacao-coorientado-do-grupo-aluno.pdf" target="_blanck">
+                    <a href="GerenciamentoGrupos/PDFregulamentos/Termo-de-desistencia-de-orientacao-coorientado-do-grupo-aluno.pdf" target="blanck">
                         <div>
                             <i class="fa fa-file-pdf-o"></i> Desisntência Aluno
                             <span class="pull-right text-muted small">PDF</span>
@@ -307,7 +316,7 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="GerenciamentoGrupos/PDFregulamentos/Ata-de-defesa-da-monografia.pdf" target="_blanck">
+                    <a href="GerenciamentoGrupos/PDFregulamentos/Ata-de-defesa-da-monografia.pdf" target="blanck">
                         <div>
                             <i class="fa fa-file-pdf-o"></i> Ata de Defesa da Monografia
                             <span class="pull-right text-muted small">PDF</span>
@@ -316,7 +325,7 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="GerenciamentoGrupos/PDFregulamentos/Compromisso-etico.pdf" target="_blanck">
+                    <a href="GerenciamentoGrupos/PDFregulamentos/Compromisso-etico.pdf" target="blanck">
                         <div>
                             <i class="fa fa-file-pdf-o"></i> Compromisso Ético
                             <span class="pull-right text-muted small">PDF</span>
@@ -325,12 +334,19 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="GerenciamentoGrupos/PDFregulamentos/Termo-de-autorizacao-para-publicacao.pdf" target="_blanck">
+                    <a href="GerenciamentoGrupos/PDFregulamentos/Termo-de-autorizacao-para-publicacao.pdf" target="blanck">
                         <div>
                             <i class="fa fa-file-pdf-o"></i> Autorização para Publicação
                             <span class="pull-right text-muted small">PDF</span>
                         </div>
                     </a>
+                </li>
+                <li class="divider"></li>
+                 <li>
+                    <center>
+                        <strong>Operações Automatizadas</strong>
+                        <i class="fa fa-angle-double-down"></i>
+                    </center>
                 </li>
                 <li class="divider"></li>
                 <li>
@@ -340,13 +356,6 @@
                             <span class="pull-right text-muted small">Relatório PDF</span>
                         </div>
                     </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <center>
-                        <strong>Operações Automatizadas</strong>
-                        <i class="fa fa-angle-right"></i>
-                    </center>
                 </li>
             </ul>
             <!-- /.dropdown-alerts -->
