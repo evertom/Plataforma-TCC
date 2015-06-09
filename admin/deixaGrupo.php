@@ -72,8 +72,10 @@ require_once('verifica-logado.php');
 
                     if (ok === true) {
                         $('.alert-success').fadeIn('fast');
-                        self.print();
+                        //self.print();
                         limpa();
+                        window.open('pdf_desistencia_grupo.php?idUser=<?php echo $id_users ;?>');
+                        window.location='panel.php';
                     } else {
                         $('.alert-danger').append(mensagem).fadeIn('fast');
                         limpa();
@@ -149,7 +151,7 @@ require_once('verifica-logado.php');
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-group input-group">
-                                                <input  id="motiGrupo" name="motiGrupo" type="checkbox"></input>
+                                                <input  id="motiGrupo" name="motivo" type="radio" value="1" checked="ckecked"></input>
                                                 Desistir do desenvolvimento do Trabalho de Conclusão de Curso no grupo formado pelos seguintes integrantes:
                                                 <?php
                                                     require_once './includes/Conexao.class.php';
@@ -186,7 +188,7 @@ require_once('verifica-logado.php');
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-group input-group">
-                                                <input  id="motiProf" name="motiProf" type="checkbox"></input>
+                                                <input  id="motiProf" name="motivo" value="2" type="radio"></input>
                                                 Desistir da orientação do Trabalho de Conclusão de Curso do(a) professor(a)
                                                 <?php
                                                     $sql = "SELECT u.username "

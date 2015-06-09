@@ -50,18 +50,21 @@
         </a>
         <ul class="dropdown-menu dropdown-messages">
             <?php
-            $result = $pdo->select("SELECT a.idavisos,a.descricao, DATE_FORMAT(a.data, '%d/%m/%Y') as data, u.username,u.fotouser FROM avisos a INNER JOIN users u ON u.uid = a.de WHERE a.uid = " . $id_users . " ORDER BY a.idavisos DESC LIMIT 7");
+            $result = $pdo->select("SELECT a.idavisos,a.descricao, "
+                    . "DATE_FORMAT(a.data, '%d/%m/%Y') as data, u.username,u.fotouser "
+                    . "FROM avisos a INNER JOIN users u ON u.uid = a.de "
+                    . "WHERE a.uid = " . $id_users . " ORDER BY a.idavisos DESC LIMIT 5");
 
             if (count($result)) {
                 foreach ($result as $ress) {
                     echo '<li>
                         <a href="notificacao.php?id=' . $ress['idavisos'] . '">
-                                <div style="margin-bottom:8px;">
-                                        <strong><img src="' . $ress['fotouser'] . '" width="25px"/> ' . $ress['username'] . '</strong>
-                                        <span class="pull-right text-muted">
-                                                <em><i class="fa fa-calendar"></i> ' . $ress['data'] . '</em>
-                                        </span>
-                                </div>';
+                            <div style="margin-bottom:8px;">
+                                <strong><img src="' . $ress['fotouser'] . '" width="25px"/> ' . $ress['username'] . '</strong>
+                                <span class="pull-right text-muted">
+                                    <em><i class="fa fa-calendar"></i> ' . $ress['data'] . '</em>
+                                </span>
+                            </div>';
                     if (strlen($ress['descricao']) > 130) {
                         $noticia = substr($ress['descricao'], 0, 130) . "... <i class=\"fa fa-plus-square\"></i> leia mais";
                     } else {
@@ -251,7 +254,7 @@
                 </li>
                 <li class="divider"></li>
 		<li>
-                    <a href="desfazerGrupo.php">
+                    <a href="deixaGrupo.php">
                         <div>
                             <i class="fa fa-group fa-fw"></i> Desistência de TCC
                             <span class="pull-right text-muted small">Relatório PDF</span>

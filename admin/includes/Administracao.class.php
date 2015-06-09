@@ -592,7 +592,15 @@ class Administracao extends Conexao {
     public function desistenciaGrupo() {
         try {
             if (parent::getPDO() == null){parent::conectar();}
-
+               
+            $stmt = $this->pdo->prepare("INSERT INTO desistenciaaluno(idUsers,idGrupo,motivo,dataDesistencia,descricao)"
+                    . "VALUES(:pidUsers,:pidGrupo,:pmotivo,current_date(),:pdescricao)");
+            $stmt->bindValue(':pidUsers', $this->iduser, PDO::PARAM_INT);
+            $stmt->bindValue(':pidGrupo', $this->idgrupo, PDO::PARAM_INT);
+            $stmt->bindValue(':pmotivo', $this->motivo, PDO::PARAM_INT);
+            $stmt->bindValue(':pdescricao', $this->descri, PDO::PARAM_STR);
+            $stmt->execute();
+            
             $stmt = $this->pdo->prepare('UPDATE grupo_has_users SET uid = 2 WHERE uid = :puid');
             $stmt->bindValue(':puid', $this->iduser, PDO::PARAM_INT);
 
@@ -637,6 +645,15 @@ class Administracao extends Conexao {
         try {
             if (parent::getPDO() == null){parent::conectar();}
             
+            $stmt = $this->pdo->prepare("INSERT INTO desistenciaprof(idUsers,idGrupo,descricao,dataDesistencia,motivo)"
+                    . "VALUES(:pidUsers,:pidGrupo,:pdescricao,current_date(),:pmotivo)");
+            $stmt->bindValue(':pidUsers', $this->iduser, PDO::PARAM_INT);
+            $stmt->bindValue(':pidGrupo', $this->idgrupo, PDO::PARAM_INT);
+            $stmt->bindValue(':pdescricao', $this->descri, PDO::PARAM_STR);
+            $stmt->bindValue(':pmotivo', $this->opcaoProf, PDO::PARAM_INT);
+            $stmt->execute();
+            
+            
             $mensagemIntegrantes = "O(a) Professor(a) {$this->name} desfez parceria com seu grupo pelo seguinte motivo: {$this->descri}";
 
             $stmt = $this->pdo->query("SELECT * "
@@ -657,6 +674,18 @@ class Administracao extends Conexao {
                     return false;
                 }
             }
+            parent::desconectar();
+            return true;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+    
+    public function deleteGrupo(){
+        try {
+            if (parent::getPDO() == null){parent::conectar();}
+            
             $stmt = $this->pdo->prepare('DELETE FROM grupo WHERE idgrupo = :pidgrupo');
             $stmt->bindValue(':pidgrupo', $this->idgrupo, PDO::PARAM_INT);
 
@@ -672,7 +701,7 @@ class Administracao extends Conexao {
             return null;
         }
     }
-
+    
     public function sendMsg() {
         try {
             if (parent::getPDO() == null) {parent::conectar();}

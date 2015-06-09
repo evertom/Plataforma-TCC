@@ -5,13 +5,13 @@ $idgrupo = isset($_POST['idgrupo']) ? $_POST['idgrupo'] : "";
 $descri = isset($_POST['descri']) ? $_POST['descri'] : "";
 $name = isset($_POST['name']) ? $_POST['name'] : "";
 
-
 require_once '../includes/Administracao.class.php';
 $Administracao = new Administracao();
 
 $Administracao->iduser = $iduser;
 $Administracao->idgrupo = $idgrupo;
 $Administracao->descri = $descri;
+$Administracao->opcaoProf = $opcaoProf;
 $Administracao->name = $name;
 
 $result = $Administracao->desistenciaProf();

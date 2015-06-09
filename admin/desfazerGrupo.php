@@ -70,8 +70,10 @@ require_once('verifica-logado.php');
 
                     if (ok === true) {
                         $('.alert-success').append(mensagem).fadeIn('fast');
-                        self.print();
+                        //self.print();
                         limpa();
+                        window.open('pdf_desistencia_prof.php?idUser=<?php echo $id_users ;?>');
+                        window.location='panel.php';
                     } else {
                         $('.alert-danger').append(mensagem).fadeIn('fast');
                         limpa();
@@ -188,8 +190,8 @@ require_once('verifica-logado.php');
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                            comunico que, a partir desta data, não serei mais o(a) responsável pela
-                                           <input type="radio" name="opcaoProf" id="opcaoProf" value="orientacao" checked="checked"> orientação / 
-                                           <input type="radio" name="opcaoProf" id="opcaoProf" value="orientacao" > coorientação do TCC do(a) aluno(a)
+                                           <input type="radio" name="opcaoProf" id="opcaoProf" value="1" checked="checked"> orientação / 
+                                           <input type="radio" name="opcaoProf" id="opcaoProf" value="2" > coorientação do TCC do(a) aluno(a)
                                            <div id="alunosGrupo" style="display:inline;font-weight: bold;"></div>
                                         </div>
                                     </div>

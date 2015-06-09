@@ -158,7 +158,7 @@ $mpdf->SetWatermarkText('TCC');
 $mpdf->SetWatermarkImage('img/if.png', 1, '', array(10, 10));
 $mpdf->showWatermarkImage = false;
 $mpdf->WriteHTML('<h2><img src="img/if.png"/> Proposta de Trabalho(TCC)</h2><br>');
-$mpdf->SetFooter('{DATE j/m/Y  H:i}||Pagina {PAGENO}/{nb}');
+$mpdf->SetFooter('{DATE j/m/Y  H:i} Bragança Paulista||Pagina {PAGENO}/{nb}');
 $mpdf->WriteHTML($html);
 $mpdf->Output();
 exit();
