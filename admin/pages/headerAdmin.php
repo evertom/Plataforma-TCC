@@ -270,6 +270,15 @@
                         </div>
                     </a>
                 </li>
+                <li class="divider"></li>
+		<li>
+                    <a href="pdf_compromisso_etico.php?idUser=<?php echo $id_users;?>" target="blanck">
+                        <div>
+                            <i class="fa fa-file-pdf-o"></i> Compromisso Ético
+                            <span class="pull-right text-muted small">Relatório PDF</span>
+                        </div>
+                    </a>
+                </li>
             </ul>
             <!-- /.dropdown-alerts -->
         </li>

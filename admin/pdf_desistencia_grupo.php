@@ -50,7 +50,7 @@ foreach($result as $res){
     $html .= "Bragança Paulista, ".date('d')." de ". date('M')." de ".date('Y');
     $html .= "<br><br><br>";
     $html .= "___________________________________________<br>";
-    $html .= "           Assinatura Aluno(a)";
+    $html .= "           Assinatura do Aluno(a)";
     
 }
 
