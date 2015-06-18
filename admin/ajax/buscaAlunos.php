@@ -7,6 +7,7 @@ $Conexao = new Conexao();
 
 $result = $Conexao->select("SELECT * FROM grupo_has_users gu "
         . "INNER JOIN users u ON u.uid = gu.uid "
+        . "INNER JOIN grupo g ON g.idgrupo = gu.idgrupo "
         . "WHERE gu.uid <> {$myid} "
         . "AND gu.idgrupo = {$idGrupo}");
 

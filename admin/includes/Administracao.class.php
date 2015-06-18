@@ -682,6 +682,54 @@ class Administracao extends Conexao {
         }
     }
     
+    public function ataDefesa() {
+        try {
+            if (parent::getPDO() == null){parent::conectar();}
+            
+            $stmt = $this->pdo->prepare("INSERT INTO atadefesa(idgrupo,titulo,prof1,prof2,prof3,dia,hora)"
+                                        . "VALUES(:pidgrupo, :ptitulo, :pprof1, :pprof2, :pprof3, :pdia, :phora)");
+            $stmt->bindValue(':pidgrupo',   $this->idgrupo, PDO::PARAM_INT);
+            $stmt->bindValue(':ptitulo',    $this->tituloGrupo2, PDO::PARAM_STR);
+            $stmt->bindValue(':pprof1',     $this->prof1, PDO::PARAM_STR);
+            $stmt->bindValue(':pprof2',     $this->prof2, PDO::PARAM_STR);
+            $stmt->bindValue(':pprof3',     $this->prof3, PDO::PARAM_STR);
+            $stmt->bindValue(':pdia',       $this->dia, PDO::PARAM_STR);
+            $stmt->bindValue(':phora',      $this->horas, PDO::PARAM_STR);
+            $stmt->execute();
+            $IdAta = $this->pdo->lastInsertId();
+            
+            $mensagemIntegrantes = "O(a) Professor(a) {$this->prof1} marcou no dia {$this->dia} "
+            . "as {$this->horas}, a defesa de seu TCC para Avalição Final diante da Banca, fique"
+            . " atento a esta data, pois se perdida, você reprovará no curso.";
+
+            $stmt = $this->pdo->query("SELECT * "
+                    . "FROM users u "
+                    . "INNER JOIN grupo_has_users gu ON gu.uid = u.uid "
+                    . "WHERE gu.idgrupo = {$this->idgrupo} AND u.uid <> {$this->iduser}");
+
+            foreach($stmt as $res){
+                $stmt2 = $this->pdo->prepare("INSERT INTO avisos(descricao, data, visto, uid, de) "
+                        . "VALUES(:pmsg, current_date(),0, :puid ,{$this->iduser})");
+
+                $stmt2->bindValue(':pmsg', $mensagemIntegrantes, PDO::PARAM_STR);
+                $id = (int) $res['uid'];
+                $stmt2->bindValue(':puid', $id, PDO::PARAM_INT);    
+
+                if (!$stmt2->execute()){
+                    parent::desconectar();
+                    return false;
+                }
+            }
+            parent::desconectar();
+            return $IdAta;
+            
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+    
+    
     public function deleteGrupo(){
         try {
             if (parent::getPDO() == null){parent::conectar();}

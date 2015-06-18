@@ -369,6 +369,15 @@
                         </div>
                     </a>
                 </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="ataBancaTcc.php">
+                        <div>
+                            <i class="fa fa-file-pdf-o"></i> Ata de Defesa
+                            <span class="pull-right text-muted small">Relatório PDF</span>
+                        </div>
+                    </a>
+                </li>
             </ul>
             <!-- /.dropdown-alerts -->
         </li>
