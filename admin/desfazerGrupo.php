@@ -154,7 +154,7 @@ require_once('verifica-logado.php');
                                         $sql = "SELECT gu.idgrupo,gu.uid,g.titulo "
                                                 . "FROM grupo_has_users gu "
                                                 . "INNER JOIN grupo g ON g.idgrupo = gu.idgrupo "
-                                                . "WHERE gu.uid = 12";
+                                                . "WHERE gu.uid = {$id_users}";
                                         
                                         $result = $Conexao->select($sql);
                                         foreach ($result as $res){

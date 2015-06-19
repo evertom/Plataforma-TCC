@@ -9,15 +9,15 @@ $result = $pdo->select("SELECT * FROM users u WHERE u.uid = {$idUser}");
 $html = "";
 
 foreach($result as $res){
-    $html .= "Eu, <strong><u>{$res['username']}</u></strong>, prontuário {$res['prontuario']} "
-    . "Curso: Análise e Desenvolvimento de Sistemas Semestre: ___________________________ ";
+    $html .= "Eu, <strong><u>{$res['username']}</u></strong>, prontuário <b>{$res['prontuario']}</b> "
+    . "Curso: Análise e Desenvolvimento de Sistemas, Semestre: ___________________________ ";
     
     $resultado = $pdo->select("SELECT * FROM grupo_has_users gu "
             . "INNER JOIN grupo g ON g.idgrupo = gu.idgrupo "
             . "WHERE gu.uid = {$idUser}");
     
     foreach($resultado as $resres){
-        $html .= "<br><br>Título do Trabalho (provisório ou definitivo): <strong>{$resres['descricao']}</strong>";
+        $html .= "<br><br>Título do Trabalho (provisório ou definitivo): <strong>{$resres['titulo']}</strong>";
         $idGrupo = $resres['idgrupo'];
     }
          
