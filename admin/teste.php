@@ -1,46 +1,32 @@
 <?php
 # PHPlot Example: Line graph, 2 lines
 require_once './phplot-6.1.0/phplot.php';
-# Generate data for:
-#   Y1 = sin(x)
-#   Y2 = cos(x)
-$end = M_PI * 2.0;
-$delta = $end / 20.0;
-$data = array();
-for ($x = 0; $x <= $end; $x += $delta)
-  $data[] = array('', $x, sin($x), cos($x));
+//Define the object
+$plot = new PHPlot(800,600);
 
-$plot = new PHPlot(800, 600);
-$plot->SetImageBorderType('plain');
+//Set titles
+$plot->SetTitle("Grafico de Acompanhamento de Evolucao");
+$plot->SetXTitle('X Data');
+$plot->SetYTitle('Y Data');
 
-$plot->SetPlotType('lines');
-$plot->SetDataType('data-data');
-$plot->SetDataValues($data);
+//Define some data
+$example_data = array(
+     array(date('M', mktime(37,16,16,06,19,2015)), mktime(37,16,16,07,19,2015), mktime(37,16,20,06,19,2015)),
+     array('a', mktime(37,16,26,06,19,2015), mktime(37,16,10,07,19,2015)),
+     array('a', mktime(37,16,06,12,19,2015), mktime(37,16,11,12,29,2015)),
+     array('a', mktime(37,16,16,08,19,2015), mktime(37,16,23,08,14,2015)),
+     array('a', mktime(37,16,22,09,19,2015), mktime(37,16,28,09,23,2015)),
+     array('a', mktime(37,16,29,10,19,2015), mktime(37,16,03,10,21,2015)),
+     array('a', mktime(37,16,01,11,19,2015), mktime(37,16,08,11,19,2015)),
+    
+);
+$plot->SetDataValues($example_data);
 
-# Main plot title:
-$plot->SetTitle('Line Plot, Sin and Cos');
+$plot->SetLegend(array('Planejado', 'Executado'));
 
-# Make a legend for the 2 functions:
-$plot->SetLegend(array('sin(t)', 'cos(t)'));
+//Turn off X axis ticks and labels because they get in the way:
+$plot->SetXTickLabelPos('none');
+$plot->SetXTickPos('none');
 
-# Select a plot area and force ticks to nice values:
-$plot->SetPlotAreaWorld(0, -1, 6.8, 1);
-
-# Even though the data labels are empty, with numeric formatting they
-# will be output as zeros unless we turn them off:
-$plot->SetXDataLabelPos('none');
-
-$plot->SetXTickIncrement(M_PI / 8.0);
-$plot->SetXLabelType('data');
-$plot->SetPrecisionX(3);
-
-$plot->SetYTickIncrement(0.2);
-$plot->SetYLabelType('data');
-$plot->SetPrecisionY(1);
-
-# Draw both grids:
-$plot->SetDrawXGrid(True);
-$plot->SetDrawYGrid(True);
-
+//Draw it
 $plot->DrawGraph();
-
