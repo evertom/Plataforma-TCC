@@ -22,7 +22,7 @@
                                     <a href="flot.html">Desempenho</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">Cronograma</a>
+                                    <a href="grafico-cronograma.php">Cronograma</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

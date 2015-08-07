@@ -525,13 +525,13 @@ if (count($result)) {
                                 <small>Data Inicial</small>
                                 <div class="form-group input-group">
                                     <span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
-                                    <input class="form-control" id="dataInicial" name="dataInicial" type="date"  max="<?php echo date('Y-m-d', strtotime("+2 years")); ?>" min="<?php echo date('Y-m-d', strtotime("-2 years")); ?>" value="<?php echo date('Y-m-d'); ?>" required></input>
+                                    <input class="form-control" id="dataInicial" name="dataInicial" type="date"  max="<?php echo date('Y-m-d', strtotime("+2 years")); ?>" min="<?php echo date('Y-m-d', strtotime("-2 years")); ?>" value="<?php echo date('Y-m-d'); ?>" required/>
                                 </div>
                                 <div id="opcionalData">
                                     <small>Data Final</small>
                                     <div class="form-group input-group">
                                         <span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
-                                        <input class="form-control" id="dataFinal" name="dataFinal" type="date"  value="<?php echo date('Y-m-d'); ?>" min="<?php echo date('Y-m-d', strtotime("-2 years")); ?>" max="<?php echo date('Y-m-d', strtotime("+2 years")); ?>"></input>
+                                        <input class="form-control" id="dataFinal" name="dataFinal" type="date"  value="<?php echo date('Y-m-d'); ?>" min="<?php echo date('Y-m-d', strtotime("-2 years")); ?>" max="<?php echo date('Y-m-d', strtotime("+2 years")); ?>" />
                                     </div>
                                 </div>
                                 <div id="opcionalHorario" style="display:none;">
