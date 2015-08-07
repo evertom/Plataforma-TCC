@@ -5,6 +5,12 @@ $pdo = new Conexao();
 
 $idGrupo = $pdo->select("SELECT * FROM grupo_has_users WHERE uid = {$id_users}");
 
+if(!count($idGrupo)){
+    echo "<script type='text/javascript'>location.href='panel.php'</script>";
+}
+
+$tipo = $idGrupo[0]['tipo'];
+
 $concluido = 0;
 $atrasado = 0;
 $registros = 0;
@@ -38,6 +44,11 @@ if (count($resultado)) {
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <!-- Custom CSS -->
         <link href="sb-admin-2/css/sb-admin-2.css" rel="stylesheet"/>
+        
+         <!-- select bootstrap -->
+        <link href="js/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" type="text/css"/>
+        <script src="js/bootstrap-select/js/bootstrap-select.min.js"></script>
+        
         <!-- Custom Fonts -->
         <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
         <link href="css/chartJs.css" rel="stylesheet" type="text/css"/>
@@ -80,9 +91,48 @@ if (count($resultado)) {
 
                 legend(document.getElementById("pieLegend"), data, pieChart);
              }
+             
+             
+             $(document).ready(function () {
+                var IDGRUPO = $("#idgrupo").val();
+
+                Load(IDGRUPO);
+
+                $('#select-idgrupo').on('change', function () {
+                    var id = $(this).val();
+                    if (id !== null) {
+                        var idO;
+                        for (var i = 0; i < id.length; i++) {
+                            idO = id[i];
+                        }
+                        IDGRUPO = idO;
+                        $("#idgrupo").val(IDGRUPO);
+                        Load(IDGRUPO);
+                    } else {
+                        IDGRUPO = "";
+                        $("#idgrupo").val(IDGRUPO);
+                        $("#timeline").fadeOut(250);
+                    }
+                });
+            });
+
+            function Load(id) {
+                $.ajax
+                ({
+                    type: "POST", //metodo POST
+                    dataType: 'html',
+                    url: "ajax/graficoPizza.php",
+                    data: {operation: "pizza", idGrupo: id},
+                    success: function (data)
+                    {
+                        $("#timeline").html(data).fadeIn(100);
+                    }
+                });
+            }
         </script>
     </head>
     <body>
+        <input type="hidden" id="idgrupo" name="idgrupo" value="<?php echo $idGrupo[0]['idgrupo']; ?>"/>
         <div id="wrapper">
             <!-- Navigation -->
             <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -125,6 +175,34 @@ if (count($resultado)) {
                         <div class="col-xs-12">
                             <h2 class="page-header">Gr&aacute;fico 
                             <span class="text-danger">de acompanhamento</span></h2>
+                            
+                            <?php
+                            if ($tipo != 1) {
+                                echo '<h4> Selecione o Grupo</h4>'
+                                . '<div class="form-group input-group">'
+                                    . '<select name="select-idgrupo" id="select-idgrupo"'
+                                    . ' class="selectpicker" multiple  data-max-options="1" '
+                                    . 'data-min-options="1" required data-style="btn-info" '
+                                    . 'title="Selecione o grupo de trabalho?" data-live-search="true" >';
+
+                                
+                                echo "<optgroup label='Grupos - Títulos'>";
+
+                                
+                                $result = $pdo->select("SELECT idgrupo, titulo FROM grupo "
+                                        . "WHERE idgrupo = {$idGrupo[0]['idgrupo']} ORDER BY titulo");
+                                
+                                foreach ($result as $res) {
+                                    if ($idGrupo[0]['idgrupo'] == $res['idgrupo']) {
+                                        echo "<option selected value='" . $res['idgrupo'] . "'>" . $res['titulo'] . "</option>";
+                                    } else {
+                                        echo "<option value='" . $res['idgrupo'] . "'>" . $res['titulo'] . "</option>";
+                                    }
+                                }
+                               
+                                echo "</optgroup></select></div>";
+                            }
+                            ?>
                         </div>
                     </div>
                     <br/>

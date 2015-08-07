@@ -116,25 +116,24 @@ if (count($result)) {
 
             function Load(id) {
                 $.ajax
-                        ({
-                            type: "POST", //metodo POST
-                            dataType: 'html',
-                            url: "ajax/control_cronograma.php",
-                            data: {operation: "timeline", idGrupo: id},
-                            success: function (data)
-                            {
-                                $("#timeline").html(data).fadeIn(100);
-                            }
-                        });
+                ({
+                    type: "POST", //metodo POST
+                    dataType: 'html',
+                    url: "ajax/control_cronograma.php",
+                    data: {operation: "timeline", idGrupo: id},
+                    success: function (data)
+                    {
+                        $("#timeline").html(data).fadeIn(100);
+                    }
+                });
             }
-
         </script>
     </head>
     <body>
 
         <input type="hidden" id="idgrupo" name="idgrupo" value="<?php echo $idgrupo; ?>"/>
 
-               <div id="wrapper">
+        <div id="wrapper">
             <!-- Navigation -->
             <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <?php require_once('pages/headerAdmin.php'); ?>
@@ -149,10 +148,12 @@ if (count($result)) {
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <?php
                             if ($tipo_users > 0) {
-                                echo '<h4> Selecione o Grupo</h4>
-                                            <div class="form-group input-group">
-                                                    <select name="select-idgrupo" id="select-idgrupo" class="selectpicker" multiple  data-max-options="1" data-min-options="1" required data-style="btn-info"
-                                                    title="Selecione o grupo de trabalho?" data-live-search="true" >';
+                                echo '<h4> Selecione o Grupo</h4>'
+                                . '<div class="form-group input-group">'
+                                    . '<select name="select-idgrupo" id="select-idgrupo"'
+                                    . ' class="selectpicker" multiple  data-max-options="1" '
+                                    . 'data-min-options="1" required data-style="btn-info" '
+                                    . 'title="Selecione o grupo de trabalho?" data-live-search="true" >';
 
 
                                 $pdo = new Conexao();
