@@ -22,7 +22,7 @@
                                     <a href="flot.html">Desempenho</a>
                                 </li>
                                 <li>
-                                    <a href="grafico-cronograma.php">Cronograma</a>
+                                    <a href="cronogramaPizza.php">Cronograma</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
