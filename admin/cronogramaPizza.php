@@ -11,22 +11,6 @@ if(!count($idGrupo)){
 
 $tipo = $idGrupo[0]['tipo'];
 
-$concluido = 0;
-$atrasado = 0;
-$registros = 0;
-$resultado = $pdo->select("SELECT * FROM evento WHERE idGrupo = {$idGrupo[0]['idgrupo']}");
-if (count($resultado)) {
-    foreach ($resultado as $ress) {
-        $registros ++;
-        if ($ress['concluido'] == 1) {
-            $concluido ++;
-            continue;
-        }
-        if (strtotime($ress['end']) < strtotime(date('Y-m-d'))) {
-            $atrasado ++;
-        }
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,9 +25,19 @@ if (count($resultado)) {
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
         <!-- MetisMenu CSS -->
         <link href="metisMenu/dist/metisMenu.min.css" rel="stylesheet"/>
-        <script type="text/javascript" src="js/jquery.min.js"></script>
+       
+        <!-- Jquery -->
+        <script src="js/jquery-2.1.3.js"></script>
+        
         <!-- Custom CSS -->
         <link href="sb-admin-2/css/sb-admin-2.css" rel="stylesheet"/>
+       
+         <!-- Bootstrap Core JavaScript -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="js/metisMenu.min.js"></script>
+        <!-- Custom Theme JavaScript -->
+        <script src="js/sb-admin-2.js"></script>
         
          <!-- select bootstrap -->
         <link href="js/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" type="text/css"/>
@@ -68,37 +62,25 @@ if (count($resultado)) {
             }
 
             function pieChart() {
-                var data = [
-                    {
-                        value: <?php echo $registros ?>,
-                        color:"#1E90FF",
-                        label: 'Total de Eventos'
-                    },
-                    {
-                        value : <?php echo $concluido ?>,
-                        color : "#00FF00",
-                        label: 'Eventos Concluidos'
-                    },
-                    {
-                        value : <?php echo $atrasado ?>,
-                        color : "#FF0000",
-                        label: 'Eventos Atrasados'
-                    }
-                ];
-
-                var ctx = document.getElementById("pieChart").getContext("2d");
-                var pieChart = new Chart(ctx).Pie(data);
-
-                legend(document.getElementById("pieLegend"), data, pieChart);
-             }
-             
-             
-             $(document).ready(function () {
+                $.getJSON('ajax/graficoPizzaJson.php', {idGrupo: $("#idgrupo").val()}, function(data){
+                   if(data.length > 2){
+                       var ctx = document.getElementById("pieChart").getContext("2d");
+                       var pieChart = new Chart(ctx).Pie(data);
+                       legend(document.getElementById("pieLegend"), data, pieChart);
+                      $("#pieChart").parent('div').fadeIn();
+                   }else{
+                       $("#pieChart").parent('div').fadeOut();
+                   }
+                });
+            }
+       
+            $(document).ready(function(){
+                
                 var IDGRUPO = $("#idgrupo").val();
 
                 Load(IDGRUPO);
 
-                $('#select-idgrupo').on('change', function () {
+                $("#select-idgrupo").on('change', function () {
                     var id = $(this).val();
                     if (id !== null) {
                         var idO;
@@ -111,7 +93,8 @@ if (count($resultado)) {
                     } else {
                         IDGRUPO = "";
                         $("#idgrupo").val(IDGRUPO);
-                        $("#timeline").fadeOut(250);
+                        $("#grafico").fadeOut(250);
+                        main();
                     }
                 });
             });
@@ -125,11 +108,14 @@ if (count($resultado)) {
                     data: {operation: "pizza", idGrupo: id},
                     success: function (data)
                     {
-                        $("#timeline").html(data).fadeIn(100);
+                        $("#grafico").html(data).fadeIn(100);
+                          main();
                     }
                 });
             }
+        
         </script>
+        
     </head>
     <body>
         <input type="hidden" id="idgrupo" name="idgrupo" value="<?php echo $idGrupo[0]['idgrupo']; ?>"/>
@@ -206,10 +192,13 @@ if (count($resultado)) {
                         </div>
                     </div>
                     <br/>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                             <?php echo $html ;?>
+                    <div id='grafico' style="width: 100%; display: block;">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                 <?php echo $html ;?>
+                            </div>
                         </div>
+                        <!-- /.row -->
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -229,13 +218,7 @@ if (count($resultado)) {
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
-        <!-- jQuery -->
-        <script src="js/jquery.min.js"></script>
-        <!-- Bootstrap Core JavaScript -->
-        <script src="js/bootstrap.min.js"></script>
-        <!-- Metis Menu Plugin JavaScript -->
-        <script src="js/metisMenu.min.js"></script>
-        <!-- Custom Theme JavaScript -->
-        <script src="js/sb-admin-2.js"></script>
+        
+       
     </body>
 </html>

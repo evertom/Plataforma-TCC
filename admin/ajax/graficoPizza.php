@@ -32,3 +32,5 @@
             . "<h3>$titulo "
             . "<small>$descricao</small></h3>"
             . "$names</div>";
+    
+    echo $html;
