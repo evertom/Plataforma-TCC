@@ -92,17 +92,13 @@ if (count($result)) {
 
                 var myID = $("#myID").val();
                 var IDGRUPO = $("#idgrupo").val();
-
-                var BDEVENTOS = {
-                    url: 'pages/cronograma_eventos/get-events.php',
-                    method: 'GET',
-                    data: {idcronograma: IDGRUPO}
-                };
-
+                var SOURCE = {url: 'pages/cronograma_eventos/get-events.php', method: 'GET',data:{idcronograma: IDGRUPO}};
+                
                 $("[name='isClonclusion']").bootstrapSwitch('state', false);
 
                 $('#idTipoEvento').on('change', function () {
-                    if ($(this).val() == 2) {
+                    var select = $(this).val();
+                    if (select[0] === "2") {
                         $("#opcionalHorario").fadeIn(550);
                         $("#opcionalData").fadeOut(550);
                         $("#allday").val("false");
@@ -116,15 +112,22 @@ if (count($result)) {
                 $('#select-idgrupo').on('change', function () {
                     var id = $(this).val();
                     if (id !== null) {
-                        IDGRUPO = id;
-                        $("#idGrupo").val(id);
-                        $('.calender').fullCalendar('removeEventSource', BDEVENTOS);
-                        $('.calender').fullCalendar('addEventSource', BDEVENTOS);
+                        var idO;
+                        for (var i = 0; i < id.length; i++) {
+                            idO = id[i];
+                        }
+                        $('.calender').fullCalendar('removeEventSource',SOURCE);
+                        $("#idgrupo").val(idO);
+                        IDGRUPO = idO;
+                        SOURCE = {url: 'pages/cronograma_eventos/get-events.php', method: 'GET', data:{idcronograma: IDGRUPO}};
+                        $('.calender').fullCalendar('addEventSource', SOURCE);
+                        reset();
+                        getParticipantes(idO);
                     } else {
                         reset();
                         IDGRUPO = "";
-                        $("#idGrupo").val("");
-                        $('.calender').fullCalendar('removeEventSource', BDEVENTOS);
+                        $("#idgrupo").val("");
+                        $('.calender').fullCalendar('removeEventSource', SOURCE);
                     }
                 });
 
@@ -136,7 +139,7 @@ if (count($result)) {
                     timezoneParam: 'America/Sao_Paulo',
                     minTime: '08:00:00',
                     maxTime: '23:59:59',
-                    eventSources: BDEVENTOS,
+                    eventSources: SOURCE,
                     eventClick: function (calEvent, jsEvent, view) {
                         if ($(".panel").hasClass("foo")) {
                             $(".panel").removeClass("foo");
@@ -147,11 +150,11 @@ if (count($result)) {
                         var participantes = calEvent.participantes;
                         var array_participantes = participantes.split(",");
                         var concluido = false;
-                        if (calEvent.concluido == 1) {
+                        if (calEvent.concluido === 1) {
                             concluido = true;
                         }
                         for (var i = 0; i < array_participantes.length; i++) {
-                            if (array_participantes[i] == myID) {
+                            if (array_participantes[i] === myID) {
                                 if (!$("#concluido").is(":visible")) {
                                     $("#concluido").fadeIn(250);
                                 }
@@ -163,8 +166,9 @@ if (count($result)) {
                         $("#idParticipantes").selectpicker('val', array_participantes);
                         $("#idTipoEvento").selectpicker('val', calEvent.idTipoEvento);
                         $(".selectpicker").selectpicker('refresh');
-
-                        if ($("#idTipoEvento").val() == 2) {
+                        
+                        var select = $("#idTipoEvento").val();
+                        if ( select[0] === "2") {
                             if (!$("#opcionalHorario").is(":visible"))
                                 $("#opcionalHorario").fadeIn(550);
                             if ($("#opcionalData").is(":visible"))
@@ -224,7 +228,7 @@ if (count($result)) {
                     var isClonclusion = $("#isClonclusion").bootstrapSwitch('state');
 
                     //pegamos todos os valores do form
-                    if ($("#allday").val() == "false") {
+                    if ($("#allday").val() === "false") {
                         start = new moment(start + " " + $("#horario").val(), "YYYY/MM/DD HH:mm");
                         end = new moment(start, "YYYY/MM/DD HH:mm");
                         end.set('hours', start.hours() + 1);
@@ -240,7 +244,7 @@ if (count($result)) {
                     start = start.format("YYYY/MM/DD HH:mm");
                     end = end.format("YYYY/MM/DD HH:mm");
 
-                    if (idEvento == "") {
+                    if (idEvento === "") {
                         var valores = "operation=CRUD&case=INSERT";
                     } else {
                         var valores = "operation=CRUD&case=UPDATE";
@@ -285,7 +289,7 @@ if (count($result)) {
                         }
                     });
 
-                    if (ok == true) {
+                    if (ok === true) {
                         $('.alert-success').fadeIn('fast');
                         reset();
                     } else {
@@ -315,7 +319,7 @@ if (count($result)) {
                 valores += "&msg=" + msg;
                 valores += "&myID=" + myID;
 
-                if (msg == "" || msg == null) {
+                if (msg === "" || msg === null) {
                     return false;
                 }
 
@@ -355,7 +359,7 @@ if (count($result)) {
             function Delete() {
 
                 var idEvento = $("#idevento").val();
-                if (idEvento != "" && idEvento != null) {
+                if (idEvento !== "" && idEvento !== null) {
                     var valores = "operation=CRUD&case=DELETE";
                     valores += "&idEvento=" + idEvento;
                     var ok = false;
@@ -384,7 +388,7 @@ if (count($result)) {
                         }
                     });
 
-                    if (ok == true) {
+                    if (ok === true) {
                         $('.alert-success').fadeIn('fast');
                         reset();
                     } else {
@@ -418,6 +422,18 @@ if (count($result)) {
                     $("#delete").fadeOut(250);
                 }
             }
+            
+            function getParticipantes(idgrupo){
+                $.post('ajax/getParticipantes.php', {idgrupo: idgrupo}, function(data){
+                    var div =  $("#idParticipantes").parent('div');
+                    $(div).find("#idcronograma").remove();
+                    $("#idParticipantes").selectpicker('destroy');
+                    var newselect = $(data);
+                    $(div).append(newselect).fadeIn();
+                    $("#idParticipantes").selectpicker();
+                }, "HTML");
+            }
+        
         </script>
     </head>
     <body>
@@ -462,8 +478,7 @@ if (count($result)) {
                                 echo "<optgroup label='Grupos - Títulos'>";
 
                                 foreach ($array_grupos as $id) {
-                                    $result = $pdo->select("SELECT idgrupo, titulo "
-                                            . "FROM grupo WHERE idgrupo = $id ORDER BY titulo");
+                                    $result = $pdo->select("SELECT * FROM grupo_has_users a INNER JOIN grupo b ON a.idgrupo = b.idgrupo WHERE a.uid = {$id_users} ORDER BY titulo");
                                     foreach ($result as $res) {
                                         if ($idgrupo == $res['idgrupo']) {
                                             echo "<option selected value='" . $res['idgrupo'] . "'>" . $res['titulo'] . "</option>";
@@ -517,6 +532,7 @@ if (count($result)) {
                                     echo "</optgroup>";
                                     ?>
                                     </select>
+                                    <input id="idcronograma" name="idcronograma" type="hidden" value="<?php echo $idcronograma; ?>"></input>
                                 </div>
                                 <div class="form-group input-group">
                                     <span class="input-group-addon"><i class="fa fa-bookmark"></i></span>
@@ -557,7 +573,6 @@ if (count($result)) {
                                     <input id="myID" name="myID" type="hidden" value="<?php echo $id_users; ?>"></input>
                                     <input id="idevento" name="idevento" type="hidden" value=""></input>
                                     <input id="idgrupo" name="idgrupo" type="hidden" value="<?php echo $idgrupo; ?>"></input>
-                                    <input id="idcronograma" name="idcronograma" type="hidden" value="<?php echo $idcronograma; ?>"></input>
                                     <input id="allday" name="allday" type="hidden" value="true"></input>
                                     <button style="margin-left: 10px" class="btn btn-primary" type="submit">Enviar <i class="fa fa-share-square"></i></button>
                                     <button style="margin-left: 10px; display: none;" class="btn btn-danger" id="delete" type="button">Deletar <i class="fa fa-times-circle"></i></button>

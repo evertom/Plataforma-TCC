@@ -160,7 +160,7 @@ if (count($result)) {
                                 echo "<optgroup label='Grupos - Títulos'>";
 
                                 foreach ($array_grupos as $id) {
-                                    $result = $pdo->select("SELECT idgrupo, titulo FROM grupo WHERE idgrupo = $id ORDER BY titulo");
+                                    $result = $pdo->select("SELECT * FROM grupo_has_users a INNER JOIN grupo b ON a.idgrupo = b.idgrupo WHERE a.uid = {$id_users} ORDER BY titulo");
                                     foreach ($result as $res) {
                                         if ($idgrupo == $res['idgrupo']) {
                                             echo "<option selected value='" . $res['idgrupo'] . "'>" . $res['titulo'] . "</option>";

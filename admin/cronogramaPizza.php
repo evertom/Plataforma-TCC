@@ -54,26 +54,6 @@ $tipo = $idGrupo[0]['tipo'];
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
         <script>
-            /*if(!!(window.addEventListener)) window.addEventListener('DOMContentLoaded', main);
-            else window.attachEvent('onload', main);*/
-
-            function main() {
-                pieChart();
-            }
-
-            function pieChart() {
-                $.getJSON('ajax/graficoPizzaJson.php', {idGrupo: $("#idgrupo").val()}, function(data){
-                   if(data.length > 2){
-                       var ctx = document.getElementById("pieChart").getContext("2d");
-                       var pieChart = new Chart(ctx).Pie(data);
-                       legend(document.getElementById("pieLegend"), data, pieChart);
-                      $("#pieChart").parent('div').fadeIn();
-                   }else{
-                       $("#pieChart").parent('div').fadeOut();
-                   }
-                });
-            }
-       
             $(document).ready(function(){
                 
                 main();
@@ -115,7 +95,32 @@ $tipo = $idGrupo[0]['tipo'];
                     }
                 });
             }
-        
+            
+             function main() {
+                pieChart();
+            }
+
+            function pieChart() {
+                $.getJSON('ajax/graficoPizzaJson.php', {idGrupo: $("#idgrupo").val()}, function(data){
+                   if(data.length > 2){
+                       var div = $("#pieChart").parent('div').fadeIn();
+                       $("#pieChart").remove();
+                       $("#pieLegend").remove();
+                       var newchart = $("<canvas id='pieChart' width='600' height='400'></canvas>");
+                       var newlegend = $("<div id='pieLegend'></div>");
+                       $(div).append(newchart).fadeIn();
+                       $(div).append(newlegend).fadeIn();
+                       var ctx = document.getElementById("pieChart").getContext("2d");
+                       var pieChart = new Chart(ctx).Pie(data);
+                       legend(document.getElementById("pieLegend"), data, pieChart);
+                      
+                   }else{
+                       $("#pieChart").parent('div').fadeOut();
+                   }
+                });
+            }
+       
+            
         </script>
         
     </head>
@@ -177,8 +182,7 @@ $tipo = $idGrupo[0]['tipo'];
                                 echo "<optgroup label='Grupos - Títulos'>";
 
                                 
-                                $result = $pdo->select("SELECT idgrupo, titulo FROM grupo "
-                                        . "WHERE idgrupo = {$idGrupo[0]['idgrupo']} ORDER BY titulo");
+                                $result = $pdo->select("SELECT * FROM grupo_has_users a INNER JOIN grupo b ON a.idgrupo = b.idgrupo WHERE a.uid = {$id_users} ORDER BY titulo");
                                 
                                 foreach ($result as $res) {
                                     if ($idGrupo[0]['idgrupo'] == $res['idgrupo']) {
