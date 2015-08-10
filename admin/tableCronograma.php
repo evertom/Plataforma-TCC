@@ -101,174 +101,201 @@
     <![endif]-->
 	<script>
 		$(function(){
-			$( "#information").draggable();
+                    $( "#information").draggable();
 		 });
 		
 		$(document).ready(function(){
-			var IDGRUPO = $("#idgrupo").val();
-			
-			Load(IDGRUPO);
-			
-			$(".fa.fa-expand").click(function(){
-				if(!$(".table-panel").hasClass('foo')){
-					$(".table-panel").addClass("foo");
-				}
-			});
-			
-			$(".fa.fa-minus-square").click(function(){
-				if($(".table-panel").hasClass('foo')){
-					$(".table-panel").removeClass("foo");
-				}
-			});
-			
-			$(".fa.fa-times-circle").on('click', function(){
-				$("#information").fadeOut(150);
-			});
-			
-			$('#select-idgrupo').on('change', function(){
-				var id = $(this).val();
-				if(id !== null){
-					var idO;
-					for(var i = 0; i < id.length; i++){
-						idO = id[i];
-					}
-					IDGRUPO = idO;
-				}else{
-					IDGRUPO = "";
-				}
-				$("#idgrupo").val(idO);
-				Load(idO);
-			});
+                    var IDGRUPO = $("#idgrupo").val();
+
+                    Load(IDGRUPO);
+
+                    $(".fa.fa-expand").click(function(){
+                        if(!$(".table-panel").hasClass('foo')){
+                            $(".table-panel").addClass("foo");
+                        }
+                    });
+
+                    $(".fa.fa-minus-square").click(function(){
+                        if($(".table-panel").hasClass('foo')){
+                            $(".table-panel").removeClass("foo");
+                        }
+                    });
+
+                    $(".fa.fa-times-circle").on('click', function(){
+                        $("#information").fadeOut(150);
+                    });
+
+                    $('#select-idgrupo').on('change', function(){
+                        var id = $(this).val();
+                        if(id !== null){
+                            var idO;
+                            for(var i = 0; i < id.length; i++){
+                                    idO = id[i];
+                            }
+                            IDGRUPO = idO;
+                        }else{
+                            IDGRUPO = "";
+                        }
+                        $("#idgrupo").val(idO);
+                        Load(idO);
+                    });
 		});
 		
-		function SetUpdates(checked, del, id, IDGRUPO){
-			$.ajax
-			({
-				async: false,
-				type: "POST", //metodo POST
-				dataType: 'json',
-				url: "ajax/control_cronograma.php",
-				data: {operation: "UpdateTable", idGrupo: IDGRUPO, idEvento:id, Checked : checked, Delete: del},
-				success: function(data)
-				{
-					if(data.msg == true){
-						if(del == true){
-							$('.alert-success').fadeIn('fast');
-							Load(IDGRUPO);
-						}
-						return true;
-					}else{
-						$('.alert-danger').fadeIn('fast');
-						return false;
-					}
-				},
-				error: function(data){
-					$('.alert-danger').fadeIn('fast');
-					console.log(data);
-					return false;
-				}
-			});
+		function SetUpdates(campo){
+                    var id = $(campo).closest('tr').attr('value');
+                    var checked = null;
+                    
+                    if($(campo).is(":checked")){
+                        checked = true;
+                    }else{
+                        checked = false;
+                    }
+                    console.log(checked);
+                    
+                    $.ajax
+                    ({
+                        type: "POST", //metodo POST
+                        dataType: 'json',
+                        url: "ajax/control_cronograma.php",
+                        data: {operation: "UpdateTable", idEvento:id, Checked:checked},
+                        success: function(data)
+                        {
+                            if(data.msg === true){
+                                $('.alert-success').fadeIn('fast');
+                                return true;
+                            }else{
+                                $('.alert-danger').fadeIn('fast');
+                                return false;
+                            }
+                        },
+                        error: function(data){
+                            $('.alert-danger').fadeIn('fast');
+                            console.log(data);
+                            return false;
+                        }
+                    });
+		}
+                
+                function DeleteEvent(campo){
+                    var id = $(campo).closest('tr').attr('value');
+                    $.ajax
+                    ({
+                        type: "POST", //metodo POST
+                        dataType: 'json',
+                        url: "ajax/control_cronograma.php",
+                        data: {operation: "UpdateTable", idEvento:id, Delete: true},
+                        success: function(data)
+                        {
+                            if(data.msg === true){
+                                $('.alert-success').fadeIn('fast');
+                                Load($("#idgrupo").val());
+                                return true;
+                            }else{
+                                $('.alert-danger').fadeIn('fast');
+                                return false;
+                            }
+                        },
+                        error: function(data){
+                            $('.alert-danger').fadeIn('fast');
+                            console.log(data);
+                            return false;
+                        }
+                    });
 		}
 		
 		function GetInfo(id){
-			$.ajax
-			({
-				async: false,
-				type: "POST", //metodo POST
-				dataType: 'html',
-				url: "ajax/control_cronograma.php",
-				data: {operation: "GetInfo", idEvento:id},
-				success: function(data)
-				{
-					$("#information").css({"top" : window.height/2,"left":(window.width/2)-250});
-					$("#information").fadeIn(100);
-					$("#info-panel").html(data).fadeIn(150);
-					return false;
-				},
-				error: function(data){
-					console.log(data);
-					$("#information").css({"top" : window.height/2,"left":window.width/2});
-					$("#information").fadeIn(100);
-					$("#info-panel").html(data).fadeIn(150);
-					return false;
-				}
-			});
+                    $.ajax
+                    ({
+                        type: "POST", //metodo POST
+                        dataType: 'html',
+                        url: "ajax/control_cronograma.php",
+                        data: {operation: "GetInfo", idEvento:id},
+                        success: function(data)
+                        {
+                            $("#information").css({"top" : window.height/2,"left":(window.width/2)-250});
+                            $("#information").fadeIn(100);
+                            $("#info-panel").html(data).fadeIn(150);
+                            return false;
+                        },
+                        error: function(data){
+                            console.log(data);
+                            $("#information").css({"top" : window.height/2,"left":window.width/2});
+                            $("#information").fadeIn(100);
+                            $("#info-panel").html(data).fadeIn(150);
+                            return false;
+                        }
+                    });
 		}
 		
 		
 		function Load(id){
-			$.ajax
-			({
-				async: false,
-				type: "POST", //metodo POST
-				dataType: 'html',
-				url: "ajax/control_cronograma.php",
-				data: {operation: "dataTable", idGrupo:id},
-				success: function(data)
-				{
-					$(".table-responsive").html(data).fadeIn(100);
-				},
-				error: function(data){
-					$('.alert-danger').fadeIn('fast');
-					console.log(data);
-						$(".table-responsive").html(data).fadeIn(100);
-				}
-			});
-			$(".table").DataTable({
-				"language": {
-					"url": "ajax/portuguesTable.json"
-				}
-			});
-			
-			$("[name='isClonclusion']").bootstrapSwitch();
+                    $.ajax({
+                        type: "POST", //metodo POST
+                        dataType: 'html',
+                        url: "ajax/control_cronograma.php",
+                        data: {operation: "dataTable", idGrupo:id},
+                        success: function(data)
+                        {
+                            $(".table-responsive").html(data).fadeIn(100);
+                                    $(".table").DataTable({
+                                "language": {
+                                    "url": "ajax/portuguesTable.json"
+                                }
+                            });
+                            $("[name='isClonclusion']").bootstrapSwitch();
+                        },
+                        error: function(data){
+                            $('.alert-danger').fadeIn('fast');
+                            console.log(data);
+                            $(".table-responsive").html(data).fadeIn(100);
+                        }
+                    });
+                    
 		}
-		
+	    
 		
 		//Submeter formulario de mensagens
 		function sendMsg(){
-		
-			var idgrupo = $('#idgrupo').val();
-			var msg = $('#analises').val();
-			var myID = $("#myID").val();
-			
-			var valores = "operation=MSG";
-			valores += "&idgrupo="+idgrupo;
-			valores += "&msg="+msg;
-			valores += "&myID="+myID;
-			
-			if(msg == "" || msg == null){
-				return false;
-			}
-			
-			var ok = false;
-			
-			$.ajax
-			({
-				async: false,
-				type: "POST", //metodo POST
-				dataType: 'json',
-				url: "ajax/control_cronograma.php",
-				beforeSend: function(){
-					loading_show();
-				},
-				data: valores,
-				success: function(data)
-				{
-					ok = data.msg;
-					$('#analises').val("");
-					$('.alert-success').fadeIn('fast');
-					$('body').scrollTop(100, 'slow');
-				},
-				error: function(data){
-					$('.alert-danger').fadeIn('fast');
-					console.log(data);
-					ok = false;
-				},
-				complete: function(){
-					loading_hide();
-					return ok;
-				}
-			});
+                    var idgrupo = $('#idgrupo').val();
+                    var msg = $('#analises').val();
+                    var myID = $("#myID").val();
+
+                    var valores = "operation=MSG";
+                    valores += "&idgrupo="+idgrupo;
+                    valores += "&msg="+msg;
+                    valores += "&myID="+myID;
+
+                    if(msg == "" || msg == null){
+                            return false;
+                    }
+
+                    var ok = false;
+
+                    $.ajax({
+                        type: "POST", //metodo POST
+                        dataType: 'json',
+                        url: "ajax/control_cronograma.php",
+                        beforeSend: function(){
+                                loading_show();
+                        },
+                        data: valores,
+                        success: function(data)
+                        {
+                                ok = data.msg;
+                                $('#analises').val("");
+                                $('.alert-success').fadeIn('fast');
+                                $('body').scrollTop(100, 'slow');
+                        },
+                        error: function(data){
+                                $('.alert-danger').fadeIn('fast');
+                                console.log(data);
+                                ok = false;
+                        },
+                        complete: function(){
+                                loading_hide();
+                                return ok;
+                        }
+                    });
 			
 		}
 		

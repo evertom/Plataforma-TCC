@@ -186,7 +186,7 @@
 							}
 						}
 						
-						$html .= "<tr>";
+						$html .= "<tr value='".$res['idEvento']."'>";
 						$html .= "<td>".date("d-m-Y", strtotime($res['start']))."</td>";
 						if($res['id'] == 2){
 							$html .= "<td>".date("H:i:s",strtotime($res['start']))."</td>";
@@ -197,11 +197,11 @@
 						$html .= "<td>".$arrayIntegrantes."</td>";
 						if($res['concluido'] == 1 || $res['concluido'] == true){
 							$html .= "<td>
-										<p><input onblur='SetUpdates(false, false, ".$res['idEvento'].", $idGrupo);' $readOnly checked='true' data-on-color='success' data-off-color='danger' data-size='mini' id='isClonclusion' name='isClonclusion' type='checkbox' data-off-text='Não' data-on-text='Sim'/></p>
+										<input checked onchange='SetUpdates($(this));' $readOnly data-on-color='success' data-off-color='danger' data-size='mini' id='isClonclusion' name='isClonclusion' type='checkbox' data-off-text='Não' data-on-text='Sim'/>
 									  </td>";
 						}else{
 							$html .= "<td>
-										<p><input onblur='SetUpdates(true, false, ".$res['idEvento'].", $idGrupo);' $readOnly data-on-color='success' data-off-color='danger' data-size='mini' id='isClonclusion' name='isClonclusion' type='checkbox' data-off-text='Não' data-on-text='Sim'/></p>
+										<input onchange='SetUpdates($(this));' $readOnly data-on-color='success' data-off-color='danger' data-size='mini' id='isClonclusion' name='isClonclusion' type='checkbox' data-off-text='Não' data-on-text='Sim'/>
 									  </td>";
 						}
 						$html .= "<td>
@@ -211,7 +211,7 @@
 								  </td>";
 						$html .= "<td>
 									<div class='form-group input-group btn-group-xs'>
-										<button $readOnly style='margin: 0px auto;' class='btn btn-danger' onclick='SetUpdates(null, true, ".$res['idEvento'].", $idGrupo);' type='button'><i class='fa fa-times-circle'></i></button>
+										<button $readOnly style='margin: 0px auto;' class='btn btn-danger' onclick='DeleteEvent($(this));' type='button'><i class='fa fa-times-circle'></i></button>
 									</div>
 								  </td>";
 						$html .= "</tr>";
@@ -245,82 +245,85 @@
 				echo json_encode($e->getMessage());
 			}	
 		}else{
-			$html = '<table id="table" class="table table-striped" cellspacing="0" width="100%">';
-			$html .='<thead><th>Data</th><th>Limite / Horário</th><th>Tipos Eventos</th><th>Responsavéis</th><th>Concluido</th><th>Info</th><th>Excluir</th></thead>';
-			$html .='<tfoot><th>Data</th><th>Limite / Horário</th><th>Tipos Eventos</th><th>Responsavéis</th><th>Concluido</th><th>Info</th><th>Excluir</th></tfoot>';
-			$html .="<tbody></tbody>";
-			$html .="</table>";
-			echo $html;
+                    $html = '<table id="table" class="table table-striped" cellspacing="0" width="100%">';
+                    $html .='<thead><th>Data</th><th>Limite / Horário</th><th>Tipos Eventos</th><th>Responsavéis</th><th>Concluido</th><th>Info</th><th>Excluir</th></thead>';
+                    $html .='<tfoot><th>Data</th><th>Limite / Horário</th><th>Tipos Eventos</th><th>Responsavéis</th><th>Concluido</th><th>Info</th><th>Excluir</th></tfoot>';
+                    $html .="<tbody></tbody>";
+                    $html .="</table>";
+                    echo $html;
 		}
 	}
 	if($operation == "GetInfo"){
-		$idEvento =	isset($_POST['idEvento']) ? $_POST['idEvento']:"";
-		require_once('../includes/Cronograma.class.php');
-		try {
-			$Cronograma = new Cronograma(); 
-			$Cronograma->idEvento = (int)$idEvento;
-			
-			$result = $Cronograma->getInfoTable();
-			
-			$html = "";
-			
-			if(count($result)){
-				foreach($result as $res){
-					$html .= "<h4>Nome do evento: <small>".$res['nomeEvento']."</small></h4>";
-					$html .= "<h4>Descrição: <small>".$res['descricao']."</small></h4>";
-				}
-			}
-			echo $html;
-		}catch (PDOException $e){
-			echo json_encode($e->getMessage());
-		}	
+            $idEvento =	isset($_POST['idEvento']) ? $_POST['idEvento']:"";
+            require_once('../includes/Cronograma.class.php');
+            try {
+                $Cronograma = new Cronograma(); 
+                $Cronograma->idEvento = (int)$idEvento;
+
+                $result = $Cronograma->getInfoTable();
+
+                $html = "";
+
+                if(count($result)){
+                    foreach($result as $res){
+                        $html .= "<h4>Nome do evento: <small>".$res['nomeEvento']."</small></h4>";
+                        $html .= "<h4>Descrição: <small>".$res['descricao']."</small></h4>";
+                    }
+                }
+                echo $html;
+            }catch (PDOException $e){
+                    echo json_encode($e->getMessage());
+            }	
 	}
 	if($operation == "UpdateTable"){
 		
-		$idEvento =	isset($_POST['idEvento']) ? $_POST['idEvento']:"";
-		$Checked =	isset($_POST['Checked']) ? $_POST['Checked']:"";
-		$Delete =	isset($_POST['Delete']) ? $_POST['Delete']:"";
-		$idGrupo = 		isset($_POST['idGrupo']) ? $_POST['idGrupo']:"";
+            $idEvento =	isset($_POST['idEvento']) ? $_POST['idEvento']:null;
+            $Checked =	isset($_POST['Checked']) ? $_POST['Checked']: null;
+            $Delete =	isset($_POST['Delete']) ? $_POST['Delete']: null;
+
+            if($Delete == "true" || $Delete == true){
+                require_once('../includes/Cronograma.class.php');
+                try {
+                    $Cronograma = new Cronograma(); 
+                    $Cronograma->idEvento = (int)$idEvento;
+
+                    $result = $Cronograma->deleteCronograma();
+
+                    if($result){
+                        $res['msg'] = true;
+                    }else{
+                        $res['msg'] = false;
+                    }
+                    echo json_encode($res);
+                }catch (PDOException $e){
+                    echo json_encode($e->getMessage());
+                }	
+            }else{
+                require_once('../includes/Cronograma.class.php');
                 
-		if($Delete == "true"){
-			require_once('../includes/Cronograma.class.php');
-			try {
-				$Cronograma = new Cronograma(); 
-				$Cronograma->idEvento = (int)$idEvento;
-				$Cronograma->idgrupo = (int)$idGrupo;
-                                $Cronograma->uid = (int)$id_users;
-                                
-				$result = $Cronograma->deleteCronograma();
-				
-				if($result){
-					$res['msg'] = true;
-				}else{
-					$res['msg'] = false;
-				}
-				echo json_encode($res);
-			}catch (PDOException $e){
-				echo json_encode($e->getMessage());
-			}	
-		}else{
-			if($Checked == "true"){$Checked = true;}else{$Checked = false;}
-			require_once('../includes/Cronograma.class.php');
-			try {
-				$Cronograma = new Cronograma(); 
-				$Cronograma->idEvento = (int)$idEvento;
-				$Cronograma->isClonclusion = (bool)$Checked;
-				
-				$result = $Cronograma->checkedCronograma();
-				
-				if($result){
-					$res['msg'] = true;
-				}else{
-					$res['msg'] = false;
-				}
-				echo json_encode($res);
-			}catch (PDOException $e){
-				echo json_encode($e->getMessage());
-			}	
-		}
+                if($Checked == "true"){
+                    $Checked = true;
+                }else{
+                    $Checked = false;
+                }
+                try {
+                    $Cronograma = new Cronograma(); 
+                    $Cronograma->idEvento = (int)$idEvento;
+                    $Cronograma->isClonclusion = $Checked;
+
+                    
+                    $result = $Cronograma->checkedCronograma();
+
+                    if($result){
+                        $res['msg'] = true;
+                    }else{
+                        $res['msg'] = false;
+                    }
+                    echo json_encode($res);
+                }catch (PDOException $e){
+                    echo json_encode($e->getMessage());
+                }	
+            }
 	}
 	if($operation == "timeline"){
 		
@@ -329,135 +332,138 @@
 		require_once('../includes/Cronograma.class.php');
 		
 		try {
-			$Cronograma = new Cronograma(); 
-			$Cronograma->idGrupo = (int)$idGrupo;
-			
-			$result = $Cronograma->getListName();
-			
-			$html = "";
-			
-			if(count($result)){
-				$names = "";
-				foreach($result as $res){
-					$titulo = $res['titulo'];
-					$descricao = $res['descricao'];
-					if($res['tipo'] == 1){
-						$names .= "<h4>Aluno: <small>";
-					}else if($res['tipo'] == 2){
-						$names .= "<h4>Orientador: <small>";
-					}else{
-						$names .= "<h4>Co-Orientador: <small>";
-					}
-					$names .= $res['username']."</small></h4>";
-				}
-			}
-			
-			$html .= "<div class='page-header'>
-							<h1 id='timeline'>Linha do Tempo </h1>
-							<h3>$titulo <small>$descricao</small></h3>
-							$names
-					 </div>";
-				
-			$result = $Cronograma->getCompleteEvents();
-			
-			if(count($result)){
-				
-				$html .= "<ul class='timeline'>";
-				
-				foreach($result as $res){
-						
-					$arrayIdusers = explode("," , $res['participantes']);
-					$arrayIntegrantes = "";
-					
-					
-					foreach($arrayIdusers as $id ){
-						$integrantes = $Cronograma->getUserNames($id);
-						if($id == $id_users){
-							$readOnly = "";
-						}
-						if(count($integrantes)){
-							foreach($integrantes as $pegaUsers){
-								$arrayIntegrantes .= $pegaUsers['username']." ; ";
-							}
-						}
-					}
-					
-					$class = "";					
-					
-					if(rand(1, 2) == 2){
-						$class = "class='timeline-inverted'";
-					}
-					
-					$end = date('Y-m-d', strtotime($res['end']));
-					
-					$situacao= "";
-					
-					if($res['concluido'] == 1 ){
-						$situacao= "<div style='color: green;float: right!important;width: 25px;position: relative!important;right: 10px;'><i class='fa fa-2x fa-check-circle'></i></div>";
-					}else if(strtotime($end) > strtotime(date('Y-m-d'))){
-						$situacao= "<div style='color: blue; float: right!important;width: 25px;position: relative!important;right: 10px;'><i class='fa fa-2x fa-exclamation'></i></div>";
-					}else{
-						$situacao = "<div style='color: red; float: right!important;width: 25px;position: relative!important;right: 10px;'><i class='fa fa-2x fa-pencil-square-o'></i></div>";
-					}
-					
-					$html .= "<li $class>
-								<div class='timeline-badge' style='background-color: ".$res['color']."!important;'>".$res['imagem']."</div>
-									<div class='timeline-panel'>
-										<div class='timeline-heading'>
-											<h4 class='timeline-title'>".$res['nome']."</h4>$situacao
-												<p>
-													<small class='text-muted'><i class='glyphicon glyphicon-time'></i> Data ".date("d-m-Y", strtotime($res['start']))."</small>
-													<small class='text-muted'><i class='glyphicon glyphicon-time'></i> Limite ".date("d-m-Y", strtotime($res['end']))."</small>
-												</p>
-										</div>
-									<div class='timeline-body'>
-										<h4><small>".$res['nomeEvento']."</small></h4>
-										<hr></hr>
-										<p>".$res['descricao']."</p>
-										<hr></hr>
-										<p>".$arrayIntegrantes."</p>
-									</div>
-									
-								</div>	
-							</li>";
-				}
-				
-				$html .= "</ul>";
-			}else{
-				$html .= "<h1>Sem Cronograma :( </h1>";
-			}
-			echo $html;
-		}catch (PDOException $e){
-			echo json_encode($e->getMessage());
-		}	
+                    $Cronograma = new Cronograma(); 
+                    $Cronograma->idGrupo = (int)$idGrupo;
+
+                    $result = $Cronograma->getListName();
+
+                    $html = "";
+
+                    if(count($result)){
+                        $names = "";
+                        foreach($result as $res){
+                            $titulo = $res['titulo'];
+                            $descricao = $res['descricao'];
+                            if($res['tipo'] == 1){
+                                $names .= "<h4>Aluno: <small>";
+                            }else if($res['tipo'] == 2){
+                                $names .= "<h4>Orientador: <small>";
+                            }else{
+                                $names .= "<h4>Co-Orientador: <small>";
+                            }
+                            $names .= $res['username']."</small></h4>";
+                        }
+                    }
+
+                    $html .= "<div class='page-header'>
+                                <h1 id='timeline'>Linha do Tempo </h1>
+                                <h3>$titulo <small>$descricao</small></h3>
+                                $names
+                            </div>";
+
+                    $result = $Cronograma->getCompleteEvents();
+
+                    if(count($result)){
+
+                        $html .= "<ul class='timeline'>";
+
+                        foreach($result as $res){
+
+                            $arrayIdusers = explode("," , $res['participantes']);
+                            $arrayIntegrantes = "";
+
+
+                            foreach($arrayIdusers as $id ){
+                                $integrantes = $Cronograma->getUserNames($id);
+                                if($id == $id_users){
+                                    $readOnly = "";
+                                }
+                                if(count($integrantes)){
+                                    foreach($integrantes as $pegaUsers){
+                                        $arrayIntegrantes .= $pegaUsers['username']." ; ";
+                                    }
+                                }
+                            }
+
+                            $class = "";					
+
+                            if(rand(1, 2) == 2){
+                                $class = "class='timeline-inverted'";
+                            }
+
+                            $end = date('Y-m-d', strtotime($res['end']));
+
+                            $situacao= "";
+                            $dataConcluido= "";
+                            
+                            if($res['concluido'] == 1 ){
+                                $situacao= "<div style='color: green;float: right!important;width: 25px;position: relative!important;right: 10px;'><i class='fa fa-2x fa-check-circle'></i></div>";
+                                $dataConcluido = "<small class='text-muted'><i class='glyphicon glyphicon-time'></i> Concluido ".date("d-m-Y H:i:s", strtotime($res['data_conclusao']))."</small>";
+                            }else if(strtotime($end) > strtotime(date('Y-m-d'))){
+                                $situacao= "<div style='color: blue; float: right!important;width: 25px;position: relative!important;right: 10px;'><i class='fa fa-2x fa-exclamation'></i></div>";
+                            }else{
+                                $situacao = "<div style='color: red; float: right!important;width: 25px;position: relative!important;right: 10px;'><i class='fa fa-2x fa-pencil-square-o'></i></div>";
+                            }
+                            
+                            
+                            $html .= "<li $class>
+                                        <div class='timeline-badge' style='background-color: ".$res['color']."!important;'>".$res['imagem']."</div>
+                                            <div class='timeline-panel'>
+                                                <div class='timeline-heading'>
+                                                    <h4 class='timeline-title'>".$res['nome']."</h4>$situacao
+                                                        <p>
+                                                            <small class='text-muted'><i class='glyphicon glyphicon-time'></i> Data ".date("d-m-Y", strtotime($res['start']))."</small>
+                                                            <br/><small class='text-muted'><i class='glyphicon glyphicon-time'></i> Limite ".date("d-m-Y", strtotime($res['end']))."</small>
+                                                            <br/>$dataConcluido
+                                                        </p>
+                                                </div>
+                                            <div class='timeline-body'>
+                                                <h4><small>".$res['nomeEvento']."</small></h4>
+                                                <hr></hr>
+                                                <p>".$res['descricao']."</p>
+                                                <hr></hr>
+                                                <p>".$arrayIntegrantes."</p>
+                                            </div>
+                                        </div>	
+                                </li>";
+                    }
+
+                    $html .= "</ul>";
+                }else{
+                    $html .= "<h1>Sem Cronograma :( </h1>";
+                }
+                echo $html;
+            }catch (PDOException $e){
+                echo json_encode($e->getMessage());
+            }	
 	
 	}
 	if($operation == "MSG"){
 		
-		$idGrupo = 	isset($_POST['idgrupo']) ? $_POST['idgrupo']:"";
-		$msg = 	isset($_POST['msg']) ? $_POST['msg']:"";
-		$uid = 	isset($_POST['myID']) ? $_POST['myID']:"";
+            $idGrupo = 	isset($_POST['idgrupo']) ? $_POST['idgrupo']:"";
+            $msg = 	isset($_POST['msg']) ? $_POST['msg']:"";
+            $uid = 	isset($_POST['myID']) ? $_POST['myID']:"";
 
-		require_once('../includes/Cronograma.class.php');
-		
-		try {
-			
-			$Cronograma = new Cronograma(); 
-			$Cronograma->idgrupo = (int)$idGrupo;
-			$Cronograma->msg = $msg;
-			$Cronograma->uid = (int)$uid;
-			
-			$result = $Cronograma->sendMsg();
-			
-			if($result){
-				$res['msg'] = true;
-			}else{
-				$res['msg'] = false;
-			}
-			echo json_encode($res);
-		}catch (PDOException $e){
-			echo json_encode($e->getMessage());
-		}	
+            require_once('../includes/Cronograma.class.php');
+
+            try {
+
+                $Cronograma = new Cronograma(); 
+                $Cronograma->idgrupo = (int)$idGrupo;
+                $Cronograma->msg = $msg;
+                $Cronograma->uid = (int)$uid;
+
+                $result = $Cronograma->sendMsg();
+
+                if($result){
+                    $res['msg'] = true;
+                }else{
+                    $res['msg'] = false;
+                }
+                echo json_encode($res);
+            }catch (PDOException $e){
+                echo json_encode($e->getMessage());
+            }	
 	}
 	
 ?>

@@ -25,7 +25,7 @@ class Cronograma extends Conexao {
     public function insertCronograma() {
         try {
             if (parent::getPDO() == null) {parent::conectar();}
-
+            
             $stmt = $this->pdo->prepare('INSERT INTO cronograma(idgrupo,aprovado, analisando, revisando, enviado) VALUES(:pidgrupo,:paprovado,:panalisando,:previsando,:penviado)');
             $stmt->bindValue(':pidgrupo', $this->idgrupo, PDO::PARAM_INT);
             $stmt->bindValue(':paprovado', $this->aprovado, PDO::PARAM_BOOL);
@@ -61,8 +61,10 @@ class Cronograma extends Conexao {
         try {
             if (parent::getPDO() == null) {parent::conectar();}
 
+            
             $stmt = $this->pdo->prepare('INSERT INTO evento(idGrupo, participantes, start, end, allday, nomeEvento, descricao, idcronograma, idTipoEvento, concluido)
-			VALUES(:pidgrupo,:pparticipantes,:pstart,:pend,:pallday,:pnomeEvento,:pdescricao,:pidcronograma, :pidTipoEvento, :pisClonclusion)');
+                    VALUES(:pidgrupo,:pparticipantes,:pstart,:pend,:pallday,:pnomeEvento,:pdescricao,:pidcronograma, :pidTipoEvento, :pisClonclusion)'); 
+            
             $stmt->bindValue(':pidgrupo', $this->idgrupo, PDO::PARAM_INT);
             $stmt->bindValue(':pparticipantes', $this->participantes, PDO::PARAM_STR);
             $stmt->bindValue(':pstart', $this->start, PDO::PARAM_STR);
@@ -131,7 +133,19 @@ class Cronograma extends Conexao {
     public function updateEvento() {
         try {
             if (parent::getPDO() == null) {parent::conectar();}
-
+            
+            if($this->isClonclusion == true){
+                $stmt = $this->pdo->prepare('UPDATE evento SET participantes = :pparticipantes, '
+                    . 'start = :pstart, end = :pend, allday = :pallday, nomeEvento = :pnomeEvento, '
+                    . 'descricao = :pdescricao, idTipoEvento = :pidTipoEvento, concluido = :pisClonclusion, '
+                    . 'idgrupo = :pidgrupo, idcronograma = :pidcronograma, data_conclusao = now() WHERE idEvento = :pidEvento');
+            }else{
+                $stmt = $this->pdo->prepare('UPDATE evento SET participantes = :pparticipantes, '
+                    . 'start = :pstart, end = :pend, allday = :pallday, nomeEvento = :pnomeEvento, '
+                    . 'descricao = :pdescricao, idTipoEvento = :pidTipoEvento, concluido = :pisClonclusion, '
+                    . 'idgrupo = :pidgrupo, idcronograma = :pidcronograma, data_conclusao = NULL WHERE idEvento = :pidEvento');
+            }
+            
             $stmt = $this->pdo->prepare('UPDATE evento SET participantes = :pparticipantes, '
                     . 'start = :pstart, end = :pend, allday = :pallday, nomeEvento = :pnomeEvento, '
                     . 'descricao = :pdescricao, idTipoEvento = :pidTipoEvento, concluido = :pisClonclusion, '
@@ -205,8 +219,13 @@ class Cronograma extends Conexao {
     public function checkedCronograma() {
         try {
             if (parent::getPDO() == null) {parent::conectar();}
-
-            $stmt = $this->pdo->prepare('UPDATE evento SET concluido = :pisClonclusion, data_conclusao = now() WHERE idEvento = :pidEvento');
+            
+            if($this->isClonclusion == true){
+                $stmt = $this->pdo->prepare('UPDATE evento SET concluido = :pisClonclusion, data_conclusao = now() WHERE idEvento = :pidEvento');
+            }else{
+                $stmt = $this->pdo->prepare("UPDATE evento SET concluido = :pisClonclusion, data_conclusao = NULL WHERE idEvento = :pidEvento");
+            }
+            
             $stmt->bindValue(':pidEvento', $this->idEvento, PDO::PARAM_INT);
             $stmt->bindValue(':pisClonclusion', $this->isClonclusion, PDO::PARAM_BOOL);
 
