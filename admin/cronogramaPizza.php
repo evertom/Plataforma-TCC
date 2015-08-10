@@ -54,8 +54,8 @@ $tipo = $idGrupo[0]['tipo'];
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
         <script>
-            if(!!(window.addEventListener)) window.addEventListener('DOMContentLoaded', main);
-            else window.attachEvent('onload', main);
+            /*if(!!(window.addEventListener)) window.addEventListener('DOMContentLoaded', main);
+            else window.attachEvent('onload', main);*/
 
             function main() {
                 pieChart();
@@ -75,6 +75,8 @@ $tipo = $idGrupo[0]['tipo'];
             }
        
             $(document).ready(function(){
+                
+                main();
                 
                 var IDGRUPO = $("#idgrupo").val();
 
