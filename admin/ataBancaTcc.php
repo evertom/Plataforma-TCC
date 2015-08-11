@@ -30,7 +30,6 @@ require_once('verifica-logado.php');
                 $("#contact").submit(function () {
                   
                     var valores =  $("#contact").serializeArray();
-                    console.log(valores);
 
                     $.ajax
                     ({
