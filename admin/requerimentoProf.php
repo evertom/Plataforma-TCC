@@ -20,9 +20,9 @@ if ($idProf == "" || $nomeProf == "") {
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta http-equiv="cache-control" content="no-cache"/>
         <meta http-equiv="pragma" content="no-cache" />
         <meta name="description" content="">
@@ -61,6 +61,7 @@ if ($idProf == "" || $nomeProf == "") {
                         data: valores,
                         success: function (data)
                         {
+                            console.log(data);
                             ok = data.msg;
                         },
                         error: function (data) {
@@ -76,6 +77,7 @@ if ($idProf == "" || $nomeProf == "") {
                     if (ok === true) {
                         $('.alert-success').fadeIn('fast');
                         limpa();
+                        window.location='index.php';
                     } else {
                         $('.alert-danger').fadeIn('fast');
                         limpa();

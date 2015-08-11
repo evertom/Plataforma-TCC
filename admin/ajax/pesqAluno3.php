@@ -20,7 +20,7 @@ $msg = "";
     } else {
         if (count($resultado)) {
             foreach ($resultado as $res) {
-                $msg .="<input type='checkbox' name='pront1' required='required' value='" . $res['uid'] . "'> " . $res['username'] . " / " . $res['prontuario'] . "</input><br/>";
+                $msg .="<input type='checkbox' name='pront3' required='required' value='" . $res['uid'] . "'> " . $res['username'] . " / " . $res['prontuario'] . "</input><br/>";
             }
         }
     }

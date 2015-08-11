@@ -182,30 +182,24 @@ class Administracao extends Conexao {
                 $IdGrupoCriado = $this->pdo->lastInsertId();
                 $diretorio = '../GerenciamentoGrupos/'.$IdGrupoCriado;
                 mkdir($diretorio);
-                
-                $pdo = new Conexao();
-                $resultado = $pdo->select("SELECT idgrupo FROM grupo ORDER BY idgrupo DESC LIMIT 1");
-                foreach ($resultado as $res) {
-                    $ultimoID = $res['idgrupo'];
-                }
 
                 $stmt = $this->pdo->prepare('INSERT INTO grupo_has_users(idgrupo,uid,tipo) VALUES(:pidgrupo,:puid,1)');
-                $stmt->bindValue(':pidgrupo', $ultimoID, PDO::PARAM_INT);
+                $stmt->bindValue(':pidgrupo', $IdGrupoCriado, PDO::PARAM_INT);
                 $stmt->bindValue(':puid', $this->pront1, PDO::PARAM_INT);
 
                 if ($stmt->execute()) {
                     $stmt = $this->pdo->prepare('INSERT INTO grupo_has_users(idgrupo,uid,tipo) VALUES(:pidgrupo,:puid,1)');
-                    $stmt->bindValue(':pidgrupo', $ultimoID, PDO::PARAM_INT);
+                    $stmt->bindValue(':pidgrupo', $IdGrupoCriado, PDO::PARAM_INT);
                     $stmt->bindValue(':puid', $this->pront2, PDO::PARAM_INT);
 
-                    if ($stmt->execute()) {
+                    if ($stmt->execute()){
                         $stmt = $this->pdo->prepare('INSERT INTO grupo_has_users(idgrupo,uid,tipo) VALUES(:pidgrupo,:puid,1)');
-                        $stmt->bindValue(':pidgrupo', $ultimoID, PDO::PARAM_INT);
+                        $stmt->bindValue(':pidgrupo', $IdGrupoCriado, PDO::PARAM_INT);
                         $stmt->bindValue(':puid', $this->pront3, PDO::PARAM_INT);
 
                         if ($stmt->execute()) {
                             $stmt = $this->pdo->prepare('INSERT INTO grupo_has_users(idgrupo,uid,tipo) VALUES(:pidgrupo,:puid,2)');
-                            $stmt->bindValue(':pidgrupo', $ultimoID, PDO::PARAM_INT);
+                            $stmt->bindValue(':pidgrupo', $IdGrupoCriado, PDO::PARAM_INT);
                             $stmt->bindValue(':puid', $this->orientador, PDO::PARAM_INT);
 
                             if ($stmt->execute()) {
@@ -224,7 +218,7 @@ class Administracao extends Conexao {
                                     }
                                 } else {
                                     $stmt = $this->pdo->prepare('INSERT INTO grupo_has_users(idgrupo,uid,tipo) VALUES(:pidgrupo,:puid,3)');
-                                    $stmt->bindValue(':pidgrupo', $ultimoID, PDO::PARAM_INT);
+                                    $stmt->bindValue(':pidgrupo', $IdGrupoCriado, PDO::PARAM_INT);
                                     $stmt->bindValue(':puid', $this->coorient, PDO::PARAM_INT);
 
                                     if ($stmt->execute()) {

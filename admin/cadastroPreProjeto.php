@@ -68,7 +68,7 @@ if ($idgrupo == "") {
                         $('.alert-success').fadeIn('fast');
                         $('html, body').animate({ scrollTop: deslocamento }, 'slow');
                         limpa();
-                        
+                        window.location='panel.php';
                     } else {
                         var deslocamento = $('.alert-danger').offset().top;
                         $('.alert-danger').fadeIn('fast');

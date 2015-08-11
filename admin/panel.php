@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 require_once('verifica-logado.php');
 require_once('includes/Conexao.class.php');
 $pdo = new Conexao();
