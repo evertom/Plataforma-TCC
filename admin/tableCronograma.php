@@ -354,7 +354,7 @@
 						<?php 
 							if($tipo_users > 0){
 							echo	'<div class="form-group input-group">
-										<select name="select-idgrupo" id="select-idgrupo" class="selectpicker" multiple  data-max-options="1" data-min-options="1" required data-style="btn-warning"
+										<select name="select-idgrupo" id="select-idgrupo" class="selectpicker" multiple  data-max-options="1" data-min-options="1" required data-style="btn-info"
 										title="Selecione o grupo de trabalho?" data-live-search="true" >';
 										
 										
@@ -362,7 +362,7 @@
 											echo "<optgroup label='Grupos - Títulos'>"; 
 											
 											foreach($array_grupos as $id){
-												$result = $pdo->select("SELECT * FROM grupo_has_users a INNER JOIN grupo b ON a.idgrupo = b.idgrupo WHERE a.uid = {$id_users} ORDER BY titulo");
+												$result = $pdo->select("SELECT * FROM grupo_has_users a INNER JOIN grupo b ON a.idgrupo = b.idgrupo WHERE a.uid = {$id_users} AND b.recusado = 0 ORDER BY titulo");
 												foreach($result as $res){
 													if($idgrupo == $res['idgrupo']){
 														echo "<option selected value='".$res['idgrupo']."'>".$res['titulo']."</option>";

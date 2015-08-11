@@ -150,7 +150,7 @@ if (count($result)) {
                         var participantes = calEvent.participantes;
                         var array_participantes = participantes.split(",");
                         var concluido = false;
-                        if (calEvent.concluido === 1) {
+                        if (calEvent.concluido === "1") {
                             concluido = true;
                         }
                         for (var i = 0; i < array_participantes.length; i++) {
@@ -296,7 +296,8 @@ if (count($result)) {
                         $('.alert-danger').fadeIn('fast');
                     }
 
-                    $(".calender").fullCalendar('refetchEvents');
+                    $('.calender').fullCalendar('removeEventSource', SOURCE);
+                    $('.calender').fullCalendar('addEventSource', SOURCE);
                     return false;
                 });
             });
@@ -471,14 +472,14 @@ if (count($result)) {
                                 echo '<div class="form-group input-group">'
                                         . '<select name="select-idgrupo" id="select-idgrupo" '
                                         . 'class="selectpicker" multiple  data-max-options="1" data-min-options="1" '
-                                        . 'required data-style="btn-warning" title="Selecione o grupo de trabalho?" '
+                                        . 'required data-style="btn-info" title="Selecione o grupo de trabalho?" '
                                         . 'data-live-search="true" >';
 
                                 $pdo = new Conexao();
                                 echo "<optgroup label='Grupos - Títulos'>";
 
                                 foreach ($array_grupos as $id) {
-                                    $result = $pdo->select("SELECT * FROM grupo_has_users a INNER JOIN grupo b ON a.idgrupo = b.idgrupo WHERE a.uid = {$id_users} ORDER BY titulo");
+                                    $result = $pdo->select("SELECT * FROM grupo_has_users a INNER JOIN grupo b ON a.idgrupo = b.idgrupo WHERE a.uid = {$id_users} AND b.recusado = 0 ORDER BY titulo");
                                     foreach ($result as $res) {
                                         if ($idgrupo == $res['idgrupo']) {
                                             echo "<option selected value='" . $res['idgrupo'] . "'>" . $res['titulo'] . "</option>";

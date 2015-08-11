@@ -182,7 +182,7 @@ $tipo = $idGrupo[0]['tipo'];
                                 echo "<optgroup label='Grupos - Títulos'>";
 
                                 
-                                $result = $pdo->select("SELECT * FROM grupo_has_users a INNER JOIN grupo b ON a.idgrupo = b.idgrupo WHERE a.uid = {$id_users} ORDER BY titulo");
+                                $result = $pdo->select("SELECT * FROM grupo_has_users a INNER JOIN grupo b ON a.idgrupo = b.idgrupo WHERE a.uid = {$id_users} AND b.recusado = 0 ORDER BY titulo");
                                 
                                 foreach ($result as $res) {
                                     if ($idGrupo[0]['idgrupo'] == $res['idgrupo']) {
