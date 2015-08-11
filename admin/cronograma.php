@@ -422,7 +422,7 @@ if (count($result)) {
                     $("#delete").fadeOut(250);
                 }
             }
-            
+            //Somente para funcionamento da troca entre grupos para o orientador
             function getParticipantes(idgrupo){
                 $.post('ajax/getParticipantes.php', {idgrupo: idgrupo}, function(data){
                     var div =  $("#idParticipantes").parent('div');
