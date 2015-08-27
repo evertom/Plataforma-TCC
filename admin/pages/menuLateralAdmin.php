@@ -19,7 +19,7 @@
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Gr&aacute;ficos<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html">Desempenho</a>
+                                    <a href="cronogramaLinha.php">Desempenho</a>
                                 </li>
                                 <li>
                                     <a href="cronogramaPizza.php">Cronograma</a>

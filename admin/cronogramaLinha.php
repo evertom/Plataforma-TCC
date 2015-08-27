@@ -97,26 +97,27 @@ $tipo = $idGrupo[0]['tipo'];
             }
             
              function main() {
-                pieChart();
+                lineChart();
             }
-
-            function pieChart() {
-                $.getJSON('ajax/graficoPizzaJson.php', {idGrupo: $("#idgrupo").val()}, function(data){
-                   if(data.length > 2){
-                       var div = $("#pieChart").parent('div').fadeIn();
-                       $("#pieChart").remove();
-                       $("#pieLegend").remove();
-                       var newchart = $("<canvas id='pieChart' width='600' height='400'></canvas>");
-                       var newlegend = $("<div id='pieLegend'></div>");
+            
+            function lineChart() {
+                $.getJSON('ajax/graficoLinhaJson.php', {idGrupo: $("#idgrupo").val()}, function(data){
+                    
+                    
+                       var div = $("#lineChart").parent('div').fadeIn();
+                       $("#lineChart").remove();
+                       $("#lineLegend").remove();
+                       var newchart = $("<canvas id='lineChart' width='600' height='400'></canvas>");
+                       var newlegend = $("<div id='lineLegend'></div>");
                        $(div).append(newchart).fadeIn();
                        $(div).append(newlegend).fadeIn();
-                       var ctx = document.getElementById("pieChart").getContext("2d");
-                       var pieChart = new Chart(ctx).Pie(data);
-                       legend(document.getElementById("pieLegend"), data, pieChart);
-                      
-                   }else{
-                       $("#pieChart").parent('div').fadeOut();
-                   }
+                       var ctx = document.getElementById("lineChart").getContext("2d");
+                       new Chart(ctx).Line(data);
+                       legend(document.getElementById("lineLegend"), data);
+                       
+                   /*}else{
+                       $("#lineChart").parent('div').fadeOut();
+                   }*/
                 });
             }
        
@@ -209,8 +210,8 @@ $tipo = $idGrupo[0]['tipo'];
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div>
-                                <canvas id="pieChart" width="600" height="400"></canvas>
-                                <div id="pieLegend"></div>
+                                <canvas id="lineChart" width="600" height="400"></canvas>
+                                <div id="lineLegend"></div>
                             </div>
                             <br>
                         </div>

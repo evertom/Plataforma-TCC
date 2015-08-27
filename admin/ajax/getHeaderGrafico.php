@@ -2,7 +2,6 @@
     require_once '../includes/Conexao.class.php';
     $pdo = new Conexao();
     
-    $operation = isset($_POST['operation']) ? $_POST['operation']:"";
     $idGrupo = 	 isset($_POST['idGrupo']) ? $_POST['idGrupo']:"";
     
     $result = $pdo->select("SELECT b.username, c.titulo, a.tipo, c.descricao "
