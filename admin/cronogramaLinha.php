@@ -102,23 +102,17 @@ $tipo = $idGrupo[0]['tipo'];
             
             function lineChart() {
                 $.getJSON('ajax/graficoLinhaJson.php', {idGrupo: $("#idgrupo").val()}, function(data){
-                    
-                    
-                       var div = $("#lineChart").parent('div').fadeIn();
-                       $("#lineChart").remove();
-                       $("#lineLegend").remove();
-                       var newchart = $("<canvas id='lineChart' width='600' height='400'></canvas>");
-                       var newlegend = $("<div id='lineLegend'></div>");
-                       $(div).append(newchart).fadeIn();
-                       $(div).append(newlegend).fadeIn();
-                       var ctx = document.getElementById("lineChart").getContext("2d");
-                       new Chart(ctx).Line(data);
-                       legend(document.getElementById("lineLegend"), data);
-                       
-                   /*}else{
-                       $("#lineChart").parent('div').fadeOut();
-                   }*/
-                });
+                    var div = $("#lineChart").parent('div').fadeIn();
+                    $("#lineChart").remove();
+                    $("#lineLegend").remove();
+                    var newchart = $("<canvas id='lineChart' width='600' height='400'></canvas>");
+                    var newlegend = $("<div id='lineLegend'></div>");
+                    $(div).append(newchart).fadeIn();
+                    $(div).append(newlegend).fadeIn();
+                    var ctx = document.getElementById("lineChart").getContext("2d");
+                    new Chart(ctx).Line(data);
+                    legend(document.getElementById("lineLegend"), data);
+                 });
             }
        
             
