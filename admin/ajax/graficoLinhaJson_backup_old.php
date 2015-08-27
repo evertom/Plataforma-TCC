@@ -12,38 +12,52 @@
     $dataMin = null;
     $qtdDias = 0;
     
-    $dias = $pdo->select("SELECT max(a.end) AS dataMax "
+    $dias = $pdo->select("SELECT DATEDIFF(max(a.end), min(a.start)) AS dias, min(a.start) AS dataMin, max(a.end) AS dataMax "
             . "             FROM evento a "
             . "             WHERE a.idGrupo = {$idGrupo} "
             . "             LIMIT 1 ;");
     $event = $pdo->select("SELECT * FROM evento a
                             INNER JOIN tipoevento b ON a.idTipoEvento = b.id
                             WHERE a.idGrupo = {$idGrupo} 
-                            ORDER BY a.end ASC");
+                            ORDER BY a.start ASC");
             
     $pdo->desconectar();
     
     if(count($event)){
 
+        $qtdDias = (int)$dias[0]['dias'];
+        $diasTotais = (int)$dias[0]['dias'];
+        $qtdEventos = (int)count($event);
+
+        if($qtdEventos != 0){
+            $razaoEvento = (int)($qtdDias / $qtdEventos);
+        }else{
+            $razaoEvento = 30;
+        }
+
+        $dataMin = date("Y-m-d", strtotime($dias[0]['dataMin']));
+        $dtMax = new DateTime($dias[0]['dataMax']);
+        $dtMin = new DateTime($dias[0]['dataMin']);
+
         $labels = array();
         $data = array();
 
+        do{
+            array_push($labels, strftime("%b-%y", strtotime($dataMin)));
+            $dataMin = date("Y-m-d", strtotime("+ $razaoEvento days", strtotime($dataMin)));
+            array_push($data, $qtdDias);
+            $qtdDias -= $razaoEvento;
+        }while($qtdDias > 0);
+
         $dataEvent = array();
-        $dtMax = new DateTime($dias[0]['dataMax']);
-        
         foreach ($event as $evento){
-            $end = new DateTime($evento['end']);
-            array_push($labels, strftime("%b-%y", strtotime($evento['end'])));
-            $intervalo_end =  $dtMax->diff($end);
-            array_push($data, $intervalo_end->days);
-            
             if($evento['data_conclusao'] != null && !empty($evento['data_conclusao'])){
                 $dataEntrega = new DateTime($evento['data_conclusao']);
-                $intervalo_entrega =  $end->diff($dataEntrega);
-                if($dataEntrega < $end){
-                    array_push($dataEvent, $intervalo_end->days - ($intervalo_entrega->days) );
+                $intervalo =  $dtMin->diff($dataEntrega);
+                if(($diasTotais - $intervalo->days > 0)){
+                    array_push($dataEvent, $diasTotais - $intervalo->days);
                 }else{
-                    array_push($dataEvent, $intervalo_end->days + ($intervalo_entrega->days) );
+                    array_push($dataEvent, $intervalo->days - $diasTotais); 
                 }
                 
             }
