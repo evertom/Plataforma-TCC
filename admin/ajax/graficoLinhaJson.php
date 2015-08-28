@@ -12,7 +12,7 @@
     $dataMin = null;
     $qtdDias = 0;
     
-    $dias = $pdo->select("SELECT max(a.end) AS dataMax "
+    $dias = $pdo->select("SELECT max(a.end) AS dataMax, min(a.end) AS dataMin "
             . "             FROM evento a "
             . "             WHERE a.idGrupo = {$idGrupo} "
             . "             LIMIT 1 ;");
@@ -30,23 +30,32 @@
 
         $dataEvent = array();
         $dtMax = new DateTime($dias[0]['dataMax']);
+        $dtMin = new DateTime($dias[0]['dataMin']);
+        $index = 0;
         
         foreach ($event as $evento){
-            $end = new DateTime($evento['end']);
-            array_push($labels, strftime("%b-%y", strtotime($evento['end'])));
-            $intervalo_end =  $dtMax->diff($end);
+            if($index == 0){
+                $end = new DateTime($evento['start']);
+                array_push($labels, strftime("%b-%y", strtotime($evento['start'])));
+            }else{
+                $end = new DateTime($evento['end']);
+                array_push($labels, strftime("%b-%y", strtotime($evento['end'])));
+            }
+            
+            $intervalo_end =  $dtMin->diff($end);
             array_push($data, $intervalo_end->days);
             
             if($evento['data_conclusao'] != null && !empty($evento['data_conclusao'])){
                 $dataEntrega = new DateTime($evento['data_conclusao']);
-                $intervalo_entrega =  $end->diff($dataEntrega);
-                if($dataEntrega < $end){
-                    array_push($dataEvent, $intervalo_end->days - ($intervalo_entrega->days) );
-                }else{
-                    array_push($dataEvent, $intervalo_end->days + ($intervalo_entrega->days) );
-                }
+                $intervalo_entrega =  $dtMin->diff($dataEntrega);
                 
+                    array_push($dataEvent, $intervalo_entrega->days);
+                
+                
+            }else{
+                array_push($dataEvent, null);
             }
+            $index++;
         }
 
 
