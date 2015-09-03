@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 11-Ago-2015 às 01:44
+-- Generation Time: 02-Set-2015 às 22:15
 -- Versão do servidor: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -19,6 +19,32 @@ SET time_zone = "+00:00";
 --
 -- Database: `tcc`
 --
+CREATE DATABASE IF NOT EXISTS `tcc` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+USE `tcc`;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `arquivos`
+--
+
+DROP TABLE IF EXISTS `arquivos`;
+CREATE TABLE IF NOT EXISTS `arquivos` (
+  `idArquivo` int(11) NOT NULL AUTO_INCREMENT,
+  `idgrupo` int(11) NOT NULL,
+  `nome` varchar(300) COLLATE utf32_unicode_ci NOT NULL,
+  `caminho` varchar(300) COLLATE utf32_unicode_ci NOT NULL,
+  `dtaEnvio` datetime NOT NULL,
+  PRIMARY KEY (`idArquivo`),
+  KEY `idgrupo` (`idgrupo`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci COMMENT='tabela de arquivos enviados' AUTO_INCREMENT=7 ;
+
+--
+-- Extraindo dados da tabela `arquivos`
+--
+
+INSERT INTO `arquivos` (`idArquivo`, `idgrupo`, `nome`, `caminho`, `dtaEnvio`) VALUES
+(6, 63, '63_48f347ddaf711a543b69f192f689617f.pdf', '/GerenciamentoGrupos/63/63_48f347ddaf711a543b69f192f689617f.pdf', '2015-09-02 22:07:10');
 
 -- --------------------------------------------------------
 
@@ -26,6 +52,7 @@ SET time_zone = "+00:00";
 -- Estrutura da tabela `atadefesa`
 --
 
+DROP TABLE IF EXISTS `atadefesa`;
 CREATE TABLE IF NOT EXISTS `atadefesa` (
   `idAtaDefesa` int(11) NOT NULL AUTO_INCREMENT,
   `idgrupo` int(11) NOT NULL,
@@ -46,6 +73,7 @@ CREATE TABLE IF NOT EXISTS `atadefesa` (
 -- Estrutura da tabela `avisos`
 --
 
+DROP TABLE IF EXISTS `avisos`;
 CREATE TABLE IF NOT EXISTS `avisos` (
   `idavisos` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` text COLLATE utf8_unicode_ci,
@@ -56,145 +84,26 @@ CREATE TABLE IF NOT EXISTS `avisos` (
   PRIMARY KEY (`idavisos`),
   KEY `fk_avisos_users1_idx1` (`uid`),
   KEY `fk_avisos_users2_idx` (`de`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=134 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=14 ;
 
 --
 -- Extraindo dados da tabela `avisos`
 --
 
 INSERT INTO `avisos` (`idavisos`, `descricao`, `data`, `visto`, `uid`, `de`) VALUES
-(1, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o solicitada.', '2015-06-08', '1', 12, 1),
-(2, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-06-08', '1', 1, 12),
-(3, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-06-08', '1', 6, 12),
-(4, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-06-08', '0', 7, 12),
-(5, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-06-08', '1', 1, 12),
-(6, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-06-08', '1', 6, 12),
-(7, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-06-08', '0', 7, 12),
-(8, 'O(a) Professor(a) Ana Giancoli desfez parceria com seu grupo pelo seguinte motivo: hahahahahahahahahahahahha', '2015-06-08', '1', 1, 12),
-(9, 'O(a) Professor(a) Ana Giancoli desfez parceria com seu grupo pelo seguinte motivo: hahahahahahahahahahahahha', '2015-06-08', '1', 6, 12),
-(10, 'O(a) Professor(a) Ana Giancoli desfez parceria com seu grupo pelo seguinte motivo: hahahahahahahahahahahahha', '2015-06-08', '0', 7, 12),
-(11, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o solicitada.', '2015-08-07', '1', 12, 1),
-(12, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-08-07', '1', 1, 12),
-(13, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-08-07', '1', 6, 12),
-(14, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-08-07', '0', 7, 12),
-(15, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-08-07', '1', 1, 12),
-(16, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-08-07', '1', 6, 12),
-(17, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-08-07', '0', 7, 12),
-(18, 'O evento Escrever com entrega prevista para 10-12-2015 foi adicionado, confira no cronograma!!!', '2015-08-07', '1', 6, 1),
-(19, 'O evento Escrever com entrega prevista para 10-12-2015 foi adicionado, confira no cronograma!!!', '2015-08-07', '0', 7, 1),
-(20, 'O evento Escrever com entrega prevista para 10-12-2015 foi adicionado, confira no cronograma!!!', '2015-08-07', '1', 12, 1),
-(21, 'O evento Escrever com entrega prevista para 10-12-2015 foi adicionado, confira no cronograma!!!', '2015-08-07', '0', 19, 1),
-(22, 'O evento Lista de detalhes para elaboração TCC com entrega prevista para 14-10-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '1', 1, 12),
-(23, 'O evento Lista de detalhes para elaboração TCC com entrega prevista para 14-10-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '1', 6, 12),
-(24, 'O evento Lista de detalhes para elaboração TCC com entrega prevista para 14-10-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '0', 7, 12),
-(25, 'O evento Lista de detalhes para elaboração TCC com entrega prevista para 14-10-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '0', 19, 12),
-(26, 'O evento Lista de desempenho com entrega prevista para 13-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '1', 1, 12),
-(27, 'O evento Lista de desempenho com entrega prevista para 13-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '1', 6, 12),
-(28, 'O evento Lista de desempenho com entrega prevista para 13-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '0', 7, 12),
-(29, 'O evento Lista de desempenho com entrega prevista para 13-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '0', 19, 12),
-(30, 'O evento Reunião de grupo com entrega prevista para 15-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '1', 1, 12),
-(31, 'O evento Reunião de grupo com entrega prevista para 15-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '1', 6, 12),
-(32, 'O evento Reunião de grupo com entrega prevista para 15-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '0', 7, 12),
-(33, 'O evento Reunião de grupo com entrega prevista para 15-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '0', 19, 12),
-(34, 'O evento Reunião de grupo com entrega prevista para 15-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '1', 1, 12),
-(35, 'O evento Reunião de grupo com entrega prevista para 15-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '1', 6, 12),
-(36, 'O evento Reunião de grupo com entrega prevista para 15-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '0', 7, 12),
-(37, 'O evento Reunião de grupo com entrega prevista para 15-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '0', 19, 12),
-(38, 'O evento Reunião de grupo com entrega prevista para 15-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '1', 1, 12),
-(39, 'O evento Reunião de grupo com entrega prevista para 15-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '1', 6, 12),
-(40, 'O evento Reunião de grupo com entrega prevista para 15-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '0', 7, 12),
-(41, 'O evento Reunião de grupo com entrega prevista para 15-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '0', 19, 12),
-(42, 'O evento Revisão Bibliografica com entrega prevista para 15-09-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '1', 1, 12),
-(43, 'O evento Revisão Bibliografica com entrega prevista para 15-09-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '1', 6, 12),
-(44, 'O evento Revisão Bibliografica com entrega prevista para 15-09-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '0', 7, 12),
-(45, 'O evento Revisão Bibliografica com entrega prevista para 15-09-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '0', 19, 12),
-(46, 'O grupo precisa elaborar a revisão com prazo apertado, sugiro começar a elaborar agora.', '2015-08-09', '1', 1, 12),
-(47, 'O grupo precisa elaborar a revisão com prazo apertado, sugiro começar a elaborar agora.', '2015-08-09', '1', 6, 12),
-(48, 'O grupo precisa elaborar a revisão com prazo apertado, sugiro começar a elaborar agora.', '2015-08-09', '0', 7, 12),
-(49, 'O grupo precisa elaborar a revisão com prazo apertado, sugiro começar a elaborar agora.', '2015-08-09', '0', 19, 12),
-(50, 'O evento Conteudo programatico com entrega prevista para 11-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '0', 1, 12),
-(51, 'O evento Conteudo programatico com entrega prevista para 11-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '1', 6, 12),
-(52, 'O evento Conteudo programatico com entrega prevista para 11-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '0', 7, 12),
-(53, 'O evento Conteudo programatico com entrega prevista para 11-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '0', 19, 12),
-(54, 'O evento Conteudo programatico com entrega prevista para 11-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '0', 1, 12),
-(55, 'O evento Conteudo programatico com entrega prevista para 11-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '1', 6, 12),
-(56, 'O evento Conteudo programatico com entrega prevista para 11-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '0', 7, 12),
-(57, 'O evento Conteudo programatico com entrega prevista para 11-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '0', 19, 12),
-(58, 'O evento Conteudo programatico com entrega prevista para 11-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '0', 1, 12),
-(59, 'O evento Conteudo programatico com entrega prevista para 11-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '1', 6, 12),
-(60, 'O evento Conteudo programatico com entrega prevista para 11-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '0', 7, 12),
-(61, 'O evento Conteudo programatico com entrega prevista para 11-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '0', 19, 12),
-(62, 'O evento Conteudo programatico com entrega prevista para 11-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '0', 1, 12),
-(63, 'O evento Conteudo programatico com entrega prevista para 11-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '1', 6, 12),
-(64, 'O evento Conteudo programatico com entrega prevista para 11-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '0', 7, 12),
-(65, 'O evento Conteudo programatico com entrega prevista para 11-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '0', 19, 12),
-(66, 'O evento Correção do cronograma com entrega prevista para 15-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '0', 1, 12),
-(67, 'O evento Correção do cronograma com entrega prevista para 15-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '1', 6, 12),
-(68, 'O evento Correção do cronograma com entrega prevista para 15-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '0', 7, 12),
-(69, 'O evento Correção do cronograma com entrega prevista para 15-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-09', '0', 19, 12),
-(70, 'O evento Correção do cronograma com entrega prevista para 15-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '0', 1, 12),
-(71, 'O evento Correção do cronograma com entrega prevista para 15-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '1', 6, 12),
-(72, 'O evento Correção do cronograma com entrega prevista para 15-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '0', 7, 12),
-(73, 'O evento Correção do cronograma com entrega prevista para 15-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-09', '0', 19, 12),
-(74, 'O evento Cronograma e Gráficos com entrega prevista para 25-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '0', 1, 12),
-(75, 'O evento Cronograma e Gráficos com entrega prevista para 25-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '1', 6, 12),
-(76, 'O evento Cronograma e Gráficos com entrega prevista para 25-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '0', 7, 12),
-(77, 'O evento Cronograma e Gráficos com entrega prevista para 25-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '0', 19, 12),
-(78, 'O evento Detalhes do projeto com entrega prevista para 15-09-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '0', 1, 12),
-(79, 'O evento Detalhes do projeto com entrega prevista para 15-09-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '1', 6, 12),
-(80, 'O evento Detalhes do projeto com entrega prevista para 15-09-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '0', 7, 12),
-(81, 'O evento Detalhes do projeto com entrega prevista para 15-09-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '0', 19, 12),
-(82, 'Meninos fiquem atentos ao evento de aprovação de hoje 11-08-2015, principalmente você Everton.', '2015-08-10', '0', 1, 12),
-(83, 'Meninos fiquem atentos ao evento de aprovação de hoje 11-08-2015, principalmente você Everton.', '2015-08-10', '1', 6, 12),
-(84, 'Meninos fiquem atentos ao evento de aprovação de hoje 11-08-2015, principalmente você Everton.', '2015-08-10', '0', 7, 12),
-(85, 'Meninos fiquem atentos ao evento de aprovação de hoje 11-08-2015, principalmente você Everton.', '2015-08-10', '0', 19, 12),
-(86, 'O evento reuniao com entrega prevista para 10-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '0', 1, 12),
-(87, 'O evento reuniao com entrega prevista para 10-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '1', 6, 12),
-(88, 'O evento reuniao com entrega prevista para 10-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '0', 7, 12),
-(89, 'O evento reuniao com entrega prevista para 10-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '0', 19, 12),
-(90, 'O evento Pesquisar e escrever com entrega prevista para 20-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '0', 1, 6),
-(91, 'O evento Pesquisar e escrever com entrega prevista para 20-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '0', 7, 6),
-(92, 'O evento Pesquisar e escrever com entrega prevista para 20-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '1', 12, 6),
-(93, 'O evento Pesquisar e escrever com entrega prevista para 20-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '0', 19, 6),
-(94, 'O evento Revisar monografia com entrega prevista para 25-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '0', 1, 6),
-(95, 'O evento Revisar monografia com entrega prevista para 25-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '0', 7, 6),
-(96, 'O evento Revisar monografia com entrega prevista para 25-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '1', 12, 6),
-(97, 'O evento Revisar monografia com entrega prevista para 25-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '0', 19, 6),
-(98, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o solicitada.', '2015-08-10', '1', 12, 10),
-(99, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-08-10', '0', 8, 12),
-(100, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-08-10', '0', 9, 12),
-(101, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-08-10', '1', 10, 12),
-(103, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-08-10', '0', 8, 12),
-(104, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-08-10', '0', 9, 12),
-(105, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-08-10', '1', 10, 12),
-(106, 'Sua Requisi&ccedil;&atilde;o foi recusada pelo seguinte motivo: dasdasd', '2015-08-10', '0', 8, 12),
-(107, 'Sua Requisi&ccedil;&atilde;o foi recusada pelo seguinte motivo: dasdasd', '2015-08-10', '0', 9, 12),
-(108, 'Sua Requisi&ccedil;&atilde;o foi recusada pelo seguinte motivo: dasdasd', '2015-08-10', '1', 10, 12),
-(109, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-08-10', '0', 8, 12),
-(110, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-08-10', '0', 9, 12),
-(111, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-08-10', '1', 10, 12),
-(112, 'O evento Junta a turma com entrega prevista para 10-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-10', '0', 1, 12),
-(113, 'O evento Junta a turma com entrega prevista para 10-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-10', '0', 6, 12),
-(114, 'O evento Junta a turma com entrega prevista para 10-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-10', '0', 7, 12),
-(115, 'O evento Junta a turma com entrega prevista para 10-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-10', '0', 19, 12),
-(116, 'O evento Junta a turma com entrega prevista para 10-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-10', '0', 1, 12),
-(117, 'O evento Junta a turma com entrega prevista para 10-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-10', '0', 6, 12),
-(118, 'O evento Junta a turma com entrega prevista para 10-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-10', '0', 7, 12),
-(119, 'O evento Junta a turma com entrega prevista para 10-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-10', '0', 19, 12),
-(120, 'O evento Junta a turma com entrega prevista para 10-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-10', '0', 1, 12),
-(121, 'O evento Junta a turma com entrega prevista para 10-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-10', '0', 6, 12),
-(122, 'O evento Junta a turma com entrega prevista para 10-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-10', '0', 7, 12),
-(123, 'O evento Junta a turma com entrega prevista para 10-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-10', '0', 19, 12),
-(124, 'O evento Correção do cronograma com entrega prevista para 16-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-10', '0', 1, 12),
-(125, 'O evento Correção do cronograma com entrega prevista para 16-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-10', '0', 6, 12),
-(126, 'O evento Correção do cronograma com entrega prevista para 16-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-10', '0', 7, 12),
-(127, 'O evento Correção do cronograma com entrega prevista para 16-08-2015 foi atualizado, confira no cronograma!!!', '2015-08-10', '0', 19, 12),
-(128, 'O evento Reunião com entrega prevista para 20-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '0', 8, 12),
-(129, 'O evento Reunião com entrega prevista para 20-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '0', 9, 12),
-(130, 'O evento Reunião com entrega prevista para 20-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '1', 10, 12),
-(131, 'O evento Teste unitarios com entrega prevista para 15-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '0', 8, 12),
-(132, 'O evento Teste unitarios com entrega prevista para 15-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '0', 9, 12),
-(133, 'O evento Teste unitarios com entrega prevista para 15-08-2015 foi adicionado, confira no cronograma!!!', '2015-08-10', '1', 10, 12);
+(1, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o solicitada.', '2015-09-02', '1', 12, 1),
+(2, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-09-02', '1', 1, 12),
+(3, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-09-02', '0', 6, 12),
+(4, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-09-02', '0', 7, 12),
+(5, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-09-02', '1', 1, 12),
+(6, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-09-02', '0', 6, 12),
+(7, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-09-02', '0', 7, 12),
+(8, 'O evento pesmismd com entrega prevista para 09-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-02', '0', 6, 1),
+(9, 'O evento pesmismd com entrega prevista para 09-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-02', '0', 7, 1),
+(10, 'O evento pesmismd com entrega prevista para 09-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-02', '0', 12, 1),
+(11, 'O evento smdx com entrega prevista para 16-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-02', '0', 6, 1),
+(12, 'O evento smdx com entrega prevista para 16-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-02', '0', 7, 1),
+(13, 'O evento smdx com entrega prevista para 16-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-02', '0', 12, 1);
 
 -- --------------------------------------------------------
 
@@ -202,6 +111,7 @@ INSERT INTO `avisos` (`idavisos`, `descricao`, `data`, `visto`, `uid`, `de`) VAL
 -- Estrutura da tabela `comments`
 --
 
+DROP TABLE IF EXISTS `comments`;
 CREATE TABLE IF NOT EXISTS `comments` (
   `com_id` int(11) NOT NULL AUTO_INCREMENT,
   `comment` varchar(200) CHARACTER SET latin1 DEFAULT NULL,
@@ -254,6 +164,7 @@ INSERT INTO `comments` (`com_id`, `comment`, `msg_id_fk`, `uid_fk`, `ip`, `creat
 -- Estrutura da tabela `cronograma`
 --
 
+DROP TABLE IF EXISTS `cronograma`;
 CREATE TABLE IF NOT EXISTS `cronograma` (
   `idcronograma` int(11) NOT NULL AUTO_INCREMENT,
   `idgrupo` int(11) NOT NULL,
@@ -264,15 +175,14 @@ CREATE TABLE IF NOT EXISTS `cronograma` (
   PRIMARY KEY (`idcronograma`),
   UNIQUE KEY `idgrupo` (`idgrupo`),
   KEY `idgrupo_2` (`idgrupo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Extraindo dados da tabela `cronograma`
 --
 
 INSERT INTO `cronograma` (`idcronograma`, `idgrupo`, `aprovado`, `analisando`, `revisando`, `enviado`) VALUES
-(22, 44, 0, 1, 0, 1),
-(23, 45, 0, 1, 0, 1);
+(2, 63, 0, 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -280,6 +190,7 @@ INSERT INTO `cronograma` (`idcronograma`, `idgrupo`, `aprovado`, `analisando`, `
 -- Estrutura da tabela `desistenciaaluno`
 --
 
+DROP TABLE IF EXISTS `desistenciaaluno`;
 CREATE TABLE IF NOT EXISTS `desistenciaaluno` (
   `idDesistencia` int(11) NOT NULL AUTO_INCREMENT,
   `idUsers` int(11) NOT NULL,
@@ -288,14 +199,7 @@ CREATE TABLE IF NOT EXISTS `desistenciaaluno` (
   `dataDesistencia` date NOT NULL,
   `descricao` text COLLATE utf32_unicode_ci NOT NULL,
   PRIMARY KEY (`idDesistencia`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci AUTO_INCREMENT=5 ;
-
---
--- Extraindo dados da tabela `desistenciaaluno`
---
-
-INSERT INTO `desistenciaaluno` (`idDesistencia`, `idUsers`, `idGrupo`, `motivo`, `dataDesistencia`, `descricao`) VALUES
-(4, 1, 39, 1, '2015-06-08', 'Porque eu cansei de voces, seus lixos, cocos estrumes de bosta de vaca HAHAHA beijos me liga...');
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -303,6 +207,7 @@ INSERT INTO `desistenciaaluno` (`idDesistencia`, `idUsers`, `idGrupo`, `motivo`,
 -- Estrutura da tabela `desistenciaprof`
 --
 
+DROP TABLE IF EXISTS `desistenciaprof`;
 CREATE TABLE IF NOT EXISTS `desistenciaprof` (
   `idDesistencia` int(11) NOT NULL AUTO_INCREMENT,
   `idUsers` int(11) NOT NULL,
@@ -311,14 +216,7 @@ CREATE TABLE IF NOT EXISTS `desistenciaprof` (
   `dataDesistencia` date NOT NULL,
   `motivo` int(11) NOT NULL,
   PRIMARY KEY (`idDesistencia`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
-
---
--- Extraindo dados da tabela `desistenciaprof`
---
-
-INSERT INTO `desistenciaprof` (`idDesistencia`, `idUsers`, `idGrupo`, `descricao`, `dataDesistencia`, `motivo`) VALUES
-(5, 12, 43, 'hahahahahahahahahahahahha', '2015-06-08', 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -326,6 +224,7 @@ INSERT INTO `desistenciaprof` (`idDesistencia`, `idUsers`, `idGrupo`, `descricao
 -- Estrutura da tabela `evento`
 --
 
+DROP TABLE IF EXISTS `evento`;
 CREATE TABLE IF NOT EXISTS `evento` (
   `idEvento` int(11) NOT NULL AUTO_INCREMENT,
   `idGrupo` int(11) NOT NULL,
@@ -342,22 +241,15 @@ CREATE TABLE IF NOT EXISTS `evento` (
   PRIMARY KEY (`idEvento`),
   KEY `idGrupo` (`idGrupo`,`idcronograma`),
   KEY `idcronograma` (`idcronograma`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=138 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
 
 --
 -- Extraindo dados da tabela `evento`
 --
 
 INSERT INTO `evento` (`idEvento`, `idGrupo`, `participantes`, `start`, `end`, `allday`, `nomeEvento`, `descricao`, `idcronograma`, `idTipoEvento`, `concluido`, `data_conclusao`) VALUES
-(128, 44, '7,12', '2015-08-15 00:00:00', '2015-09-15 00:00:00', 1, 'Revisão Bibliografica', 'Elaboração da revisão bibliográfica, fazer sobre supervisão da Orientadora.', 22, 4, 1, '2015-08-10 14:20:30'),
-(129, 44, '12,6', '2015-08-09 00:00:00', '2015-08-11 00:00:00', 1, 'Conteudo programatico', 'Aprovação de conteúdo programático, enfasê nas etapas 2 e 3.', 22, 3, 0, NULL),
-(130, 44, '12,6', '2015-08-11 00:00:00', '2015-08-16 00:00:00', 1, 'Correção do cronograma', 'Correção do modelo de  cronograma do trabalho. Efetivas comits até data limite. ', 22, 8, 0, NULL),
-(131, 44, '6,1', '2015-08-10 00:00:00', '2015-08-25 00:00:00', 1, 'Cronograma e Gráficos', 'Elaboração de cronograma e gráficos.\nCronograma: \nAgendamento de tarefas determinadas por grupos de acesso a cada tarefa. \nGrupo de tarefas pré determinado.\nUtilizar fullcalender.\nGráficos de acompanhamentos dos períodos do cronograma.\n', 22, 6, 0, NULL),
-(132, 44, '12', '2015-08-30 00:00:00', '2015-09-15 00:00:00', 1, 'Detalhes do projeto', 'Analise para aprovação dos detalhes do projeto.', 22, 3, 0, NULL),
-(133, 44, '7,12,6,1', '2015-08-10 10:35:00', '2015-08-10 11:35:00', 0, 'Junta a turma', 'Reunião para controle de progresso', 22, 2, 0, NULL),
-(134, 44, '7,12', '2015-08-10 00:00:00', '2015-08-20 00:00:00', 1, 'Pesquisar e escrever', 'Pesquisa e escrita sobre o web services.', 22, 4, 0, NULL),
-(135, 44, '12,6,1', '2015-08-21 00:00:00', '2015-08-25 00:00:00', 1, 'Revisar monografia', 'Revisão dos textos da Ana.', 22, 5, 0, NULL),
-(137, 45, '12,9,10', '2015-08-10 00:00:00', '2015-08-15 00:00:00', 1, 'Teste unitarios', 'Realizar testes unitários.', 23, 6, 0, NULL);
+(4, 63, '7,12,6,1', '2015-09-02 00:00:00', '2015-09-09 00:00:00', 1, 'pesmismd', 'oxkcidnvcidcnicndns', 2, 1, 1, '2015-09-02 18:23:33'),
+(5, 63, '1', '2015-10-13 00:00:00', '2015-10-14 00:00:00', 1, 'smdx', 'kmcks', 2, 6, 1, '2015-10-15 18:23:09');
 
 -- --------------------------------------------------------
 
@@ -365,6 +257,7 @@ INSERT INTO `evento` (`idEvento`, `idGrupo`, `participantes`, `start`, `end`, `a
 -- Estrutura da tabela `grupo`
 --
 
+DROP TABLE IF EXISTS `grupo`;
 CREATE TABLE IF NOT EXISTS `grupo` (
   `idgrupo` int(11) NOT NULL AUTO_INCREMENT,
   `dataCriacao` date NOT NULL,
@@ -384,15 +277,14 @@ CREATE TABLE IF NOT EXISTS `grupo` (
   `preProjeto` int(1) NOT NULL DEFAULT '0' COMMENT 'utilizado para controle de tela, para forçar o aluno a cadastrar o pre projeto',
   `cronograma` int(1) NOT NULL DEFAULT '0' COMMENT 'utilizado no controle de tela para forçar o aluno a cadastrar o cronograma apos o pre projeto',
   PRIMARY KEY (`idgrupo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=47 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=64 ;
 
 --
 -- Extraindo dados da tabela `grupo`
 --
 
 INSERT INTO `grupo` (`idgrupo`, `dataCriacao`, `titulo`, `descricao`, `objetivoGeral`, `objetivoEspecifico`, `justificativa`, `tipodePesquisa`, `metodologia`, `resultadoEsperado`, `fraselema`, `aceito`, `visto`, `recusado`, `revisando`, `preProjeto`, `cronograma`) VALUES
-(44, '2015-08-07', 'Workflow', 'ahuahuahauhauhua', 'huahuhauh', 'ahuahuah', 'hauahuahau', 'hauhuhauha', 'ahuhauhau', 'ahuahuah', NULL, 1, 1, 0, 0, 0, 0),
-(45, '2015-08-10', 'Web', 'dasdasdads', 'adsasd', 'adsasd', 'asdasd', 'asdasd', 'asdasd', 'asdads', NULL, 1, 1, 0, 0, 0, 0);
+(63, '2015-09-02', 'Gerenciamento de TCC', 'Gerenciamento de TCC HUASUHHSAHAUHSAHUUSHAHU SUAHSUHA', 'h', 'h', 'h', 'h', 'h', 'h', NULL, 1, 1, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -400,6 +292,7 @@ INSERT INTO `grupo` (`idgrupo`, `dataCriacao`, `titulo`, `descricao`, `objetivoG
 -- Estrutura da tabela `grupo_has_users`
 --
 
+DROP TABLE IF EXISTS `grupo_has_users`;
 CREATE TABLE IF NOT EXISTS `grupo_has_users` (
   `idgrupo` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
@@ -414,15 +307,10 @@ CREATE TABLE IF NOT EXISTS `grupo_has_users` (
 --
 
 INSERT INTO `grupo_has_users` (`idgrupo`, `uid`, `tipo`) VALUES
-(44, 1, 1),
-(44, 6, 1),
-(44, 7, 1),
-(44, 12, 2),
-(44, 19, 3),
-(45, 8, 1),
-(45, 9, 1),
-(45, 10, 1),
-(45, 12, 2);
+(63, 1, 1),
+(63, 6, 1),
+(63, 7, 1),
+(63, 12, 2);
 
 -- --------------------------------------------------------
 
@@ -430,6 +318,7 @@ INSERT INTO `grupo_has_users` (`idgrupo`, `uid`, `tipo`) VALUES
 -- Estrutura da tabela `likes`
 --
 
+DROP TABLE IF EXISTS `likes`;
 CREATE TABLE IF NOT EXISTS `likes` (
   `idlikes` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL,
@@ -437,7 +326,7 @@ CREATE TABLE IF NOT EXISTS `likes` (
   PRIMARY KEY (`idlikes`),
   KEY `uid` (`uid`),
   KEY `msg_id` (`msg_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=36 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=37 ;
 
 --
 -- Extraindo dados da tabela `likes`
@@ -457,7 +346,8 @@ INSERT INTO `likes` (`idlikes`, `uid`, `msg_id`) VALUES
 (32, 9, 128),
 (33, 9, 127),
 (34, 15, 128),
-(35, 1, 125);
+(35, 1, 125),
+(36, 17, 127);
 
 -- --------------------------------------------------------
 
@@ -465,6 +355,7 @@ INSERT INTO `likes` (`idlikes`, `uid`, `msg_id`) VALUES
 -- Estrutura da tabela `mensagens`
 --
 
+DROP TABLE IF EXISTS `mensagens`;
 CREATE TABLE IF NOT EXISTS `mensagens` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_de` int(11) NOT NULL,
@@ -473,7 +364,7 @@ CREATE TABLE IF NOT EXISTS `mensagens` (
   `data` datetime NOT NULL,
   `lido` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=40 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=41 ;
 
 --
 -- Extraindo dados da tabela `mensagens`
@@ -518,7 +409,8 @@ INSERT INTO `mensagens` (`id`, `id_de`, `id_para`, `mensagem`, `data`, `lido`) V
 (36, 1, 11, 'como vc ta maãe', '0000-00-00 00:00:00', 1),
 (37, 11, 1, 'to bem', '0000-00-00 00:00:00', 1),
 (38, 1, 6, 'bo', '0000-00-00 00:00:00', 1),
-(39, 1, 7, 'oiiii', '0000-00-00 00:00:00', 1);
+(39, 1, 7, 'oiiii', '0000-00-00 00:00:00', 1),
+(40, 1, 7, 'pppp', '0000-00-00 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -526,6 +418,7 @@ INSERT INTO `mensagens` (`id`, `id_de`, `id_para`, `mensagem`, `data`, `lido`) V
 -- Estrutura da tabela `messages`
 --
 
+DROP TABLE IF EXISTS `messages`;
 CREATE TABLE IF NOT EXISTS `messages` (
   `msg_id` int(11) NOT NULL AUTO_INCREMENT,
   `message` varchar(200) CHARACTER SET latin1 DEFAULT NULL,
@@ -573,6 +466,7 @@ INSERT INTO `messages` (`msg_id`, `message`, `uid_fk`, `ip`, `created`) VALUES
 -- Estrutura da tabela `tipoevento`
 --
 
+DROP TABLE IF EXISTS `tipoevento`;
 CREATE TABLE IF NOT EXISTS `tipoevento` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
@@ -602,6 +496,7 @@ INSERT INTO `tipoevento` (`id`, `nome`, `imagem`, `color`, `textcolor`) VALUES
 -- Estrutura da tabela `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(30) CHARACTER SET latin1 NOT NULL,
@@ -622,22 +517,22 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`uid`, `username`, `password`, `email`, `prontuario`, `fotouser`, `horario`, `limite`, `descricao`, `cargo`, `tipo`) VALUES
-(1, 'Leonardo Martins', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'leo.piracaia@hotmail.com', 1262751, 'fotoUser/thumbnail_1427732986.jpg', '2015-08-09 19:36:17', '2015-08-09 19:38:17', 'Programador Júnior, Formando em Análise e Desenvolvimento de Sistemas', 'Aluno', 0),
+(1, 'Leonardo Martins', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'leo.piracaia@hotmail.com', 1262751, 'fotoUser/thumbnail_1427732986.jpg', '2015-09-02 19:44:17', '2015-09-02 19:46:17', 'Programador Júnior, Formando em Análise e Desenvolvimento de Sistemas', 'Aluno', 0),
 (2, '-----', '123', '-----', 0, 'fotoUser/padraoUser.jpg', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Admin', 'Admin', 0),
 (3, '-----', '123', '-----', 0, 'fotoUser/padraoUser.jpg', '2015-04-07 00:00:00', '2015-04-07 00:00:00', 'Admin', 'Admin', 0),
-(6, 'Everton de Paula', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'everton.projetos@gmail.com', 0, 'fotoUser/thumbnail_1427733642.jpg', '2015-08-10 14:42:34', '2015-08-10 14:44:34', 'teste', 'Aluno', 0),
-(7, 'Ana carolina', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'ana@hotmail.com', 0, 'fotoUser/thumbnail_1427733717.jpg', '2015-06-02 11:01:24', '2015-06-02 11:03:24', 'teste', 'Aluno', 0),
-(8, 'Rodrigo Adolfo', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'rodrigo@hotmail.com', 0, 'fotoUser/thumbnail_1427733865.jpg', '2015-06-01 18:57:34', '2015-06-01 18:59:34', 'teste', 'Aluno', 0),
-(9, 'Marcio Vianna', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'marcio@hotmail.com', 111111111, 'fotoUser/thumbnail_1427734132.jpg', '2015-06-03 15:05:08', '2015-06-03 15:07:08', 'teste', 'Aluno', 0),
-(10, 'Marcos Martins', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'marcosevmartins@gmail.com', 22222222, 'fotoUser/thumbnail_1427734208.jpg', '2015-08-10 20:32:13', '2015-08-10 20:34:13', 'Programador e Analista de Sistemas', 'Aluno', 0),
-(11, 'Claudia Martins', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'claubmartins@gmail.com', 3333333, 'fotoUser/thumbnail_1427733083.jpg', '2015-04-02 16:08:10', '2015-04-02 16:10:10', 'teste', 'Aluno', 0),
-(12, 'Ana Giancoli', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'paulagiancoli@gmail.com', 1234567, 'fotoUser/thumbnail_1427754341.jpg', '2015-08-10 20:39:54', '2015-08-10 20:41:54', 'teste', 'Professor', 1),
+(6, 'Everton de Paula', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'everton.projetos@gmail.com', 0, 'fotoUser/thumbnail_1427733642.jpg', '2015-06-02 10:55:11', '2015-06-02 10:57:11', 'teste', 'Aluno', 0),
+(7, 'Ana carolina', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'ana@hotmail.com', 0, 'fotoUser/thumbnail_1427733717.jpg', '2015-08-27 15:30:50', '2015-08-27 15:32:50', 'teste', 'Aluno', 0),
+(8, 'Rodrigo Adolfo', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'rodrigo@hotmail.com', 0, 'fotoUser/thumbnail_1427733865.jpg', '2015-08-11 20:55:52', '2015-08-11 20:57:52', 'teste', 'Aluno', 0),
+(9, 'Marcio Vianna', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'marcio@hotmail.com', 111111111, 'fotoUser/thumbnail_1427734132.jpg', '2015-08-10 14:36:58', '2015-08-10 14:38:58', 'teste', 'Aluno', 0),
+(10, 'Marcos Martins', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'marcosevmartins@gmail.com', 22222222, 'fotoUser/thumbnail_1427734208.jpg', '2015-08-10 14:38:58', '2015-08-10 14:40:58', 'Programador e Analista de Sistemas', 'Aluno', 0),
+(11, 'Claudia Martins', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'claubmartins@gmail.com', 3333333, 'fotoUser/thumbnail_1427733083.jpg', '2015-08-10 22:24:48', '2015-08-10 22:26:48', 'teste', 'Aluno', 0),
+(12, 'Ana Giancoli', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'paulagiancoli@gmail.com', 1234567, 'fotoUser/thumbnail_1427754341.jpg', '2015-09-02 18:18:43', '2015-09-02 18:20:43', 'teste', 'Professor', 1),
 (14, 'Jefferson de Souza', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'jeff@hotmail.com', 1234567, 'fotoUser/thumbnail_1427771298.jpg', '2015-03-30 19:28:05', '2015-03-30 19:30:05', 'Prof. Dr. Jefferson de Souza Pinto\r\nDoutor em Engenharia Mecânica - DEF/FEM/UNICAMP\r\nPós-doutor em Engenharia Mecânica - DEMM/FEM/UNICAMP\r\nPós-doutorando em Engenharia Mecânica - DEMM/FEM/UNICAMP\r\nInstituto Federal de São Paulo - Campus Bragança Paulista', 'Professor', 1),
-(15, 'João Paulo', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'joaolds@gmail.com', 1234567, 'fotoUser/thumbnail_1427919145.jpg', '2015-06-03 19:35:32', '2015-06-03 19:37:32', NULL, 'Aluno', 0),
-(17, 'Mauro Mazzola', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'mauro@hotmail.com', 1234567, 'fotoUser/thumbnail_1427919031.jpg', '2015-06-02 10:22:47', '2015-06-02 10:24:47', NULL, 'Aluno', 0),
+(15, 'João Paulo', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'joaolds@gmail.com', 1234567, 'fotoUser/thumbnail_1427919145.jpg', '2015-08-11 21:12:12', '2015-08-11 21:14:12', 'I''M GAY', 'Aluno', 0),
+(17, 'Mauro Mazzola', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'mauro@hotmail.com', 1234567, 'fotoUser/thumbnail_1427919031.jpg', '2015-08-10 23:12:18', '2015-08-10 23:14:18', NULL, 'Aluno', 0),
 (18, 'André Lemme', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'andre@hotmail.com', 1234567, 'fotoUser/thumbnail_1427920239.png', '2015-04-15 18:52:49', '2015-04-15 18:54:49', 'Enquetes - Servidores , Coordenadoria de Extensão - Uso Interno, Coordenação do Curso de ADS, Coordenadoria de Área - Informática, Coordenação de Pesquisa (2015), Engenharia de Software - ESWI2, Projeto de Sistemas II - PS2I6, Gerencia de Projetos - GPSIIP3, Treinamento Professor', 'Professor', 1),
 (19, 'Wilson Vendramel', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'vendramel@hotmail.com', 1234567, 'fotoUser/thumbnail_1427920193.png', '2015-06-03 15:04:10', '2015-06-03 15:06:10', 'Professor e Coordenador ADS Enquetes - Servidores , Coordenadoria de Extensão - Uso Interno, Coordenação do Curso de ADS, Coordenadoria de Área - Informática, Coordenação de Pesquisa (2015), Análise Orientada a Objetos - AOOI3, Arquitetura de Software - ASWI4, Qualidade de Software - QSWI5, Treinamento Professor, Alunos ADS', 'Coordenador ADS', 1),
-(20, 'André Panhan', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'apanhan@gmail.com', 1234567, 'fotoUser/thumbnail_1427930009.png', '2015-04-02 20:28:43', '2015-04-02 20:30:43', 'Enquetes - Servidores , Coordenadoria de Extensão - Uso Interno, Coordenação do Curso de ADS, Coordenadoria de Área - Informática, Coordenação de Pesquisa (2015), Desenvolvimento para Web II - DW2A6, Programação Orientada a Objetos - POOI4, Treinamento Professor', 'Professor', 1),
+(20, 'André Panhan', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'apanhan@gmail.com', 1234567, 'fotoUser/thumbnail_1427930009.png', '2015-08-11 21:08:47', '2015-08-11 21:10:47', 'Enquetes - Servidores , Coordenadoria de Extensão - Uso Interno, Coordenação do Curso de ADS, Coordenadoria de Área - Informática, Coordenação de Pesquisa (2015), Desenvolvimento para Web II - DW2A6, Programação Orientada a Objetos - POOI4, Treinamento Professor', 'Professor', 1),
 (21, 'Luciano Bernardes', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'luciano@hotmail.com', 1234567, 'fotoUser/thumbnail_1427930133.png', '2015-04-15 19:53:26', '2015-04-15 19:55:26', 'Enquetes - Servidores , Coordenadoria de Extensão - Uso Interno, Coordenação do Curso de ADS, Coordenadoria de Área - Informática, Coordenação de Pesquisa (2015), Segurança e Auditoria de Sistemas - SEGA6, Linguagem de Programação I - LP1I1, Serviços de Rede - SSRI5, Eletiva I - EL1I5, Treinamento Professor', 'Professor', 1),
 (22, 'Marcel Zacarias', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'marcel@hotmail.com', 111111111, 'fotoUser/thumbnail_1428453049.jpg', '2015-04-07 21:31:57', '2015-04-07 21:33:57', NULL, 'Aluno', 0),
 (23, 'Eliane Andreoli', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'eliane@hotmail.com', 1234567, 'fotoUser/thumbnail_1428721478.jpg', '2015-04-11 00:05:20', '2015-04-11 00:07:20', 'Professora de Português e Inglês', 'Professor', 1),
@@ -649,6 +544,12 @@ INSERT INTO `users` (`uid`, `username`, `password`, `email`, `prontuario`, `foto
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Limitadores para a tabela `arquivos`
+--
+ALTER TABLE `arquivos`
+  ADD CONSTRAINT `fk_idgrupo` FOREIGN KEY (`idgrupo`) REFERENCES `grupo` (`idgrupo`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `avisos`

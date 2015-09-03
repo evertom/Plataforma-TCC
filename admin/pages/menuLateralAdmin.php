@@ -43,7 +43,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="forms.html"><i class="fa fa-envelope-o fa-fw"></i> Mensagens</a>
+                            <a href="enviaPDF.php"><i class="fa fa-file-pdf-o fa-fw"></i> Enviar Arquivo</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Administra&ccedil;&atilde;o<span class="fa arrow"></span></a>
@@ -53,18 +53,6 @@
                                 </li>
                                 <li>
                                     <a href="requerimentoProf.php">Requerimento de Professor</a>
-                                </li>
-                                <li>
-                                    <a href="notifications.html">Notifications</a>
-                                </li>
-                                <li>
-                                    <a href="typography.html">Typography</a>
-                                </li>
-                                <li>
-                                    <a href="icons.html"> Icons</a>
-                                </li>
-                                <li>
-                                    <a href="grid.html">Grid</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
