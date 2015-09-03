@@ -30,7 +30,7 @@ $Wall->UpdateHora($atual, $expira, $_SESSION['id_login']);
         <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <meta http-equiv="cache-control" content="no-cache"/>
         <meta http-equiv="pragma" content="no-cache" />
-
+        
         <link rel="stylesheet" type="text/css" media="all" href="css/wall.css" />
         <script type="text/javascript" src="js/jquery.oembed.js"></script>
         <script type="text/javascript" src="js/wall.js"></script>
@@ -41,7 +41,9 @@ $Wall->UpdateHora($atual, $expira, $_SESSION['id_login']);
         <script type="text/javascript" src="chat/js/functions.js"></script>
         <script type="text/javascript" src="chat/js/chat.js"></script>
         <!-- >Chat Messenger<--->
-
+        
+       
+        
         <link rel="shortcut icon" href="favicon.ico"/>
         <script type="text/javascript">
             var pagina = 0;
@@ -65,7 +67,7 @@ $Wall->UpdateHora($atual, $expira, $_SESSION['id_login']);
             ;
 
             $(document).ready(function () {
-
+                
                 /*var recursiva = function () {
                  alert("Se passaram 1 segundo!");
                  setTimeout(recursiva,8000);
@@ -319,7 +321,7 @@ $Wall->UpdateHora($atual, $expira, $_SESSION['id_login']);
         <header>
             <div id="aligheader">
                 <div id="logoif"></div>
-                <div id="forumimg"></div>
+                <div id="forumimg" data-step="1" data-intro="This is a tooltip!"></div>
                 <div id="aligmenu">
                     <nav id="navigation">
                         <ul>

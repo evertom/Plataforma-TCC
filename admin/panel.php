@@ -9,7 +9,7 @@ foreach ($result as $res) {
     $tipo = $res['tipo'];
     $_SESSION['tipoUser'] = $tipo; 
 }
-//tipo igual a zero � aluno e tipo igual a 1 � professor
+//tipo igual a zero e aluno e tipo igual a 1 e professor
 if ($tipo == 0) {
     $result = $pdo->select("SELECT gu.idgrupo FROM grupo_has_users gu "
             . "INNER JOIN grupo g ON g.idgrupo = gu.idgrupo where g.aceito = 1 "

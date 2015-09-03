@@ -42,9 +42,16 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+                        <?php
+                            if($_SESSION['tipoUser'] == 1){
+                        ?>
                         <li>
-                            <a href="enviaPDF.php"><i class="fa fa-file-pdf-o fa-fw"></i> Enviar Arquivo</a>
+                            <a href="viewPDF.php"><i class="fa fa-file-pdf-o fa-fw"></i> Verificar Monografias</a>
                         </li>
+                        <?php
+                            }
+                        ?>
+                        
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Administra&ccedil;&atilde;o<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">

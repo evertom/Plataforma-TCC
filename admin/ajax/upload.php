@@ -3,7 +3,8 @@ require_once '../verifica-logado.php';
 require_once '../includes/Conexao.class.php';
 $pdo = new Conexao();
 
-$idGrupo = $pdo->select("SELECT g.idgrupo FROM grupo_has_users g WHERE g.uid = {$id_users}");
+$idGrupo = $pdo->select("SELECT g.idgrupo,gr.titulo FROM grupo_has_users g INNER JOIN grupo gr ON gr.idgrupo = g.idgrupo WHERE g.uid = {$id_users}");
+$idprof = $pdo->select("SELECT g.uid FROM grupo_has_users g WHERE g.idgrupo = {$idGrupo[0]['idgrupo']} AND g.tipo = 2 ");
         
 $pasta = "../GerenciamentoGrupos/{$idGrupo[0]['idgrupo']}/"; 
 $pastaBD = "/GerenciamentoGrupos/{$idGrupo[0]['idgrupo']}/"; 
@@ -30,9 +31,15 @@ if(isset($_POST)){
             $tabela = "arquivos";
             
             $result = $pdo->insert($dados,$tabela);
-                    
-            
-           //mysql_query("INSERT INTO fotos (foto) VALUES (".$nome_atual.")"); 
+             
+            $tabela = "avisos";
+            $dadosA['descricao'] = "O Grupo: ".$idGrupo[0]['titulo'].", enviou sua monografia para avaliação da etapa concluida, confira...";
+            $dadosA['data'] = date('Y-m-d');
+            $dadosA['visto'] = 0;
+            $dadosA['uid'] = $idprof[0]['uid'];
+            $dadosA['de'] = $id_users;
+           
+            $resultA = $pdo->insert($dadosA,$tabela);
 
             echo '<div class="panel panel-default">
                     <div class="panel-heading">

@@ -12,6 +12,8 @@ $prontuario_users = isset($_SESSION['prontuario']) ? $_SESSION['prontuario'] : "
 $tipo_users = isset($_SESSION['tipo']) ? $_SESSION['tipo'] : "";
 $logado = isset($_SESSION['logado']) ? $_SESSION['logado'] : "N";
 
+date_default_timezone_set('America/Sao_Paulo');
+
 if ($logado == "N" && $id_users == "") {
     echo "<script type='text/javascript'>location.href='../'</script>";
     exit();
