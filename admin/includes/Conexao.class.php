@@ -34,6 +34,10 @@ class Conexao {
         if ($this->pdo == null)
             $this->conectar();
     }
+    
+    function __destruct() {
+        $this->pdo = null;
+    }
 
     //método que conecta com o banco de dados
     public function conectar() {
@@ -63,18 +67,21 @@ class Conexao {
     }
 
     public function select($sql) {
+        if ($this->getPDO() == null){$this->conectar();} 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function contaReg($sql) {
+        if ($this->getPDO() == null){$this->conectar();} 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         return $stmt->rowCount();
     }
 
     public function selectObj($sql) {
+        if ($this->getPDO() == null){$this->conectar();} 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         $this->total = count($stmt);
@@ -87,18 +94,21 @@ class Conexao {
     }
 
     public function selectObject($sql) {
+        if ($this->getPDO() == null){$this->conectar();} 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
     public function delete($tabela, $where) {
+        if ($this->getPDO() == null){$this->conectar();} 
         $stmt = $this->pdo->prepare("DELETE FROM {$tabela} WHERE {$where}");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function insert(array $dados, $tabela) {
+        if ($this->getPDO() == null){$this->conectar();} 
         $campos = implode(", ", array_keys($dados));
         $valores = "'" . implode("', '", array_values($dados)) . "'";
 
@@ -114,6 +124,7 @@ class Conexao {
     }
 
     public function update(array $dados, $tabela, $where) {
+        if ($this->getPDO() == null){$this->conectar();} 
         foreach ($dados as $indice => $valor) {
             $campos[] = "{$indice} = '{$valor}'";
         }

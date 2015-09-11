@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 02-Set-2015 às 22:15
+-- Generation Time: 11-Set-2015 às 09:06
 -- Versão do servidor: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -37,14 +37,16 @@ CREATE TABLE IF NOT EXISTS `arquivos` (
   `dtaEnvio` datetime NOT NULL,
   PRIMARY KEY (`idArquivo`),
   KEY `idgrupo` (`idgrupo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci COMMENT='tabela de arquivos enviados' AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci COMMENT='tabela de arquivos enviados' AUTO_INCREMENT=4 ;
 
 --
 -- Extraindo dados da tabela `arquivos`
 --
 
 INSERT INTO `arquivos` (`idArquivo`, `idgrupo`, `nome`, `caminho`, `dtaEnvio`) VALUES
-(6, 63, '63_48f347ddaf711a543b69f192f689617f.pdf', '/GerenciamentoGrupos/63/63_48f347ddaf711a543b69f192f689617f.pdf', '2015-09-02 22:07:10');
+(1, 63, '63_5b1bdb6551a327156776da7f5868ec08.pdf', '/GerenciamentoGrupos/63/63_5b1bdb6551a327156776da7f5868ec08.pdf', '2015-09-03 13:59:15'),
+(2, 64, '64_f9f6c7fd1f76e36fd46487d87e31a735.pdf', '/GerenciamentoGrupos/64/64_f9f6c7fd1f76e36fd46487d87e31a735.pdf', '2015-09-03 13:59:46'),
+(3, 63, '63_8d1e3ba1d74de71fb6c6078684bd6efd.pdf', '/GerenciamentoGrupos/63/63_8d1e3ba1d74de71fb6c6078684bd6efd.pdf', '2015-09-09 19:27:15');
 
 -- --------------------------------------------------------
 
@@ -84,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `avisos` (
   PRIMARY KEY (`idavisos`),
   KEY `fk_avisos_users1_idx1` (`uid`),
   KEY `fk_avisos_users2_idx` (`de`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=38 ;
 
 --
 -- Extraindo dados da tabela `avisos`
@@ -94,16 +96,40 @@ INSERT INTO `avisos` (`idavisos`, `descricao`, `data`, `visto`, `uid`, `de`) VAL
 (1, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o solicitada.', '2015-09-02', '1', 12, 1),
 (2, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-09-02', '1', 1, 12),
 (3, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-09-02', '0', 6, 12),
-(4, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-09-02', '0', 7, 12),
+(4, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-09-02', '1', 7, 12),
 (5, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-09-02', '1', 1, 12),
 (6, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-09-02', '0', 6, 12),
-(7, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-09-02', '0', 7, 12),
+(7, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-09-02', '1', 7, 12),
 (8, 'O evento pesmismd com entrega prevista para 09-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-02', '0', 6, 1),
-(9, 'O evento pesmismd com entrega prevista para 09-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-02', '0', 7, 1),
-(10, 'O evento pesmismd com entrega prevista para 09-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-02', '0', 12, 1),
+(9, 'O evento pesmismd com entrega prevista para 09-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-02', '1', 7, 1),
+(10, 'O evento pesmismd com entrega prevista para 09-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-02', '1', 12, 1),
 (11, 'O evento smdx com entrega prevista para 16-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-02', '0', 6, 1),
-(12, 'O evento smdx com entrega prevista para 16-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-02', '0', 7, 1),
-(13, 'O evento smdx com entrega prevista para 16-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-02', '0', 12, 1);
+(12, 'O evento smdx com entrega prevista para 16-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-02', '1', 7, 1),
+(13, 'O evento smdx com entrega prevista para 16-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-02', '1', 12, 1),
+(14, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o solicitada.', '2015-09-03', '1', 12, 9),
+(15, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-09-03', '0', 2, 12),
+(16, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-09-03', '0', 3, 12),
+(17, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-09-03', '1', 9, 12),
+(18, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-09-03', '0', 2, 12),
+(19, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-09-03', '0', 3, 12),
+(20, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-09-03', '1', 9, 12),
+(21, 'O evento nc jc com entrega prevista para 10-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-03', '0', 2, 9),
+(22, 'O evento nc jc com entrega prevista para 10-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-03', '0', 3, 9),
+(23, 'O evento nc jc com entrega prevista para 10-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-03', '1', 12, 9),
+(24, 'O Grupo: Gerenciamento de TCC, enviou sua monografia para avaliação da etapa concluida, confira...', '2015-09-03', '1', 12, 12),
+(25, 'O Grupo: Gerenciamento de TCC, enviou sua monografia para avaliação da etapa concluida, confira...', '2015-09-03', '1', 12, 1),
+(26, 'O Grupo: Gerenciamento de TCC, enviou sua monografia para avaliação da etapa concluida, confira...', '2015-09-03', '1', 12, 1),
+(27, 'O Grupo: cmskcskcs, enviou sua monografia para avaliação da etapa concluida, confira...', '2015-09-03', '1', 12, 9),
+(28, 'O professor enviou as seguintes considerações ao Grupo sobre a monografia: Vocês mandaram muito bem meninos....', '2015-09-03', '1', 1, 12),
+(29, 'O professor enviou as seguintes considerações ao Grupo sobre a monografia: Vocês mandaram muito bem meninos....', '2015-09-03', '0', 6, 12),
+(30, 'O professor enviou as seguintes considerações ao Grupo sobre a monografia: Vocês mandaram muito bem meninos....', '2015-09-03', '1', 7, 12),
+(31, 'O professor enviou as seguintes considerações ao Grupo sobre a monografia: quero mais empenho', '2015-09-03', '0', 2, 12),
+(32, 'O professor enviou as seguintes considerações ao Grupo sobre a monografia: quero mais empenho', '2015-09-03', '0', 3, 12),
+(33, 'O professor enviou as seguintes considerações ao Grupo sobre a monografia: quero mais empenho', '2015-09-03', '1', 9, 12),
+(34, 'O Grupo: Gerenciamento de TCC, enviou sua monografia para avaliação da etapa concluida, confira...', '2015-09-09', '1', 12, 7),
+(35, 'O professor enviou as seguintes considerações ao Grupo sobre a monografia: <b>fico bom</b>', '2015-09-09', '1', 1, 12),
+(36, 'O professor enviou as seguintes considerações ao Grupo sobre a monografia: <b>fico bom</b>', '2015-09-09', '0', 6, 12),
+(37, 'O professor enviou as seguintes considerações ao Grupo sobre a monografia: <b>fico bom</b>', '2015-09-09', '0', 7, 12);
 
 -- --------------------------------------------------------
 
@@ -175,14 +201,15 @@ CREATE TABLE IF NOT EXISTS `cronograma` (
   PRIMARY KEY (`idcronograma`),
   UNIQUE KEY `idgrupo` (`idgrupo`),
   KEY `idgrupo_2` (`idgrupo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
 -- Extraindo dados da tabela `cronograma`
 --
 
 INSERT INTO `cronograma` (`idcronograma`, `idgrupo`, `aprovado`, `analisando`, `revisando`, `enviado`) VALUES
-(2, 63, 0, 1, 0, 1);
+(2, 63, 0, 1, 0, 1),
+(3, 64, 0, 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -241,7 +268,7 @@ CREATE TABLE IF NOT EXISTS `evento` (
   PRIMARY KEY (`idEvento`),
   KEY `idGrupo` (`idGrupo`,`idcronograma`),
   KEY `idcronograma` (`idcronograma`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 --
 -- Extraindo dados da tabela `evento`
@@ -249,7 +276,8 @@ CREATE TABLE IF NOT EXISTS `evento` (
 
 INSERT INTO `evento` (`idEvento`, `idGrupo`, `participantes`, `start`, `end`, `allday`, `nomeEvento`, `descricao`, `idcronograma`, `idTipoEvento`, `concluido`, `data_conclusao`) VALUES
 (4, 63, '7,12,6,1', '2015-09-02 00:00:00', '2015-09-09 00:00:00', 1, 'pesmismd', 'oxkcidnvcidcnicndns', 2, 1, 1, '2015-09-02 18:23:33'),
-(5, 63, '1', '2015-10-13 00:00:00', '2015-10-14 00:00:00', 1, 'smdx', 'kmcks', 2, 6, 1, '2015-10-15 18:23:09');
+(5, 63, '1', '2015-10-13 00:00:00', '2015-10-14 00:00:00', 1, 'smdx', 'kmcks', 2, 6, 1, '2015-10-15 18:23:09'),
+(6, 64, '9', '2015-09-03 00:00:00', '2015-09-10 00:00:00', 1, 'nc jc', 'sncsncjns', 3, 3, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -277,14 +305,15 @@ CREATE TABLE IF NOT EXISTS `grupo` (
   `preProjeto` int(1) NOT NULL DEFAULT '0' COMMENT 'utilizado para controle de tela, para forçar o aluno a cadastrar o pre projeto',
   `cronograma` int(1) NOT NULL DEFAULT '0' COMMENT 'utilizado no controle de tela para forçar o aluno a cadastrar o cronograma apos o pre projeto',
   PRIMARY KEY (`idgrupo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=64 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=65 ;
 
 --
 -- Extraindo dados da tabela `grupo`
 --
 
 INSERT INTO `grupo` (`idgrupo`, `dataCriacao`, `titulo`, `descricao`, `objetivoGeral`, `objetivoEspecifico`, `justificativa`, `tipodePesquisa`, `metodologia`, `resultadoEsperado`, `fraselema`, `aceito`, `visto`, `recusado`, `revisando`, `preProjeto`, `cronograma`) VALUES
-(63, '2015-09-02', 'Gerenciamento de TCC', 'Gerenciamento de TCC HUASUHHSAHAUHSAHUUSHAHU SUAHSUHA', 'h', 'h', 'h', 'h', 'h', 'h', NULL, 1, 1, 0, 0, 0, 0);
+(63, '2015-09-02', 'Gerenciamento de TCC', 'Gerenciamento de TCC HUASUHHSAHAUHSAHUUSHAHU SUAHSUHA', 'h', 'h', 'h', 'h', 'h', 'h', NULL, 1, 1, 0, 0, 0, 0),
+(64, '2015-09-03', 'cmskcskcs', 'amsiwnduwnduwnduwnd', 'k', 'k', 'k', 'k', 'k', 'k', NULL, 1, 1, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -310,7 +339,11 @@ INSERT INTO `grupo_has_users` (`idgrupo`, `uid`, `tipo`) VALUES
 (63, 1, 1),
 (63, 6, 1),
 (63, 7, 1),
-(63, 12, 2);
+(63, 12, 2),
+(64, 2, 1),
+(64, 3, 1),
+(64, 9, 1),
+(64, 12, 2);
 
 -- --------------------------------------------------------
 
@@ -364,7 +397,7 @@ CREATE TABLE IF NOT EXISTS `mensagens` (
   `data` datetime NOT NULL,
   `lido` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=41 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=42 ;
 
 --
 -- Extraindo dados da tabela `mensagens`
@@ -410,7 +443,8 @@ INSERT INTO `mensagens` (`id`, `id_de`, `id_para`, `mensagem`, `data`, `lido`) V
 (37, 11, 1, 'to bem', '0000-00-00 00:00:00', 1),
 (38, 1, 6, 'bo', '0000-00-00 00:00:00', 1),
 (39, 1, 7, 'oiiii', '0000-00-00 00:00:00', 1),
-(40, 1, 7, 'pppp', '0000-00-00 00:00:00', 1);
+(40, 1, 7, 'pppp', '0000-00-00 00:00:00', 1),
+(41, 1, 7, 'ola', '0000-00-00 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -428,7 +462,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   PRIMARY KEY (`msg_id`),
   KEY `ip` (`ip`),
   KEY `fk_messages_users1_idx` (`uid_fk`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=129 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=131 ;
 
 --
 -- Extraindo dados da tabela `messages`
@@ -458,7 +492,8 @@ INSERT INTO `messages` (`msg_id`, `message`, `uid_fk`, `ip`, `created`) VALUES
 (125, 'Pessoal, vamos fazer as gravações aqui pro meu tcc pooww.. hahahahahahahahahahahahahahahahaha hahahahahahahahaha hahahahahahahahaha hahahahahahahahaha hahahahahahahahaha hahahahahahahahaha hahahahahah', 18, '127.0.0.1', 1428429789),
 (126, 'Facebook do IFSP HAHAHA kkkk', 15, '127.0.0.1', 1428454260),
 (127, '#Partiu Paratti haha', 7, '127.0.0.1', 1428785816),
-(128, 'Eu sou um gordinho gostoso, gordinhoo gostosoooo haha', 9, '127.0.0.1', 1428791672);
+(128, 'Eu sou um gordinho gostoso, gordinhoo gostosoooo haha', 9, '127.0.0.1', 1428791672),
+(130, 'Intro JS success...', 12, '::1', 1441809367);
 
 -- --------------------------------------------------------
 
@@ -509,6 +544,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `descricao` text CHARACTER SET latin1,
   `cargo` varchar(100) CHARACTER SET latin1 NOT NULL,
   `tipo` int(2) NOT NULL DEFAULT '0',
+  `primeiroacesso` int(11) NOT NULL DEFAULT '0' COMMENT '0 = primeiro acesso',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=28 ;
 
@@ -516,30 +552,30 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Extraindo dados da tabela `users`
 --
 
-INSERT INTO `users` (`uid`, `username`, `password`, `email`, `prontuario`, `fotouser`, `horario`, `limite`, `descricao`, `cargo`, `tipo`) VALUES
-(1, 'Leonardo Martins', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'leo.piracaia@hotmail.com', 1262751, 'fotoUser/thumbnail_1427732986.jpg', '2015-09-02 19:44:17', '2015-09-02 19:46:17', 'Programador Júnior, Formando em Análise e Desenvolvimento de Sistemas', 'Aluno', 0),
-(2, '-----', '123', '-----', 0, 'fotoUser/padraoUser.jpg', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Admin', 'Admin', 0),
-(3, '-----', '123', '-----', 0, 'fotoUser/padraoUser.jpg', '2015-04-07 00:00:00', '2015-04-07 00:00:00', 'Admin', 'Admin', 0),
-(6, 'Everton de Paula', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'everton.projetos@gmail.com', 0, 'fotoUser/thumbnail_1427733642.jpg', '2015-06-02 10:55:11', '2015-06-02 10:57:11', 'teste', 'Aluno', 0),
-(7, 'Ana carolina', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'ana@hotmail.com', 0, 'fotoUser/thumbnail_1427733717.jpg', '2015-08-27 15:30:50', '2015-08-27 15:32:50', 'teste', 'Aluno', 0),
-(8, 'Rodrigo Adolfo', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'rodrigo@hotmail.com', 0, 'fotoUser/thumbnail_1427733865.jpg', '2015-08-11 20:55:52', '2015-08-11 20:57:52', 'teste', 'Aluno', 0),
-(9, 'Marcio Vianna', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'marcio@hotmail.com', 111111111, 'fotoUser/thumbnail_1427734132.jpg', '2015-08-10 14:36:58', '2015-08-10 14:38:58', 'teste', 'Aluno', 0),
-(10, 'Marcos Martins', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'marcosevmartins@gmail.com', 22222222, 'fotoUser/thumbnail_1427734208.jpg', '2015-08-10 14:38:58', '2015-08-10 14:40:58', 'Programador e Analista de Sistemas', 'Aluno', 0),
-(11, 'Claudia Martins', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'claubmartins@gmail.com', 3333333, 'fotoUser/thumbnail_1427733083.jpg', '2015-08-10 22:24:48', '2015-08-10 22:26:48', 'teste', 'Aluno', 0),
-(12, 'Ana Giancoli', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'paulagiancoli@gmail.com', 1234567, 'fotoUser/thumbnail_1427754341.jpg', '2015-09-02 18:18:43', '2015-09-02 18:20:43', 'teste', 'Professor', 1),
-(14, 'Jefferson de Souza', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'jeff@hotmail.com', 1234567, 'fotoUser/thumbnail_1427771298.jpg', '2015-03-30 19:28:05', '2015-03-30 19:30:05', 'Prof. Dr. Jefferson de Souza Pinto\r\nDoutor em Engenharia Mecânica - DEF/FEM/UNICAMP\r\nPós-doutor em Engenharia Mecânica - DEMM/FEM/UNICAMP\r\nPós-doutorando em Engenharia Mecânica - DEMM/FEM/UNICAMP\r\nInstituto Federal de São Paulo - Campus Bragança Paulista', 'Professor', 1),
-(15, 'João Paulo', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'joaolds@gmail.com', 1234567, 'fotoUser/thumbnail_1427919145.jpg', '2015-08-11 21:12:12', '2015-08-11 21:14:12', 'I''M GAY', 'Aluno', 0),
-(17, 'Mauro Mazzola', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'mauro@hotmail.com', 1234567, 'fotoUser/thumbnail_1427919031.jpg', '2015-08-10 23:12:18', '2015-08-10 23:14:18', NULL, 'Aluno', 0),
-(18, 'André Lemme', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'andre@hotmail.com', 1234567, 'fotoUser/thumbnail_1427920239.png', '2015-04-15 18:52:49', '2015-04-15 18:54:49', 'Enquetes - Servidores , Coordenadoria de Extensão - Uso Interno, Coordenação do Curso de ADS, Coordenadoria de Área - Informática, Coordenação de Pesquisa (2015), Engenharia de Software - ESWI2, Projeto de Sistemas II - PS2I6, Gerencia de Projetos - GPSIIP3, Treinamento Professor', 'Professor', 1),
-(19, 'Wilson Vendramel', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'vendramel@hotmail.com', 1234567, 'fotoUser/thumbnail_1427920193.png', '2015-06-03 15:04:10', '2015-06-03 15:06:10', 'Professor e Coordenador ADS Enquetes - Servidores , Coordenadoria de Extensão - Uso Interno, Coordenação do Curso de ADS, Coordenadoria de Área - Informática, Coordenação de Pesquisa (2015), Análise Orientada a Objetos - AOOI3, Arquitetura de Software - ASWI4, Qualidade de Software - QSWI5, Treinamento Professor, Alunos ADS', 'Coordenador ADS', 1),
-(20, 'André Panhan', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'apanhan@gmail.com', 1234567, 'fotoUser/thumbnail_1427930009.png', '2015-08-11 21:08:47', '2015-08-11 21:10:47', 'Enquetes - Servidores , Coordenadoria de Extensão - Uso Interno, Coordenação do Curso de ADS, Coordenadoria de Área - Informática, Coordenação de Pesquisa (2015), Desenvolvimento para Web II - DW2A6, Programação Orientada a Objetos - POOI4, Treinamento Professor', 'Professor', 1),
-(21, 'Luciano Bernardes', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'luciano@hotmail.com', 1234567, 'fotoUser/thumbnail_1427930133.png', '2015-04-15 19:53:26', '2015-04-15 19:55:26', 'Enquetes - Servidores , Coordenadoria de Extensão - Uso Interno, Coordenação do Curso de ADS, Coordenadoria de Área - Informática, Coordenação de Pesquisa (2015), Segurança e Auditoria de Sistemas - SEGA6, Linguagem de Programação I - LP1I1, Serviços de Rede - SSRI5, Eletiva I - EL1I5, Treinamento Professor', 'Professor', 1),
-(22, 'Marcel Zacarias', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'marcel@hotmail.com', 111111111, 'fotoUser/thumbnail_1428453049.jpg', '2015-04-07 21:31:57', '2015-04-07 21:33:57', NULL, 'Aluno', 0),
-(23, 'Eliane Andreoli', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'eliane@hotmail.com', 1234567, 'fotoUser/thumbnail_1428721478.jpg', '2015-04-11 00:05:20', '2015-04-11 00:07:20', 'Professora de Português e Inglês', 'Professor', 1),
-(24, 'Rosalvo Soares C. Filho', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'rosalvo@hotmail.com', 123456, 'fotoUser/thumbnail_1429109792.jpg', '2015-04-15 11:56:49', '2015-04-15 11:58:49', 'Professor de Redes de Computadores', 'Professor', 1),
-(25, 'Ana Cristina Gobbo César', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'anacristina@hotmail.com', 1234567, 'fotoUser/thumbnail_1429109742.jpg', '2015-04-15 11:55:59', '2015-04-15 11:57:59', 'Professora de TCC', 'Professor', 1),
-(26, 'Bianca Maria Pedrosa', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'bianca@hotmail.com', 1234567, 'fotoUser/thumbnail_1429109829.jpg', '2015-04-15 11:57:30', '2015-04-15 11:59:30', 'Professora de WEB', 'Professor', 1),
-(27, 'Flavio César Amate', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'flavio@hotmail.com', 1234567, 'fotoUser/thumbnail_1429109684.jpg', '2015-04-15 11:55:06', '2015-04-15 11:57:06', 'Professor de Matemática', 'Professor', 1);
+INSERT INTO `users` (`uid`, `username`, `password`, `email`, `prontuario`, `fotouser`, `horario`, `limite`, `descricao`, `cargo`, `tipo`, `primeiroacesso`) VALUES
+(1, 'Leonardo Martins', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'leo.piracaia@hotmail.com', 1262751, 'fotoUser/thumbnail_1427732986.jpg', '2015-09-09 20:51:25', '2015-09-09 20:53:25', 'Programador Júnior, Formando em Análise e Desenvolvimento de Sistemas', 'Aluno', 0, 0),
+(2, '-----', '123', '-----', 0, 'fotoUser/padraoUser.jpg', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Admin', 'Admin', 0, 0),
+(3, '-----', '123', '-----', 0, 'fotoUser/padraoUser.jpg', '2015-04-07 00:00:00', '2015-04-07 00:00:00', 'Admin', 'Admin', 0, 0),
+(6, 'Everton de Paula', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'everton.projetos@gmail.com', 0, 'fotoUser/thumbnail_1427733642.jpg', '2015-06-02 10:55:11', '2015-06-02 10:57:11', 'teste', 'Aluno', 0, 0),
+(7, 'Ana carolina', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'ana@hotmail.com', 0, 'fotoUser/thumbnail_1427733717.jpg', '2015-09-09 19:25:19', '2015-09-09 19:27:19', 'teste', 'Aluno', 0, 0),
+(8, 'Rodrigo Adolfo', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'rodrigo@hotmail.com', 0, 'fotoUser/thumbnail_1427733865.jpg', '2015-08-11 20:55:52', '2015-08-11 20:57:52', 'teste', 'Aluno', 0, 0),
+(9, 'Marcio Vianna', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'marcio@hotmail.com', 111111111, 'fotoUser/thumbnail_1427734132.jpg', '2015-09-03 15:18:27', '2015-09-03 15:20:27', 'teste', 'Aluno', 0, 0),
+(10, 'Marcos Martins', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'marcosevmartins@gmail.com', 22222222, 'fotoUser/thumbnail_1427734208.jpg', '2015-08-10 14:38:58', '2015-08-10 14:40:58', 'Programador e Analista de Sistemas', 'Aluno', 0, 0),
+(11, 'Claudia Martins', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'claubmartins@gmail.com', 3333333, 'fotoUser/thumbnail_1427733083.jpg', '2015-08-10 22:24:48', '2015-08-10 22:26:48', 'teste', 'Aluno', 0, 0),
+(12, 'Ana Giancoli', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'paulagiancoli@gmail.com', 1234567, 'fotoUser/thumbnail_1427754341.jpg', '2015-09-09 19:27:42', '2015-09-09 19:29:42', 'teste', 'Professor', 1, 0),
+(14, 'Jefferson de Souza', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'jeff@hotmail.com', 1234567, 'fotoUser/thumbnail_1427771298.jpg', '2015-03-30 19:28:05', '2015-03-30 19:30:05', 'Prof. Dr. Jefferson de Souza Pinto\r\nDoutor em Engenharia Mecânica - DEF/FEM/UNICAMP\r\nPós-doutor em Engenharia Mecânica - DEMM/FEM/UNICAMP\r\nPós-doutorando em Engenharia Mecânica - DEMM/FEM/UNICAMP\r\nInstituto Federal de São Paulo - Campus Bragança Paulista', 'Professor', 1, 0),
+(15, 'João Paulo', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'joaolds@gmail.com', 1234567, 'fotoUser/thumbnail_1427919145.jpg', '2015-08-11 21:12:12', '2015-08-11 21:14:12', 'I''M GAY', 'Aluno', 0, 0),
+(17, 'Mauro Mazzola', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'mauro@hotmail.com', 1234567, 'fotoUser/thumbnail_1427919031.jpg', '2015-08-10 23:12:18', '2015-08-10 23:14:18', NULL, 'Aluno', 0, 0),
+(18, 'André Lemme', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'andre@hotmail.com', 1234567, 'fotoUser/thumbnail_1427920239.png', '2015-04-15 18:52:49', '2015-04-15 18:54:49', 'Enquetes - Servidores , Coordenadoria de Extensão - Uso Interno, Coordenação do Curso de ADS, Coordenadoria de Área - Informática, Coordenação de Pesquisa (2015), Engenharia de Software - ESWI2, Projeto de Sistemas II - PS2I6, Gerencia de Projetos - GPSIIP3, Treinamento Professor', 'Professor', 1, 0),
+(19, 'Wilson Vendramel', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'vendramel@hotmail.com', 1234567, 'fotoUser/thumbnail_1427920193.png', '2015-06-03 15:04:10', '2015-06-03 15:06:10', 'Professor e Coordenador ADS Enquetes - Servidores , Coordenadoria de Extensão - Uso Interno, Coordenação do Curso de ADS, Coordenadoria de Área - Informática, Coordenação de Pesquisa (2015), Análise Orientada a Objetos - AOOI3, Arquitetura de Software - ASWI4, Qualidade de Software - QSWI5, Treinamento Professor, Alunos ADS', 'Coordenador ADS', 1, 0),
+(20, 'André Panhan', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'apanhan@gmail.com', 1234567, 'fotoUser/thumbnail_1427930009.png', '2015-08-11 21:08:47', '2015-08-11 21:10:47', 'Enquetes - Servidores , Coordenadoria de Extensão - Uso Interno, Coordenação do Curso de ADS, Coordenadoria de Área - Informática, Coordenação de Pesquisa (2015), Desenvolvimento para Web II - DW2A6, Programação Orientada a Objetos - POOI4, Treinamento Professor', 'Professor', 1, 0),
+(21, 'Luciano Bernardes', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'luciano@hotmail.com', 1234567, 'fotoUser/thumbnail_1427930133.png', '2015-04-15 19:53:26', '2015-04-15 19:55:26', 'Enquetes - Servidores , Coordenadoria de Extensão - Uso Interno, Coordenação do Curso de ADS, Coordenadoria de Área - Informática, Coordenação de Pesquisa (2015), Segurança e Auditoria de Sistemas - SEGA6, Linguagem de Programação I - LP1I1, Serviços de Rede - SSRI5, Eletiva I - EL1I5, Treinamento Professor', 'Professor', 1, 0),
+(22, 'Marcel Zacarias', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'marcel@hotmail.com', 111111111, 'fotoUser/thumbnail_1428453049.jpg', '2015-04-07 21:31:57', '2015-04-07 21:33:57', NULL, 'Aluno', 0, 0),
+(23, 'Eliane Andreoli', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'eliane@hotmail.com', 1234567, 'fotoUser/thumbnail_1428721478.jpg', '2015-04-11 00:05:20', '2015-04-11 00:07:20', 'Professora de Português e Inglês', 'Professor', 1, 0),
+(24, 'Rosalvo Soares C. Filho', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'rosalvo@hotmail.com', 123456, 'fotoUser/thumbnail_1429109792.jpg', '2015-04-15 11:56:49', '2015-04-15 11:58:49', 'Professor de Redes de Computadores', 'Professor', 1, 0),
+(25, 'Ana Cristina Gobbo César', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'anacristina@hotmail.com', 1234567, 'fotoUser/thumbnail_1429109742.jpg', '2015-04-15 11:55:59', '2015-04-15 11:57:59', 'Professora de TCC', 'Professor', 1, 0),
+(26, 'Bianca Maria Pedrosa', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'bianca@hotmail.com', 1234567, 'fotoUser/thumbnail_1429109829.jpg', '2015-04-15 11:57:30', '2015-04-15 11:59:30', 'Professora de WEB', 'Professor', 1, 0),
+(27, 'Flavio César Amate', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'flavio@hotmail.com', 1234567, 'fotoUser/thumbnail_1429109684.jpg', '2015-04-15 11:55:06', '2015-04-15 11:57:06', 'Professor de Matemática', 'Professor', 1, 0);
 
 --
 -- Constraints for dumped tables

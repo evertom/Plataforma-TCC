@@ -12,6 +12,11 @@ $atual = date('Y-m-d H:i:s');
 $expira = date('Y-m-d H:i:s', strtotime('+2 min'));
 
 $Wall->UpdateHora($atual, $expira, $_SESSION['id_login']);
+
+require_once('includes/Conexao.class.php');
+$pdo = new Conexao();
+
+$primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id_users} ");
 ?>
 
 <!DOCTYPE HTML>
@@ -20,9 +25,15 @@ $Wall->UpdateHora($atual, $expira, $_SESSION['id_login']);
         <meta charset="utf-8" />
         <title>Plataforma de Gerenciamento de TCC</title>
         <link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
+
         <!-- Bootstrap Core CSS -->
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="css/demo.css" rel="stylesheet">
+        <link href="css/introjs.css" rel="stylesheet">
+
         <!-- jQuery -->
+        <script src="js/intro.js"></script>
         <script src="js/jquery.min.js"></script>
 
         <!-- Bootstrap Core JavaScript -->
@@ -30,7 +41,7 @@ $Wall->UpdateHora($atual, $expira, $_SESSION['id_login']);
         <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <meta http-equiv="cache-control" content="no-cache"/>
         <meta http-equiv="pragma" content="no-cache" />
-        
+
         <link rel="stylesheet" type="text/css" media="all" href="css/wall.css" />
         <script type="text/javascript" src="js/jquery.oembed.js"></script>
         <script type="text/javascript" src="js/wall.js"></script>
@@ -41,9 +52,9 @@ $Wall->UpdateHora($atual, $expira, $_SESSION['id_login']);
         <script type="text/javascript" src="chat/js/functions.js"></script>
         <script type="text/javascript" src="chat/js/chat.js"></script>
         <!-- >Chat Messenger<--->
-        
-       
-        
+
+
+
         <link rel="shortcut icon" href="favicon.ico"/>
         <script type="text/javascript">
             var pagina = 0;
@@ -67,7 +78,10 @@ $Wall->UpdateHora($atual, $expira, $_SESSION['id_login']);
             ;
 
             $(document).ready(function () {
-                
+
+<?php if ($primeroAcesso[0]['primeiroacesso'] == 0) { ?>
+                    introJs().start();
+<?php } ?>
                 /*var recursiva = function () {
                  alert("Se passaram 1 segundo!");
                  setTimeout(recursiva,8000);
@@ -129,11 +143,11 @@ $Wall->UpdateHora($atual, $expira, $_SESSION['id_login']);
 
             $(function () {
                 $('.destaque').hover(function () {
-                    //eleva a descri��o para cima
+                    //eleva a descricao para cima
                     $(this).find('p').stop().animate({top: '160px'}, 300);
                 },
                         function () {
-                            //volta a descri��o para baixo
+                            //volta a descricao para baixo
                             $(this).find('p').stop().animate({top: '200px'}, 300);
                         });
 
@@ -152,7 +166,7 @@ $Wall->UpdateHora($atual, $expira, $_SESSION['id_login']);
                     }
                 });
 
-                //fun��o para editar o post do feeds
+                //funcao para editar o post do feeds
                 $('.EditarPostBt').live('click', function () {
                     var div = $(this).parents('.stbody');
                     var id = div.find('.comment_button').attr('id');
@@ -308,6 +322,40 @@ $Wall->UpdateHora($atual, $expira, $_SESSION['id_login']);
                     });
                     return false;
                 });
+                var PassosCompletosIntro = 1;
+                $('.NextIntro').live('click', function () {
+                    PassosCompletosIntro = parseInt(PassosCompletosIntro) + 1;
+
+                    if (PassosCompletosIntro == 10) {
+                        confirmIntro();
+                    }
+                });
+
+                $('.BackIntro').live('click', function () {
+                    PassosCompletosIntro = parseInt(PassosCompletosIntro) - 1;
+                });
+
+                $('.introjs-skipbutton').live('click', function () {
+                    if (PassosCompletosIntro != 10) {
+
+                    }
+                });
+
+                function confirmIntro() {
+                    $.ajax({
+                        type: "POST",
+                        url: "ajax/introJs.php",
+                        data: "id=" +<?php echo $id_users ?>,
+                        success: function (data) {
+                            console.log(data);
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        }
+                    });
+                    return false;
+                }
+
             });
         </script>
     </head>
@@ -320,15 +368,30 @@ $Wall->UpdateHora($atual, $expira, $_SESSION['id_login']);
         <!-- >Chat Messenger<--->
         <header>
             <div id="aligheader">
-                <div id="logoif"></div>
-                <div id="forumimg" data-step="1" data-intro="This is a tooltip!"></div>
+                <div id="logoif" data-step="1" data-intro="Olá, seja muito bem vindo à Plataforma de Gerencimento de TCC, 
+                     aqui você encontrará recursos para auxiliar você e seu grupo juntamente de seu orientador
+                     a desenvolver sua monografia, mapeando todos os passos do grupo como um histórico de processos 
+                     feitos, atas de reuniões automatizadas, sistema de bate-papo, acompanhamento por gráficos, 
+                     enfim, tudo muito intuitivo e dinâmico, fazendo assim com que seu grupo tenha um maior controle 
+                     sobre oque está sendo feito e sobre oque ainda precisa fazer, mantendo assim um ótimo fluxo no desenvolvimento, e com o professor acompanhando passo
+                     a passo todas as etapas, conheça um pouco nossa plataforma !!!"></div>
+                <div id="forumimg" data-step="2" data-intro="Aqui na página principal, você encontra nossa mini rede social, 
+                     na qual você poderá compartilhar suas ideias, comentar ideias dos seus amigos, bater papo no privado, 
+                     ver possíveis ideias de tema para TCC postada por todos integrantes da plataforma, visualizar monografias de 
+                     TCC finalizadas para ter como base, enfim, muitas vantagens que você poderá encontrar aqui. "></div>
                 <div id="aligmenu">
                     <nav id="navigation">
                         <ul>
                             <li><a href="index.php">Home</a></li>
-                            <li><a href="panel.php">TCC</a></li>
-                            <li><a href="" data-toggle="modal" data-target="#myModal2"><i class="fa fa-file-pdf-o"></i> Arquivos</a></li>
-                            <li><a href="" data-toggle="modal" data-target="#myModal"><i class="fa fa-info"></i> Sobre</a></li>
+                            <li data-step="3" data-intro="Nesse menu você encontrará nossa plataforma onde será realizado todo o controle 
+                                da monografia de seu TCC, porém para poder ter acesso total a plataforma, é necessário que você contate um 
+                                orientador mais abaixo, e que ele aceite seu convite, formando assim um grupo e sendo liberado seu acesso a 
+                                plataforma juntamente de todos os integrantes do grupo."><a href="panel.php">TCC</a></li>
+
+                            <li data-step="4" data-intro="Nesse menu, você encontrará todos os PDF disponibilizados pela secretaria para alguns processos envolvendo o grupo de TCC, como 
+                                por exemplo, ata de desistência de grupo e de orientador, ata de responsabilidade, ata de apresentação da monografia, porém esses PDF foram 
+                                todos automatizados pela plataforma, na qual dispensará você ter o trabalho de escrever, pois o sistema fará tudo automaticamente."><a href="" data-toggle="modal" data-target="#myModal2"><i class="fa fa-file-pdf-o"></i> Arquivos</a></li>
+                            <li data-step="10" data-intro="Aqui você encontra mais algumas dicas sobre a plataforma!<br><br> Para finalizar clique no botão ENTENDI e Boa sorte em seu desenvolvimento!"><a href="" data-toggle="modal" data-target="#myModal"><i class="fa fa-info"></i> Sobre</a></li>
                             <!-- Modal -->
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -339,11 +402,11 @@ $Wall->UpdateHora($atual, $expira, $_SESSION['id_login']);
                                         </div>
                                         <div class="modal-body">
                                             <p>A plataforma de Gerenciamento de TCC foi criado para auxiliar 
-                                            o aluno no desenvolvimento de sua monografia, desde a criação 
-                                            de sua ideia em si, até seu objetivo final, a banca. Para tal 
-                                            foi desenvolvido um sistema de rede social onde os alunos vão
-                                            poder trocar ideias através do Feeds de notícias ou pelo bate
-                                            papo privado.</p>
+                                                o aluno no desenvolvimento de sua monografia, desde a criação 
+                                                de sua ideia em si, até seu objetivo final, a banca. Para tal 
+                                                foi desenvolvido um sistema de rede social onde os alunos vão
+                                                poder trocar ideias através do Feeds de notícias ou pelo bate
+                                                papo privado.</p>
                                             <p>Dentro do painel administrativo você encontrará todo o suporte
                                                 para o desenvolvimento do TCC de seu grupo, com muitas funcionalidades
                                                 e controles, para que haja sempre um bom fluxo de seu projeto.</p>
@@ -357,8 +420,8 @@ $Wall->UpdateHora($atual, $expira, $_SESSION['id_login']);
                                 <!-- /.modal-dialog -->
                             </div>
                             <!-- /.modal -->
-                            
-                             <!-- Modal -->
+
+                            <!-- Modal -->
                             <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -402,7 +465,7 @@ $Wall->UpdateHora($atual, $expira, $_SESSION['id_login']);
                                                     <i class="fa fa-file-pdf-o"></i> Autorização para Publicação
                                                 </div>
                                             </a>
-                                            
+
                                             <br style="clear:both;"/>
                                         </div>
                                         <div class="modal-footer">
@@ -423,29 +486,33 @@ $Wall->UpdateHora($atual, $expira, $_SESSION['id_login']);
             <div id="conteudo">
                 <!-- bloco do perfil -->
                 <div id="perfil" class="arredonda">
-                    <div id="fotoperfil" class="destaque">
-                        <img src="<?php echo $fotouser ?>"/>
-                        <p><a onclick="return false;" href="addPhoto.php?id=<?php echo $id_users ?>" title="Editar Foto" class="openInsertForm">Editar Foto...</p></a>
+                    <div data-step="5" data-intro="Aqui você encontra um pequeno painel de configuração de usuário, como foto e dados pessoais, e encontra as publicações de TCC já realizadas e permitidas para exibição.">
+                        <div id="fotoperfil" class="destaque">
+                            <img src="<?php echo $fotouser ?>"/>
+                            <p><a onclick="return false;" href="addPhoto.php?id=<?php echo $id_users ?>" title="Editar Foto" class="openInsertForm">Editar Foto...</p></a>
+                        </div>
+                        <div id="nomeperfil">
+                            <?php echo $nome_user ?>
+                        </div>
+                        <hr/>
+                        <nav>
+                            <a href="userProfile.php?id=<?php echo $id_users; ?>"><ul><i class="fa fa-user"></i> Perfil</ul></a>
+                            <ul><i class="fa fa-gears"></i> Configura&ccedil;&otilde;es</ul>
+                            <ul><i class="fa fa-book"></i> Publica&ccedil;&otilde;es</ul>
+                            <a href="logout.php"><ul><i class="fa fa-sign-out"></i> Sair</ul></a>
+                        </nav>
                     </div>
-                    <div id="nomeperfil">
-                        <?php echo $nome_user ?>
+                    <div data-step="6" data-intro="Nesse bloco você encontrará nosso bate papo privado para trocar ideias com quem desejar da plataforma.">
+                        <br clear="all"/>
+                        <?php include('chat/chat.php'); ?>
                     </div>
-                    <hr/>
-                    <nav>
-                        <a href="userProfile.php?id=<?php echo $id_users; ?>"><ul><i class="fa fa-user"></i> Perfil</ul></a>
-                        <ul><i class="fa fa-gears"></i> Configura&ccedil;&otilde;es</ul>
-                        <ul><i class="fa fa-book"></i> Publica&ccedil;&otilde;es</ul>
-                        <a href="logout.php"><ul><i class="fa fa-sign-out"></i> Sair</ul></a>
-                    </nav>
-                    <br clear="all"/>
-                    <?php include('chat/chat.php'); ?>
                 </div>
                 <!-- final bloco do perfil -->
                 <div id="feeds">
                     <div id="wall_container">
                         <div id="updateboxarea">
                             <form method="post" id="formpost" action="">
-                                <fieldset>
+                                <fieldset data-step="7" data-intro="Aqui você poderá expor suas ideias, opiniões, dúvidas etc.">
                                     <legend>Em que est&aacute; pensando?</legend>
                                     <textarea  class="meuform" name="update" id="update"></textarea><br />
 
@@ -457,7 +524,7 @@ $Wall->UpdateHora($atual, $expira, $_SESSION['id_login']);
                             <div id="flash" align="left"></div>
                         </div>
 
-                        <div class="separador clr"><h3>Feeds</h3></div>
+                        <div class="separador clr" data-step="8" data-intro="Aqui você acompanha tudo oque os usuários da plataforma postaram, você poderá curtir o post de seu amigo se gostar e comentar."><h3>Feeds</h3></div>
                         <div id="content"></div>
                         <div id='loading'></div>
                     </div>
@@ -465,16 +532,15 @@ $Wall->UpdateHora($atual, $expira, $_SESSION['id_login']);
                 </div><!-- final bloco do feeds -->
                 <aside>				
                     <div id="sidebar" class="arredonda">
-                        <div class="separador2 clr"><h3>Professores ADS</h3></div>
-                        <?php
-                        require_once('includes/Conexao.class.php');
-                        $pdo = new Conexao();
+                        <div class="separador2 clr" data-step="9" data-intro="Esse bloco é muito importante para o acesso à plataforma, aqui você encontra todos os Professores do IFSP na 
+                             área de ADS (Análise e Desenvolvimento de Sistemas).<br><br>Abaixo da foto você encontra a área de atuação do professor e sua disponibilidade, e um botão de 
+                             SOLICITAR orientação para formação de grupo do TCC, para enviar sua requisição ao professor clique nesse botão e preencha o formulário em seguida."><h3>Professores ADS</h3></div>
+                             <?php
+                             $result = $pdo->select("SELECT uid,username,email,fotouser,descricao,cargo "
+                                     . "FROM users WHERE tipo = 1 ORDER BY cargo,username ASC");
 
-                        $result = $pdo->select("SELECT uid,username,email,fotouser,descricao,cargo "
-                                . "FROM users WHERE tipo = 1 ORDER BY cargo,username ASC");
-
-                        foreach ($result as $res) {
-                            ?>
+                             foreach ($result as $res) {
+                                 ?>
                             <div id="blocoprofessores">
                                 <div id="fotoprof">
                                     <img src="<?php echo $res['fotouser'] ?>" width="59px"/>
