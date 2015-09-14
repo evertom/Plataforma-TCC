@@ -3,10 +3,10 @@ require_once('verifica-logado.php');
 $id = isset($_GET['idgrupo']) ? $_GET['idgrupo']:"";
 	
 	if($id == ""){
-		echo  "<script type='text/javascript'>
-					window.location.href='panel.php'
-				</script>";
-			exit;
+            echo  "<script type='text/javascript'>
+                        window.location.href='panel.php'
+                    </script>";
+            exit;
 	}
 ?>
 <!DOCTYPE html>
@@ -40,46 +40,47 @@ $id = isset($_GET['idgrupo']) ? $_GET['idgrupo']:"";
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-	<script>
-		//funcao para solicitar mais detalhes da requisicao
-		function RefazRequisicao(idgrupo,idProf){
-			loading_show();
-			var idUser = <?php echo $id_users;?>;
-			var texto = $("#descriProjeto").val();
-			
-			if(texto == ""){
-				alert('Preencha a Descricao do Projeto!!!');
-				loading_hide();
-			}else{
-				$.ajax({
-					type: "POST",
-					url: "ajax/refazRequisicao.php",
-					data: "idgrupo=" + idgrupo + "&idUser="+idUser + "&idProf=" + idProf + "&texto="+texto,
-					success: function(html){
-						$('.alert-success').fadeIn('fast');
-						loading_hide();
-					}
-				});
-			}
-		}
-		
-		//função para mostrar o loading
-		function loading_show(){
-			$('#loading').html("<img src='img/loader.gif'/>").fadeIn('fast');
-		}
-		//função para esconder o loading
-		function loading_hide(){
-			$('#loading').fadeOut('fast');
-		}
-		
-		function limpa(){
-			$('#contact').find("textarea").val("");
-			$('#contact').find("input").each(function(){
-				$(this).val("");
-			});
-		}
-		
-	</script>
+    <link rel="stylesheet" href="bootstrap3-dialog-master/src/css/bootstrap-dialog.css"/>
+    <script>
+        //funcao para solicitar mais detalhes da requisicao
+        function RefazRequisicao(idgrupo,idProf){
+            loading_show();
+            var idUser = <?php echo $id_users;?>;
+            var texto = $("#descriProjeto").val();
+
+            if(texto == ""){
+                showAlert('alert',{title: 'Aviso!!!', message:'Preencha a Descricao do Projeto!!!', type: BootstrapDialog.TYPE_WARNING}, null);
+                loading_hide();
+            }else{
+                $.ajax({
+                    type: "POST",
+                    url: "ajax/refazRequisicao.php",
+                    data: "idgrupo=" + idgrupo + "&idUser="+idUser + "&idProf=" + idProf + "&texto="+texto,
+                    success: function(html){
+                        $('.alert-success').fadeIn('fast');
+                        loading_hide();
+                    }
+                });
+            }
+        }
+
+        //funï¿½ï¿½o para mostrar o loading
+        function loading_show(){
+            $('#loading').html("<img src='img/loader.gif'/>").fadeIn('fast');
+        }
+        //funï¿½ï¿½o para esconder o loading
+        function loading_hide(){
+            $('#loading').fadeOut('fast');
+        }
+
+        function limpa(){
+            $('#contact').find("textarea").val("");
+            $('#contact').find("input").each(function(){
+                $(this).val("");
+            });
+        }
+
+    </script>
 </head>
 <body>
     <div id="wrapper">
@@ -212,5 +213,8 @@ $id = isset($_GET['idgrupo']) ? $_GET['idgrupo']:"";
 
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
+    <script src="bootstrap3-dialog-master/src/js/bootstrap-dialog.js"></script>
+    <script src="bootstrap3-dialog-master/alertsMsg.js"></script>
+  
 </body>
 </html>

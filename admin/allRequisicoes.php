@@ -19,6 +19,7 @@ require_once('verifica-logado.php');
 
         <!-- MetisMenu CSS -->
         <link href="metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="bootstrap3-dialog-master/src/css/bootstrap-dialog.css"/>
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <!-- Custom CSS -->
         <link href="sb-admin-2/css/sb-admin-2.css" rel="stylesheet">
@@ -32,6 +33,8 @@ require_once('verifica-logado.php');
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+        
+        
         <script>
             $(document).ready(function () {
                 $('.panel-red a').click(function () {
@@ -50,7 +53,7 @@ require_once('verifica-logado.php');
                             expansivePainel.removeClass('panel-red').addClass('panel-green');
                         },
                         error: function (html) {
-                            alert('Erro de processo!!!');
+                            showAlert('alert',{title: 'ERRO!!!', message:'Erro de processo!!!', type: BootstrapDialog.TYPE_DANGER}, null);
                         }
                     });
 
@@ -349,5 +352,9 @@ require_once('verifica-logado.php');
 
         <!-- Custom Theme JavaScript -->
         <script src="js/sb-admin-2.js"></script>
+        
+        <script src="bootstrap3-dialog-master/src/js/bootstrap-dialog.js"></script>
+        <script src="bootstrap3-dialog-master/alertsMsg.js"></script>
+        
     </body>
 </html>

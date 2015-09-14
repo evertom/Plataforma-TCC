@@ -254,9 +254,9 @@ if (isset($_POST["upload_thumbnail"]) && strlen($large_photo_exists)>0) {
 			
 			unlink($large_image_location.$userfile_tmp);
 			
-			echo  "<script type='text/javascript'>alert('Thumb Atualizado com sucesso');window.location.replace('index.php')</script>";
+			echo  "<script type='text/javascript'>showAlert('alert',{title: 'Aviso!!!', message:'Thumb Atualizado com sucesso', type: BootstrapDialog.TYPE_INFO, location:'index.php'}, null);</script>";
 		}else{
-			echo  "<script type='text/javascript'>alert('Erro ao Atualizar Foto...');window.location.reload()</script>";
+			echo  "<script type='text/javascript'>showAlert('alert',{title: 'Aviso!!!', message:'Erro ao Atualizar Foto...', type: BootstrapDialog.TYPE_DANGER}, null);</script>";
 		}
 	exit();
 }
@@ -283,6 +283,12 @@ if ($_GET['a']=="delete" && strlen($_GET['t'])>0){
 	<title>Gigasystems - Painel Administrativo</title>
 	<script type="text/javascript" src="js/jquery-pack.js"></script>
 	<script type="text/javascript" src="js/jquery.imgareaselect.min.js"></script>
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js" type="text/javascript" ></script>
+        <link rel="stylesheet" href="bootstrap3-dialog-master/src/css/bootstrap-dialog.css"/>
+        <script src="bootstrap3-dialog-master/src/js/bootstrap-dialog.js"></script>
+        <script src="bootstrap3-dialog-master/alertsMsg.js"></script>
 
 </head>
 <body>
@@ -326,8 +332,8 @@ $(document).ready(function () {
 		var w = $('#w').val();
 		var h = $('#h').val();
 		if(x1=="" || y1=="" || x2=="" || y2=="" || w=="" || h==""){
-			alert("Voc\u00ea deve fazer uma selec\u00e3o primeiro...");
-			return false;
+			showAlert('alert',{title: 'Aviso!!!', message:'Voc\u00ea deve fazer uma selec\u00e3o primeiro...', type: BootstrapDialog.TYPE_WARNING}, null);
+                        return false;
 		}else{
 			return true;
 		}

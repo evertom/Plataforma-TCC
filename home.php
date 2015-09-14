@@ -10,9 +10,15 @@ ob_start();
         <link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
         <script language="JavaScript" src="js/jquery-2.1.1.js"></script>
         <link rel="shortcut icon" href="favicon.ico"/>
+        <link rel="stylesheet" href="admin/bootstrap/css/bootstrap.min.css"/>
+        <script src="admin/bootstrap/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="admin/bootstrap3-dialog-master/src/css/bootstrap-dialog.css"/>
+        <script src="admin/bootstrap3-dialog-master/src/js/bootstrap-dialog.js"></script>
+        <script src="admin/bootstrap3-dialog-master/alertsMsg.js"></script>
         <script>
             //Aqui inicio do c�digo Jquery
             $(document).ready(function () {
+               
                 var $divShow = $('#showCad');
                 var $divShow2 = $('#showCad2');
                 var $divClick = $('#cadastro');
@@ -55,30 +61,49 @@ ob_start();
             </div>
             <form name="form_pesquisa" id="form_pesquisa" method="post" action="">
                 <div id="login-box">
-                    <H2>Login</H2>
-                    Entre com seus dados corretamente para acessar o sistema.
-                    <br/>
-                    <br/>
-                    <div id="login-box-name">Email:</div>
-                    <div id="login-box-field">
-                        <input name="email" class="form-login" title="Username" value="" size="30" />
-                    </div>
-                    <div id="login-box-name">Password:</div>
-                    <div id="login-box-field">
-                        <input name="pass" type="password" class="form-login" title="Password" value="" size="30"/>
-                    </div>
-                    <br/>
-                    <span class="login-box-options">
-                        <div id="cadastro">
-                            Cadastre-se
+                    <div class='row'>
+                        <div class='col-lg-12 col-sm-12 col-xs-12 col-md-12'>
+                            <h4>Login <small>Entre com seus dados corretamente para acessar o sistema.</small></h4>
                         </div>
-                        <div id="lembrarSenha">
-                            Esqueceu sua senha?
+                    </div>
+                    <div class='row'>
+                        <div class='col-lg-12 col-sm-12 col-xs-12 col-md-12'>
+                            <label>
+                                <span>Email</span>
+                                <br clear='all'/>
+                                <input name="email" class="form-login" title="Username" value="" size="30" />
+                            </label>
                         </div>
-                    </span>
-
-                    <input type="submit" value="" class="bt-enviar"/>
-                    <input type="hidden" name="acao" value="Login"/>
+                    </div>
+                    <div class='row'>
+                        <div class='col-lg-12 col-sm-12 col-xs-12 col-md-12'>
+                            <label>
+                                <span>Password:</span>
+                                <br clear='all'/>
+                                <input name="pass" type="password" class="form-login" title="Password" value="" size="30"/>
+                            </label>
+                        </div>
+                    </div>
+                   
+                    <div class='row'>
+                        <div class='col-lg-4 col-sm-4 col-xs-4 col-md-4'>
+                               <div id="cadastro">
+                                   Cadastre-se
+                               </div>
+                        </div>
+                        <div class='col-lg-8 col-sm-8 col-xs-8 col-md-8'>
+                           <div id="lembrarSenha">
+                               Esqueceu sua senha?
+                           </div>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='col-lg-12 col-sm-12 col-xs-12 col-md-12'>
+                            <input type="submit" value="" class="bt-enviar"/>
+                            <input type="hidden" name="acao" value="Login"/>
+                        </div>
+                    </div>
+                    
                 </div>
             </form>
         </article>
@@ -150,10 +175,12 @@ if (isset($action) && $action != "") {
 
             if ($Autentica->Validar_Usuario()) {
                 echo "<script type='text/javascript'>"
-                . "alert('Login Efetuado');location.href='admin/index.php'</script>";
+                . " showAlert('alert',{title: 'Bem vindo!!!', message:'Seja bem vindo ao sistema TCC.', location:'admin/index.php' }, null);"
+                . "</script>";
             } else {
                 echo "<script type='text/javascript'>"
-                . "alert('Erro ao logar');location.href='home.php'</script>";
+                . "showAlert('alert',{title: 'Aviso!!!', message:'senha ou login incorretos!!!', type: BootstrapDialog.TYPE_WARNING, location:'home.php'}, null);"
+                . "</script>";
             }
             break;
 
@@ -168,10 +195,10 @@ if (isset($action) && $action != "") {
 
             if ($Users->AddUser()) {
                 echo "<script type='text/javascript'>"
-                . "alert('Login Criado');location.href='home.php'</script>";
+                . "showAlert('alert',{title: 'Parabéns!!!', message:'Login criado com sucesso!!!', location:'home.php'}, null);</script>";
             } else {
                 echo "<script type='text/javascript'>"
-                . "alert('Erro ao criar Login');location.href='home.php'</script>";
+                . "showAlert('alert',{title: 'Aviso!!!', message:'Erro ao tentar cadastrar novo login!!!', type: BootstrapDialog.TYPE_DANGER, location:'home.php'}, null);</script>";
             }
             break;
         case 'updatePost':

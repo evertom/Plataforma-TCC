@@ -1,15 +1,10 @@
 <?php
-require_once('verifica-logado.php');
-$id1 = isset($_GET['id1']) ? $_GET['id1'] : "";
-$id2 = isset($_GET['id2']) ? $_GET['id2'] : "";
-$id3 = isset($_GET['id3']) ? $_GET['id3'] : "";
-$idgrupo = isset($_GET['idgrupo']) ? $_GET['idgrupo'] : "";
-$idprof = isset($_GET['idprof']) ? $_GET['idprof'] : "";
-
-if ($id1 == ""){
-    echo "<script type='text/javascript'>alert('Acesso negado...');"
-    . "location.href='panel.php'</script>";
-}
+    require_once('verifica-logado.php');
+    $id1 = isset($_GET['id1']) ? $_GET['id1'] : "";
+    $id2 = isset($_GET['id2']) ? $_GET['id2'] : "";
+    $id3 = isset($_GET['id3']) ? $_GET['id3'] : "";
+    $idgrupo = isset($_GET['idgrupo']) ? $_GET['idgrupo'] : "";
+    $idprof = isset($_GET['idprof']) ? $_GET['idprof'] : "";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,6 +32,18 @@ if ($id1 == ""){
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"/></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"/></script>
         <![endif]-->
+        <!-- jQuery -->
+        <link rel="stylesheet" href="bootstrap3-dialog-master/src/css/bootstrap-dialog.css"/>
+        
+        <!-- Bootstrap Core JavaScript -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="js/metisMenu.min.js"></script>
+        <!-- Custom Theme JavaScript -->
+        <script src="js/sb-admin-2.js"></script>
+        <script src="bootstrap3-dialog-master/src/js/bootstrap-dialog.js"></script>
+        <script src="bootstrap3-dialog-master/alertsMsg.js"></script>
+        
         <script>
             $(document).ready(function () {
                 $("#contact").submit(function () {
@@ -94,7 +101,12 @@ if ($id1 == ""){
         </script>
     </head>
     <body>
-        <div id="wrapper">
+    <?php
+    if ($id1 == ""){
+        echo "<script type='text/javascript'>showAlert('alert',{title: 'Aviso!!!', message:'Acesso negado...', type: BootstrapDialog.TYPE_WARNING, location:'panel.php'}, null);</script>";
+    }
+    ?>
+         <div id="wrapper">
             <!-- Navigation -->
             <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <?php require_once('pages/headerAdmin.php'); ?>
@@ -160,13 +172,6 @@ if ($id1 == ""){
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
-        <!-- jQuery -->
-        <script src="js/jquery.min.js"></script>
-        <!-- Bootstrap Core JavaScript -->
-        <script src="js/bootstrap.min.js"></script>
-        <!-- Metis Menu Plugin JavaScript -->
-        <script src="js/metisMenu.min.js"></script>
-        <!-- Custom Theme JavaScript -->
-        <script src="js/sb-admin-2.js"></script>
+        
     </body>
 </html>

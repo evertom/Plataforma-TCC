@@ -87,6 +87,9 @@ if (count($result)) {
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+         <link rel="stylesheet" href="bootstrap3-dialog-master/src/css/bootstrap-dialog.css"/>
+        <script src="bootstrap3-dialog-master/src/js/bootstrap-dialog.js"></script>
+        <script src="bootstrap3-dialog-master/alertsMsg.js"></script>
         <script>
             $(document).ready(function () {
 
@@ -236,7 +239,7 @@ if (count($result)) {
                         start = moment(start + "00:00", "YYYY/MM/DD HH:mm");
                         end = moment(end + " 00:00", "YYYY/MM/DD HH:mm");
                         if (end.unix() < start.unix()) {
-                            alert("A data inicial não pode ser menor que a data final");
+                            showAlert('alert',{title: 'AVISO!!!', message:'A data inicial não pode ser menor que a data final', type: BootstrapDialog.TYPE_WARNING}, null);
                             return false;
                         }
                     }

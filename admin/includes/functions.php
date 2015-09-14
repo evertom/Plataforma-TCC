@@ -24,9 +24,9 @@ class Wall_Updates extends Conexao{
 	
 	public function Updates($uid){
 		try{
-			//verifica se há conexão com o banco de dados
+			//verifica se hï¿½ conexï¿½o com o banco de dados
 			if(parent::getPDO() == null){
-				//caso não tenha conecta-se com o banco de dados
+				//caso nï¿½o tenha conecta-se com o banco de dados
 				parent::conectar();
 			}
 		  
@@ -42,8 +42,8 @@ class Wall_Updates extends Conexao{
 			}else{
 				//caso haja erro na query deconecta do banco de dados
 				parent::desconectar();
-				//atribui um valor de erro para a variável    
-				//retorna falso para a aplicação, houve algum tipo de erro
+				//atribui um valor de erro para a variï¿½vel    
+				//retorna falso para a aplicaï¿½ï¿½o, houve algum tipo de erro
 				return $this->erro = 'Erro ao atualizar, entre em contato com o administrador !';
 			}
 		  
@@ -55,9 +55,9 @@ class Wall_Updates extends Conexao{
 	
 	public function UpdatesAjax($uid,$inicio,$qntd){
 		try{
-			//verifica se há conexão com o banco de dados
+			//verifica se hï¿½ conexï¿½o com o banco de dados
 			if(parent::getPDO() == null){
-				//caso não tenha conecta-se com o banco de dados
+				//caso nï¿½o tenha conecta-se com o banco de dados
 				parent::conectar();
 			}
 		  
@@ -73,8 +73,8 @@ class Wall_Updates extends Conexao{
 			}else{
 				//caso haja erro na query deconecta do banco de dados
 				parent::desconectar();
-				//atribui um valor de erro para a variável    
-				//retorna falso para a aplicação, houve algum tipo de erro
+				//atribui um valor de erro para a variï¿½vel    
+				//retorna falso para a aplicaï¿½ï¿½o, houve algum tipo de erro
 				return $this->erro = 'Erro ao atualizar, entre em contato com o administrador !';
 			}
 		  
@@ -88,9 +88,9 @@ class Wall_Updates extends Conexao{
 	   public function UsersSelect(){
 	   
 		try{
-			//verifica se há conexão com o banco de dados
+			//verifica se hï¿½ conexï¿½o com o banco de dados
 			if(parent::getPDO() == null){
-				//caso não tenha conecta-se com o banco de dados
+				//caso nï¿½o tenha conecta-se com o banco de dados
 				parent::conectar();
 			}
 		  
@@ -106,8 +106,8 @@ class Wall_Updates extends Conexao{
 			}else{
 				//caso haja erro na query deconecta do banco de dados
 				parent::desconectar();
-				//atribui um valor de erro para a variável    
-				//retorna falso para a aplicação, houve algum tipo de erro
+				//atribui um valor de erro para a variï¿½vel    
+				//retorna falso para a aplicaï¿½ï¿½o, houve algum tipo de erro
 				return $this->erro = 'Erro ao atualizar, entre em contato com o administrador !';
 			}
 		}catch( PDOException $e ){
@@ -121,9 +121,9 @@ class Wall_Updates extends Conexao{
 	   public function Comments($msg_id){
 	   
 		try{
-			//verifica se há conexão com o banco de dados
+			//verifica se hï¿½ conexï¿½o com o banco de dados
 			if(parent::getPDO() == null){
-				//caso não tenha conecta-se com o banco de dados
+				//caso nï¿½o tenha conecta-se com o banco de dados
 				parent::conectar();
 			}
 		  
@@ -139,8 +139,8 @@ class Wall_Updates extends Conexao{
 			}else{
 				//caso haja erro na query deconecta do banco de dados
 				parent::desconectar();
-				//atribui um valor de erro para a variável    
-				//retorna falso para a aplicação, houve algum tipo de erro
+				//atribui um valor de erro para a variï¿½vel    
+				//retorna falso para a aplicaï¿½ï¿½o, houve algum tipo de erro
 				return $this->erro = 'Erro ao atualizar, entre em contato com o administrador !';
 			}
 		}catch( PDOException $e ){
@@ -153,9 +153,9 @@ class Wall_Updates extends Conexao{
 	public function Gravatar($uid) 
 	{
 		try{
-			//verifica se há conexão com o banco de dados
+			//verifica se hï¿½ conexï¿½o com o banco de dados
 			if(parent::getPDO() == null){
-				//caso não tenha conecta-se com o banco de dados
+				//caso nï¿½o tenha conecta-se com o banco de dados
 				parent::conectar();
 			}
 			
@@ -182,10 +182,10 @@ class Wall_Updates extends Conexao{
 	{
 		try{
 			if(parent::getPDO() == null){
-              //caso não tenha conecta-se com o banco de dados
+              //caso nï¿½o tenha conecta-se com o banco de dados
                parent::conectar();
         }
-		//preparação para a query com os metodos pdo
+		//preparaï¿½ï¿½o para a query com os metodos pdo
 		$stmt = $this->pdo->prepare('UPDATE users SET fotouser = :pfotouser WHERE uid = :puid');
 		$stmt->bindValue(':pfotouser', $this->thumb, PDO::PARAM_STR);
 		$stmt->bindValue(':puid', $this->uid, PDO::PARAM_INT);
@@ -207,9 +207,9 @@ class Wall_Updates extends Conexao{
 		$ip=$_SERVER['REMOTE_ADDR'];
 	   
 		try{
-			//verifica se há conexão com o banco de dados
+			//verifica se hï¿½ conexï¿½o com o banco de dados
 			if(parent::getPDO() == null){
-				//caso não tenha conecta-se com o banco de dados
+				//caso nï¿½o tenha conecta-se com o banco de dados
 				parent::conectar();
 			}
 		  
@@ -240,8 +240,8 @@ class Wall_Updates extends Conexao{
 			}else{
 				//caso haja erro na query deconecta do banco de dados
 				parent::desconectar();
-				//atribui um valor de erro para a variável    
-				//retorna falso para a aplicação, houve algum tipo de erro
+				//atribui um valor de erro para a variï¿½vel    
+				//retorna falso para a aplicaï¿½ï¿½o, houve algum tipo de erro
 				return $this->erro = 'Erro ao atualizar, entre em contato com o administrador !';
 			}
 		}catch( PDOException $e ){
@@ -252,34 +252,35 @@ class Wall_Updates extends Conexao{
 	
 	//Delete update
 	public function Delete_Update($uid, $msg_id){
-		try{
-			//verifica se há conexão com o banco de dados
-			if(parent::getPDO() == null){
-				//caso não tenha conecta-se com o banco de dados
-				parent::conectar();
-			}
-			echo "<script>alert('chego aki comm');</script>";
-			
-			//query a ser feita no banco de dados, usando PDO
-			$retorno = $this->pdo->prepare("DELETE FROM `comments` WHERE msg_id_fk = '$msg_id'");
-			
-			if($retorno->execute()){
-				$retorno2 = $this->pdo->prepare("DELETE FROM `messages` WHERE msg_id = '$msg_id' and uid_fk='$uid'");
-				if($retorno2->execute()){
-					//desconecta do banco de dados
-					parent::desconectar();
-					return true;
-				}	
-			}else{
-				//caso haja erro na query deconecta do banco de dados
-				parent::desconectar();
-				return false;
-			}
-		}catch( PDOException $e ){
-			echo $e->getMessage ();
-			return null;
-		}    
-    }
+            try{
+                //verifica se hï¿½ conexï¿½o com o banco de dados
+                if(parent::getPDO() == null){
+                    //caso nï¿½o tenha conecta-se com o banco de dados
+                    parent::conectar();
+                }
+                
+                //echo "<script>alert('chego aki comm');</script>";
+
+                //query a ser feita no banco de dados, usando PDO
+                $retorno = $this->pdo->prepare("DELETE FROM `comments` WHERE msg_id_fk = '$msg_id'");
+
+                if($retorno->execute()){
+                    $retorno2 = $this->pdo->prepare("DELETE FROM `messages` WHERE msg_id = '$msg_id' and uid_fk='$uid'");
+                    if($retorno2->execute()){
+                        //desconecta do banco de dados
+                        parent::desconectar();
+                        return true;
+                    }	
+                }else{
+                    //caso haja erro na query deconecta do banco de dados
+                    parent::desconectar();
+                    return false;
+                }
+            }catch( PDOException $e ){
+                echo $e->getMessage ();
+                return null;
+            }    
+        }
 	
 	//Insert Comments
 	public function Insert_Comment($uid,$msg_id,$comment) 
@@ -289,9 +290,9 @@ class Wall_Updates extends Conexao{
 		$ip=$_SERVER['REMOTE_ADDR'];
 		
 		try{
-			//verifica se há conexão com o banco de dados
+			//verifica se hï¿½ conexï¿½o com o banco de dados
 			if(parent::getPDO() == null){
-				//caso não tenha conecta-se com o banco de dados
+				//caso nï¿½o tenha conecta-se com o banco de dados
 				parent::conectar();
 			}
 		  
@@ -320,8 +321,8 @@ class Wall_Updates extends Conexao{
 			}else{
 				//caso haja erro na query deconecta do banco de dados
 				parent::desconectar();
-				//atribui um valor de erro para a variável    
-				//retorna falso para a aplicação, houve algum tipo de erro
+				//atribui um valor de erro para a variï¿½vel    
+				//retorna falso para a aplicaï¿½ï¿½o, houve algum tipo de erro
 				return $this->erro = 'Erro ao atualizar, entre em contato com o administrador !';
 			}
 		}catch( PDOException $e ){
@@ -333,9 +334,9 @@ class Wall_Updates extends Conexao{
 	//Delete Comments
 	public function Delete_Comment($uid, $com_id){
 	    try{
-			//verifica se há conexão com o banco de dados
+			//verifica se hï¿½ conexï¿½o com o banco de dados
 			if(parent::getPDO() == null){
-				//caso não tenha conecta-se com o banco de dados
+				//caso nï¿½o tenha conecta-se com o banco de dados
 				parent::conectar();
 			}
 			
@@ -358,9 +359,9 @@ class Wall_Updates extends Conexao{
 	//Atualiza hora
 	public function UpdateHora($atual,$expira,$uid){
 	    try{
-			//verifica se há conexão com o banco de dados
+			//verifica se hï¿½ conexï¿½o com o banco de dados
 			if(parent::getPDO() == null){
-				//caso não tenha conecta-se com o banco de dados
+				//caso nï¿½o tenha conecta-se com o banco de dados
 				parent::conectar();
 			}
 			

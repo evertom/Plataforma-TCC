@@ -6,7 +6,7 @@ $(document).ready(function () {
 
         if (updateval == '')
         {
-            alert("Por favor digite seu Post !!!");
+            showAlert('alert',{title: 'AVISO!!!', message:'Por favor digite seu Post !!!', type: BootstrapDialog.TYPE_WARNING}, null);
         }
         else
         {
@@ -38,7 +38,7 @@ $(document).ready(function () {
         var dataString = 'comment=' + comment + '&msg_id=' + ID;
 
         if (comment == '') {
-            alert("Por favor digite seu Post !!!");
+            showAlert('alert',{title: 'AVISO!!!', message:'Por favor digite seu Post !!!', type: BootstrapDialog.TYPE_WARNING}, null);
         }
         else {
             $.ajax({
@@ -66,40 +66,42 @@ $(document).ready(function () {
     // delete comment
     $('.stcommentdelete').live("click", function () {
         var ID = $(this).attr("id");
-        var dataString = 'com_id=' + ID;
-
-        if (confirm("Tem certeza que deseja excluir este coment\u00e1rio?")) {
-
-            $.ajax({
-                type: "POST",
-                url: "delete_comment_ajax.php",
-                data: dataString,
-                cache: false,
-                success: function (html) {
-                    $("#stcommentbody" + ID).slideUp();
-                }
-            });
-        }
+        
+        showAlert('confirm',{
+            type: BootstrapDialog.TYPE_DANGER, 
+            title: 'AVISO!!!', message:'Tem certeza que deseja excluir este coment\u00e1rio?'
+        },
+        {
+            method:'POST', 
+            type: 'POST', // Só ta funcionado com type, deve ser versão de lib jquery
+            url: "delete_comment_ajax.php", 
+            data: {'com_id': ID },
+            cache: false,
+            some_function: function(){
+                $("#stcommentbody" + ID).slideUp();
+            }
+        });
         return false;
     });
 
     // delete update
     $('.stdelete').live("click", function () {
         var ID = $(this).attr("id");
-        var dataString = 'msg_id=' + ID;
-
-        if (confirm("Tem certeza que deseja excluir este post?")) {
-
-            $.ajax({
-                type: "POST",
-                url: "delete_message_ajax.php",
-                data: dataString,
-                cache: false,
-                success: function (html) {
-                    $("#stbody" + ID).slideUp();
-                }
-            });
-        }
+        
+        showAlert('confirm',{
+            type: BootstrapDialog.TYPE_DANGER, 
+            title: 'AVISO!!!', message:'Tem certeza que deseja excluir este post?'
+        },
+        {
+            method:'POST', 
+            type: 'POST', // Só ta funcionado com type, deve ser versão de lib jquery
+            url: "delete_message_ajax.php", 
+            data: {'msg_id': ID },
+            cache: false,
+            some_function: function(){
+                 $("#stbody" + ID).slideUp();
+            }
+        });
         return false;
     });
 });

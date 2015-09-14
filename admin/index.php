@@ -41,7 +41,11 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
         <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <meta http-equiv="cache-control" content="no-cache"/>
         <meta http-equiv="pragma" content="no-cache" />
+        <link rel="stylesheet" href="bootstrap3-dialog-master/src/css/bootstrap-dialog.css"/>
+        <script src="bootstrap3-dialog-master/src/js/bootstrap-dialog.js"></script>
+        <script src="bootstrap3-dialog-master/alertsMsg.js"></script>
 
+        
         <link rel="stylesheet" type="text/css" media="all" href="css/wall.css" />
         <script type="text/javascript" src="js/jquery.oembed.js"></script>
         <script type="text/javascript" src="js/wall.js"></script>
@@ -52,9 +56,7 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
         <script type="text/javascript" src="chat/js/functions.js"></script>
         <script type="text/javascript" src="chat/js/chat.js"></script>
         <!-- >Chat Messenger<--->
-
-
-
+        
         <link rel="shortcut icon" href="favicon.ico"/>
         <script type="text/javascript">
             var pagina = 0;
@@ -207,7 +209,7 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
                     var id = div.find('.comment_button').attr('id');
 
                     if (texto === '') {
-                        alert("Por favor digite seu Post !!!");
+                        showAlert('alert',{title: 'AVISO!!!', message:'Por favor digite seu Post !!!', type: BootstrapDialog.TYPE_WARNING}, null);
                         div.find('.postText').focus();
                     } else {
                         $.ajax({
@@ -265,7 +267,7 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
                     texto = $.trim(texto);
 
                     if (texto === '') {
-                        alert("Por favor digite seu Coment\u00e1rio !!!");
+                        showAlert('alert',{title: 'AVISO!!!', message:'Por favor digite seu Coment\u00e1rio !!!', type: BootstrapDialog.TYPE_WARNING}, null);
                         div.find('.ComentarioText').focus();
                     } else {
                         $.ajax({
