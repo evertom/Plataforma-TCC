@@ -33,7 +33,7 @@
                 method: 'GET', //tipo de envio de dados
                 type: 'GET', //Tipo de envio de dados
                 cache: false, //Padrão de cache false
-                some_function: null //Alguma função que se queira executar apos o ajax.
+                after_function: null //Alguma função que se queira executar apos o ajax.
             };
             
             //Nesta Etapa estou incluindo as opção passadas por parametros
@@ -58,21 +58,15 @@
                             dataType: options_conection.dataType,
                             data: options_conection.data,
                             cache: options_conection.cache,
-                            async: false,
+                            async: options_conection.async,
                             beforeSend: function(){
                                 dialogRef.enableButtons(false);
                                 dialogRef.setClosable(false);
                                 dialogRef.getModalBody().html(options_style.text_before_send);
                             },
                             success: function(data){
-                                if(data){
-                                    dialogRef.getModalBody().html(options_style.text_before_confirm);
-                                    dialogRef.setType(BootstrapDialog.TYPE_SUCCESS);
-                                    if(typeof(options_conection.some_function)==="function"){
-                                        return options_conection.some_function.call();
-                                    }
-                                }else{
-                                    dialogRef.getModalBody().html(options_style.text_before_fail);
+                                if(typeof(options_conection.after_function)==="function"){
+                                    return options_conection.after_function.call(this, data, dialogRef);
                                 }
                             },
                             error: function(msg){

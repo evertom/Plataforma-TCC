@@ -77,8 +77,14 @@ $(document).ready(function () {
             url: "delete_comment_ajax.php", 
             data: {'com_id': ID },
             cache: false,
-            some_function: function(){
-                $("#stcommentbody" + ID).slideUp();
+            after_function: function(data, dialogRef){
+                if(data){
+                    dialogRef.getModalBody().html('procedimento realizado com sucesso!');
+                    dialogRef.setType(BootstrapDialog.TYPE_SUCCESS);
+                    $("#stcommentbody" + ID).slideUp();
+                }else{
+                    dialogRef.getModalBody().html('falha ao realizar o procedimento!');
+                }
             }
         });
         return false;
@@ -98,8 +104,14 @@ $(document).ready(function () {
             url: "delete_message_ajax.php", 
             data: {'msg_id': ID },
             cache: false,
-            some_function: function(){
-                 $("#stbody" + ID).slideUp();
+            after_function: function(data, dialogRef){
+                if(data){
+                    dialogRef.getModalBody().html('procedimento realizado com sucesso!');
+                    dialogRef.setType(BootstrapDialog.TYPE_SUCCESS);
+                    $("#stbody" + ID).slideUp();
+                }else{
+                    dialogRef.getModalBody().html('falha ao realizar o procedimento!');
+                }
             }
         });
         return false;
