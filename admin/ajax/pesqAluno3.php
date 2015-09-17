@@ -16,11 +16,11 @@ $msg = "";
     $busca = $pdo->select("SELECT * FROM grupo_has_users gh WHERE gh.uid = {$resultado[0]['uid']}");
     $pdo->desconectar();
     if (count($busca)) {
-        $msg = "";
+        $msg = "Aluno já está em um Grupo de TCC...";
     } else {
         if (count($resultado)) {
             foreach ($resultado as $res) {
-                $msg .="<input type='checkbox' name='pront3' required='required' value='" . $res['uid'] . "'> " . $res['username'] . " / " . $res['prontuario'] . "</input><br/>";
+                $msg .="<div class='col-lg-2'><input type='checkbox' class='form-control' name='pront3' required='required' value='" . $res['uid'] . "'/></div> " . $res['username'] . " / " . $res['prontuario'] . "<br/>";
             }
         }
     }

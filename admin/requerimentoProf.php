@@ -20,29 +20,38 @@ if ($idProf == "" || $nomeProf == "") {
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8"/>
+       <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <meta http-equiv="cache-control" content="no-cache"/>
-        <meta http-equiv="pragma" content="no-cache" />
-        <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
         <title>Admin</title>
         <!-- Bootstrap Core CSS -->
-        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
         <!-- MetisMenu CSS -->
-        <link href="metisMenu/dist/metisMenu.min.css" rel="stylesheet">
-        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <link href="metisMenu/dist/metisMenu.min.css" rel="stylesheet"/>
         <!-- Custom CSS -->
-        <link href="sb-admin-2/css/sb-admin-2.css" rel="stylesheet">
+        <link href="sb-admin-2/css/sb-admin-2.css" rel="stylesheet"/>
         <!-- Custom Fonts -->
-        <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"/></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"/></script>
         <![endif]-->
+        <link rel="stylesheet" href="bootstrap3-dialog-master/src/css/bootstrap-dialog.css"/>
+        <!-- jQuery -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="js/metisMenu.min.js"></script>
+        <!-- Custom Theme JavaScript -->
+        <script src="js/sb-admin-2.js"></script>
+        <script src="bootstrap3-dialog-master/src/js/bootstrap-dialog.js"></script>
+        <script src="bootstrap3-dialog-master/alertsMsg.js"></script>
         <script>
             $(document).ready(function () {
                 $("#contact").submit(function () {
@@ -53,70 +62,74 @@ if ($idProf == "" || $nomeProf == "") {
                     var id = null;
 
                     $.ajax
-                    ({
-                        async: false,
-                        type: "POST", //metodo POST
-                        dataType: 'json',
-                        url: "ajax/insertReq.php",
-                        data: valores,
-                        success: function (data)
-                        {
-                            console.log(data);
-                            ok = data.msg;
-                        },
-                        error: function (data) {
-                            $('.alert-danger').fadeIn('fast');
-                            ok = false;
-                        },
-                        complete: function () {
-                            loading_hide();
-                            return ok;
-                        }
-                    });
+                            ({
+                                async: false,
+                                type: "POST", //metodo POST
+                                dataType: 'json',
+                                url: "ajax/insertReq.php",
+                                data: valores,
+                                success: function (data)
+                                {
+                                    console.log(data);
+                                    ok = data.msg;
+                                },
+                                error: function (data) {
+                                    showAlert('alert',{title: 'AVISO!!!', 
+                                        message:'Falha no sistema, contate seu administrador...', 
+                                        type: BootstrapDialog.TYPE_ERROR}, setTimeout("window.location = 'index.php'",4500));
+                                    ok = false;
+                                },
+                                complete: function () {
+                                    loading_hide();
+                                    return ok;
+                                }
+                            });
 
                     if (ok === true) {
-                        $('.alert-success').fadeIn('fast');
+                        showAlert('alert',{title: 'AVISO!!!', 
+                            message:'Requerimento enviado com sucesso, aguarde o professor entrar em contato...',
+                            type: BootstrapDialog.TYPE_SUCCESS}, setTimeout("window.location = 'index.php'",4500));
                         limpa();
-                        window.location='index.php';
+                        
                     } else {
-                        $('.alert-danger').fadeIn('fast');
+                        showAlert('alert',{title: 'AVISO!!!', message:'Falha ao cadastrar requerimento...', type: BootstrapDialog.TYPE_ERROR}, setTimeout("window.location = 'index.php'",4500));
                         limpa();
                     }
 
                     return false;
                 });
 
-                // aqui a fun��o ajax que busca os dados em outra pagina do tipo html, n�o � json
+                // aqui a fun??o ajax que busca os dados em outra pagina do tipo html, n?o ? json
                 function load_dados(valores, page, div)
                 {
                     $.ajax
-                    ({
-                        type: 'POST',
-                        dataType: 'html',
-                        url: page,
-                        beforeSend: function () {//Chama o loading antes do carregamento
-                            loading_show();
-                        },
-                        data: "parametro=" + valores,
-                        success: function (msg)
-                        {
-                            loading_hide();
-                            var data = msg;
-                            $(div).html(data).fadeIn();
-                        }
-                    });
+                            ({
+                                type: 'POST',
+                                dataType: 'html',
+                                url: page,
+                                beforeSend: function () {//Chama o loading antes do carregamento
+                                    loading_show();
+                                },
+                                data: "parametro=" + valores,
+                                success: function (msg)
+                                {
+                                    loading_hide();
+                                    var data = msg;
+                                    $(div).html(data).fadeIn();
+                                }
+                            });
                 }
 
                 load_dados(null, 'ajax/pesqAluno1.php', '#Pront1');
 
-                //Aqui uso o evento key up para come�ar a pesquisar, se valor for maior q 2 ele faz a pesquisa
+                //Aqui uso o evento key up para come?ar a pesquisar, se valor for maior q 2 ele faz a pesquisa
                 $('#name1').keyup(function () {
 
                     var $parametro = $(this).val();
 
-                    if ($parametro.length >= 1){
+                    if ($parametro.length >= 1) {
                         load_dados($parametro, 'ajax/pesqAluno1.php', '#Pront1');
-                    } else{
+                    } else {
                         load_dados(null, 'ajax/pesqAluno1.php', '#Pront1');
                     }
                 });
@@ -198,7 +211,7 @@ if ($idProf == "" || $nomeProf == "") {
                     }
                     ?>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-8">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
                             <form method="post" class="reply" id="contact">
                                 <fieldset>
                                     <div class="row">
@@ -209,7 +222,7 @@ if ($idProf == "" || $nomeProf == "") {
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div class="form-group input-group">
+                                            <div class="col-lg-12" style="font-size: 20px;">
                                                 <div id="Pront1"></div>
                                             </div>
                                         </div>
@@ -222,7 +235,7 @@ if ($idProf == "" || $nomeProf == "") {
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div class="form-group input-group">
+                                            <div class="col-lg-12" style="font-size: 20px;">
                                                 <div id="Pront2"></div>
                                             </div>
                                         </div>
@@ -235,7 +248,7 @@ if ($idProf == "" || $nomeProf == "") {
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div class="form-group input-group">
+                                            <div class="col-lg-12" style="font-size: 20px;">
                                                 <div id="Pront3"></div>
                                             </div>
                                         </div>
@@ -249,7 +262,7 @@ if ($idProf == "" || $nomeProf == "") {
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div class="form-group input-group">
+                                            <div class="col-lg-12" style="font-size: 20px;">
                                                 <div id="coori"></div>
                                             </div>
                                         </div>
@@ -283,6 +296,7 @@ if ($idProf == "" || $nomeProf == "") {
 
                                 <div class="clearfix">
                                 </div>
+
                             </form>
                         </div>
                         <div class="col-xs-6 col-md-4">
@@ -311,17 +325,5 @@ if ($idProf == "" || $nomeProf == "") {
 
         </div>
         <!-- /#wrapper -->
-
-        <!-- jQuery -->
-        <script src="js/jquery.min.js"></script>
-
-        <!-- Bootstrap Core JavaScript -->
-        <script src="js/bootstrap.min.js"></script>
-
-        <!-- Metis Menu Plugin JavaScript -->
-        <script src="js/metisMenu.min.js"></script>
-
-        <!-- Custom Theme JavaScript -->
-        <script src="js/sb-admin-2.js"></script>
     </body>
 </html>

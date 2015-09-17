@@ -12,7 +12,7 @@ try {
 $msg = "";
 if (count($resultado)) {
     foreach ($resultado as $res) {
-        $msg .="<input type='checkbox' name='coorient' value='" . $res['uid'] . "'> " . $res['username'] . " / " . $res['prontuario'] . "</input><br/>";
+        $msg .="<div class='col-lg-2'><input type='checkbox' class='form-control' name='coorient' value='" . $res['uid'] . "'/></div> " . $res['username'] . " / " . $res['prontuario'] . "<br/>";
     }
 }
 echo $msg;

@@ -18,7 +18,6 @@ if ($idgrupo == "") {
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
         <!-- MetisMenu CSS -->
         <link href="metisMenu/dist/metisMenu.min.css" rel="stylesheet"/>
-        <script type="text/javascript" src="js/jquery.min.js"></script>
         <!-- Custom CSS -->
         <link href="sb-admin-2/css/sb-admin-2.css" rel="stylesheet"/>
         <!-- Custom Fonts -->
@@ -27,9 +26,20 @@ if ($idgrupo == "") {
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"/></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"/></script>
         <![endif]-->
+        <link rel="stylesheet" href="bootstrap3-dialog-master/src/css/bootstrap-dialog.css"/>
+        <!-- jQuery -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="js/metisMenu.min.js"></script>
+        <!-- Custom Theme JavaScript -->
+        <script src="js/sb-admin-2.js"></script>
+        <script src="bootstrap3-dialog-master/src/js/bootstrap-dialog.js"></script>
+        <script src="bootstrap3-dialog-master/alertsMsg.js"></script>
         <script>
             $(document).ready(function () {
                 $("#contact").submit(function () {
@@ -54,7 +64,9 @@ if ($idgrupo == "") {
                                     ok = data.msg;
                                 },
                                 error: function (data) {
-                                    $('.alert-danger').fadeIn('fast');
+                                    showAlert('alert', {title: 'AVISO!!!',
+                                        message: 'Falha no sistema contate o adiministrador...',
+                                        type: BootstrapDialog.TYPE_ERROR}, setTimeout("window.location = 'index.php'", 4000));
                                     ok = false;
                                 },
                                 complete: function () {
@@ -64,15 +76,14 @@ if ($idgrupo == "") {
                             });
 
                     if (ok == true) {
-                        var deslocamento = $('.alert-success').offset().top;
-                        $('.alert-success').fadeIn('fast');
-                        $('html, body').animate({ scrollTop: deslocamento }, 'slow');
+                        showAlert('alert', {title: 'AVISO!!!',
+                            message: 'Pré Projeto cadastrado com sucesso...',
+                            type: BootstrapDialog.TYPE_SUCCESS}, setTimeout("window.location = 'panel.php'", 4000));
                         limpa();
-                        window.location='panel.php';
                     } else {
-                        var deslocamento = $('.alert-danger').offset().top;
-                        $('.alert-danger').fadeIn('fast');
-                        $('html, body').animate({ scrollTop: deslocamento }, 'slow');
+                        showAlert('alert', {title: 'AVISO!!!',
+                            message: 'Falha ao cadastrar Pré Projeto...',
+                            type: BootstrapDialog.TYPE_ERROR}, setTimeout("window.location = 'panel.php'", 4000));
                         limpa();
                     }
 
@@ -182,13 +193,5 @@ if ($idgrupo == "") {
             <!-- /#page-wrapper -->
         </div>
         <!-- /#wrapper -->
-        <!-- jQuery -->
-        <script src="js/jquery.min.js"></script>
-        <!-- Bootstrap Core JavaScript -->
-        <script src="js/bootstrap.min.js"></script>
-        <!-- Metis Menu Plugin JavaScript -->
-        <script src="js/metisMenu.min.js"></script>
-        <!-- Custom Theme JavaScript -->
-        <script src="js/sb-admin-2.js"></script>
     </body>
 </html>

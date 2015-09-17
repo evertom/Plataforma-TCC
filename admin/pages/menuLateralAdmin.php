@@ -43,7 +43,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <?php
-                            if($_SESSION['tipoUser'] == 1){
+                            if($_SESSION['tipo'] == 1){
                         ?>
                         <li>
                             <a href="viewPDF.php"><i class="fa fa-file-pdf-o fa-fw"></i> Verificar Monografias</a>

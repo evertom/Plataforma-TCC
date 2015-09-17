@@ -18,39 +18,8 @@ ob_start();
         <script>
             //Aqui inicio do c�digo Jquery
             $(document).ready(function () {
-               
-                var $divShow = $('#showCad');
-                var $divShow2 = $('#showCad2');
-                var $divClick = $('#cadastro');
-                var $divClick2 = $('#lembrarSenha');
 
-                //bloco para cadastro
-                $divClick.click(function () {
-                    $('body').css('overflow', 'hidden');
-                    $('body').css('display', 'block');
-                    $divShow.toggle('slow', function () {
-                    });
-                });
 
-                $('#botaoFechar').click(function () {
-                    $('#showCad').fadeOut(500, function () {
-                        $('body').css('overflow', 'auto');
-                    });
-                });
-                //bloca para lembra senha	
-                $divClick2.click(function () {
-                    $('body').css('overflow', 'hidden');
-                    $('body').css('display', 'block');
-
-                    $divShow2.toggle('slow', function () {
-                    });
-                });
-
-                $('#botaoFechar2').click(function () {
-                    $('#showCad2').fadeOut(500, function () {
-                        $('body').css('overflow', 'auto');
-                    });
-                });
             });
         </script>
     </head>
@@ -62,80 +31,139 @@ ob_start();
             <form name="form_pesquisa" id="form_pesquisa" method="post" action="">
                 <div id="login-box">
                     <div class='row'>
-                        <div class='col-lg-12 col-sm-12 col-xs-12 col-md-12'>
-                            <h4>Login <small>Entre com seus dados corretamente para acessar o sistema.</small></h4>
+                        <div class='col-lg-10'>
+                            <h1>Login</h1> Entre com seus dados corretamente para acessar o sistema.
                         </div>
                     </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
                     <div class='row'>
-                        <div class='col-lg-12 col-sm-12 col-xs-12 col-md-12'>
+                        <div class='col-lg-10'>
                             <label>
                                 <span>Email</span>
                                 <br clear='all'/>
-                                <input name="email" class="form-login" title="Username" value="" size="30" />
+                                <input name="email" class="form-control" title="Username" value="" size="34" />
                             </label>
                         </div>
                     </div>
                     <div class='row'>
-                        <div class='col-lg-12 col-sm-12 col-xs-12 col-md-12'>
+                        <div class='col-lg-10'>
                             <label>
                                 <span>Password:</span>
                                 <br clear='all'/>
-                                <input name="pass" type="password" class="form-login" title="Password" value="" size="30"/>
+                                <input name="pass" type="password" class="form-control" title="Password" value="" size="34"/>
                             </label>
                         </div>
                     </div>
-                   
+
                     <div class='row'>
                         <div class='col-lg-4 col-sm-4 col-xs-4 col-md-4'>
-                               <div id="cadastro">
-                                   Cadastre-se
-                               </div>
+                            <div id="cadastro">
+                                <a data-toggle="modal" data-target="#login" style="color: #FFF;">Cadastre-se</a>
+                            </div>
                         </div>
                         <div class='col-lg-8 col-sm-8 col-xs-8 col-md-8'>
-                           <div id="lembrarSenha">
-                               Esqueceu sua senha?
-                           </div>
+                            <div id="lembrarSenha">
+                                <a data-toggle="modal" data-target="#review" style="color: #FFF;">Esqueceu sua senha?</a>
+                            </div>
                         </div>
                     </div>
                     <div class='row'>
-                        <div class='col-lg-12 col-sm-12 col-xs-12 col-md-12'>
+                        <div class='col-lg-10'>
                             <input type="submit" value="" class="bt-enviar"/>
                             <input type="hidden" name="acao" value="Login"/>
                         </div>
                     </div>
-                    
+
                 </div>
             </form>
         </article>
-        <div id="showCad">
-            <div id="aligform" class="arredonda">
-                <div id="botaoFechar"></div>
-                Cadastro de Login
-                <hr>
-                <br/>
-                <form name="formulario" id="formulario" method="post" action="">
-                    <fieldset>
-                        <legend>Dados do Aluno</legend>
 
-                        <label>Nome:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input class="meuform" type="text" name="nome" size="20" tabindex="1"required="required"/>
-                        <br/>
-                        <label>Email:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input class="meuform" type="email" name="email" size="20" tabindex="1"required="required"/>
-                        <br/>
-                        <label>Prontu&aacute;rio:</label>
-                        <input class="meuform" type="text" name="prontuario" size="20" tabindex="1"required="required"/>
-                        <br/>
-                        <label>Senha:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input class="meuform" type="password" name="senha" size="20" tabindex="1"required="required"/>
-                        <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="hidden" name="acao" value="createLogin"/>
-                        <input class="br-enviar arredonda" type="submit" value="Enviar" tabindex="2"/>
-                    </fieldset>
-                </form>
+        <!-- Modal -->
+        <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Cadastro de Login</h4>
+                    </div>
+                    <form name="formulario" id="formulario" method="post" action="">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">
+                                        <label class="label-control">Nome:</label>
+                                        <input class="form-control" type="text" name="nome" required="required" placeholder="Digite seu nome..."/>
+                                    </div>
+                                    <br style="clear: both;">
+                                    <br style="clear: both;">
+                                    <div class="col-lg-12">
+                                        <label class="label-control">Email:</label>
+                                        <input class="form-control" type="text" name="email" required="required" placeholder="Digite seu email..."/>
+                                    </div>
+                                    <br style="clear: both;">
+                                    <br style="clear: both;">
+                                    <div class="col-lg-6">
+                                        <label class="label-control">Prontu&aacute;rio:</label>
+                                        <input class="form-control" type="text" name="prontuario" required="required" placeholder="Digite seu prontuário..."/>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label class="label-control">Senha:</label>
+                                        <input class="form-control" type="text" name="senha" required="required" placeholder="Digite sua senha..."/>
+                                        <input type="hidden" name="acao" value="createLogin"/>
+                                    </div>
+                                    <br style="clear: both;">
+                                    <br style="clear: both;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
             </div>
+            <!-- /.modal-dialog -->
         </div>
-
+        <!-- /.modal -->
+        
+        <!-- Modal -->
+        <div class="modal fade" id="review" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Recuperação de Senha</h4>
+                    </div>
+                    <form name="formulario" id="formulario" method="post" action="">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">
+                                        <label class="label-control">Email:</label>
+                                        <input class="form-control" type="text" name="email" required="required" placeholder="Digite seu email..."/>
+                                    </div>
+                                    <br style="clear: both;">
+                                    <br style="clear: both;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+       
         <div id="showCad2">
             <div id="aligform" class="arredonda">
                 <div id="botaoFechar2"></div>

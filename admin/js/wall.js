@@ -38,7 +38,7 @@ $(document).ready(function () {
         var dataString = 'comment=' + comment + '&msg_id=' + ID;
 
         if (comment == '') {
-            showAlert('alert',{title: 'AVISO!!!', message:'Por favor digite seu Post !!!', type: BootstrapDialog.TYPE_WARNING}, null);
+            showAlert('alert',{title: 'AVISO!!!', message:'Por favor digite seu Comentário !!!', type: BootstrapDialog.TYPE_WARNING}, null);
         }
         else {
             $.ajax({

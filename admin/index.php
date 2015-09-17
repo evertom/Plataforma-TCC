@@ -41,6 +41,7 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
         <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <meta http-equiv="cache-control" content="no-cache"/>
         <meta http-equiv="pragma" content="no-cache" />
+        
         <link rel="stylesheet" href="bootstrap3-dialog-master/src/css/bootstrap-dialog.css"/>
         <script src="bootstrap3-dialog-master/src/js/bootstrap-dialog.js"></script>
         <script src="bootstrap3-dialog-master/alertsMsg.js"></script>
