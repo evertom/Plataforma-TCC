@@ -4,16 +4,11 @@
         <meta charset="UTF-8">
         <title>Gigasystems - Painel Administrativo</title>
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-        <script type="text/javascript" src="js/jquery.min.js"></script>
-
-        <script src="bootstrap/js/bootstrap.min.js" type="text/javascript" ></script>
-
         <link rel="stylesheet" href="bootstrap3-dialog-master/src/css/bootstrap-dialog.css"/>
-        <script src="bootstrap3-dialog-master/src/js/bootstrap-dialog.js"></script>
-        <script src="bootstrap3-dialog-master/alertsMsg.js"></script>
+        
+        <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/jquery-pack.js"></script>
         <script type="text/javascript" src="js/jquery.imgareaselect.min.js"></script>
-
     </head>
     <?php
     require_once('verifica-logado.php');
@@ -274,13 +269,12 @@
 
             unlink($large_image_location . $userfile_tmp);
 
-            echo "<script type='text/javascript'>showAlert('alert',{title: 'Aviso!!!', message:'Thumb Atualizado com sucesso', type: BootstrapDialog.TYPE_INFO, location:'index.php'}, null);</script>";
+            echo "<script type='text/javascript'>window.location='index.php';</script>";
         } else {
-            echo "<script type='text/javascript'>showAlert('alert',{title: 'Aviso!!!', message:'Erro ao Atualizar Foto...', type: BootstrapDialog.TYPE_DANGER}, null);</script>";
+            echo "<script type='text/javascript'>window.location='addPhoto.php';</script>";
         }
         exit();
     }
-
 
     if ($_GET['a'] == "delete" && strlen($_GET['t']) > 0) {
 //get the file locations 
@@ -343,7 +337,7 @@
                                                 var w = $('#w').val();
                                                 var h = $('#h').val();
                                                 if (x1 == "" || y1 == "" || x2 == "" || y2 == "" || w == "" || h == "") {
-                                                    showAlert('alert', {title: 'Aviso!!!', message: 'Voc\u00ea deve fazer uma selec\u00e3o primeiro...', type: BootstrapDialog.TYPE_WARNING}, null);
+                                                    alert("Você deve fazer a seleção primeiro.");//showAlert('alert', {title: 'Aviso!!!', message: 'Voc\u00ea deve fazer uma selec\u00e3o primeiro...', type: BootstrapDialog.TYPE_WARNING}, null);
                                                     return false;
                                                 } else {
                                                     return true;
