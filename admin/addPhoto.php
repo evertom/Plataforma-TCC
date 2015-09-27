@@ -3,13 +3,42 @@
     <head>
         <meta charset="UTF-8">
         <title>Gigasystems - Painel Administrativo</title>
-        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-        <link rel="stylesheet" href="bootstrap3-dialog-master/src/css/bootstrap-dialog.css"/>
-        
+        <link href='css/style.css' rel='stylesheet'/>
+        <link href='bootstrap/css/bootstrap.min.css' rel='stylesheet'/>
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/jquery-pack.js"></script>
         <script type="text/javascript" src="js/jquery.imgareaselect.min.js"></script>
+        <script type="text/javascript">
+            $(function ($) {
+                var painel = $("#painel");
+                var close = $("#closePainel");
+                //fecha painel clicando na seta
+                $(close).click(function () {
+                    $(".insertForm > ").remove();
+                    painel.fadeOut(500);
+                    
+                });
+            });
+            
+            
+            function alertMsg(text, classe, location){
+                var div = $("<div class='msgAlert "+classe+"'>"+text+"</div>");
+                $('body').append(div);
+                $(div).fadeIn();
+                setTimeout(closeAlertMsg, 5000, div, location);
+            }
+            
+            function closeAlertMsg(div, location){
+                $(div).fadeOut();
+                $(div).remove();
+                if(location !== null){
+                    window.location=location;
+                }
+            }
+        
+        </script>
     </head>
+    <body>
     <?php
     require_once('verifica-logado.php');
 
@@ -170,6 +199,7 @@
     }
 
     if (isset($_POST["upload"])) {
+        
         //Get the file information
         $userfile_name = $_FILES['image']['name'];
         $userfile_tmp = $_FILES['image']['tmp_name'];
@@ -200,7 +230,6 @@
         }
         //Everything is ok, so we can upload the image.
         if (strlen($error) == 0) {
-
             if (isset($_FILES['image']['name'])) {
                 //this file could now has an unknown file extension (we hope it's one of the ones set above!)
                 $large_image_location = $large_image_location . "." . $file_ext;
@@ -269,9 +298,9 @@
 
             unlink($large_image_location . $userfile_tmp);
 
-            echo "<script type='text/javascript'>window.location='index.php';</script>";
+            echo "<script type='text/javascript'>alertMsg('Foto adicionada com successo', 'success','index.php');</script>";
         } else {
-            echo "<script type='text/javascript'>window.location='addPhoto.php';</script>";
+            echo "<script type='text/javascript'>alertMsg('Falha ao tentar adicionar foto.', 'error','addPhoto.php');</script>";
         }
         exit();
     }
@@ -290,19 +319,18 @@
         exit();
     }
     ?>
-    <body>
+    
         <section>
             <div id="coontentsAuto">
-                <br>
-                <br>
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             Escolha uma nova foto para seu perfil
+                            <div id="closePainel"><i class="fa fa-close"></i></div>
                         </div>
                         <div class="panel-body">
+                            <div style="position: relative; overflow-y: auto; height: 275px; margin: 0px auto;">
                             <article>
-
                                 <?php
 //Only display the javacript if an image has been uploaded
                                 if (strlen($large_photo_exists) > 0) {
@@ -337,7 +365,7 @@
                                                 var w = $('#w').val();
                                                 var h = $('#h').val();
                                                 if (x1 == "" || y1 == "" || x2 == "" || y2 == "" || w == "" || h == "") {
-                                                    alert("Você deve fazer a seleção primeiro.");//showAlert('alert', {title: 'Aviso!!!', message: 'Voc\u00ea deve fazer uma selec\u00e3o primeiro...', type: BootstrapDialog.TYPE_WARNING}, null);
+                                                    alertMsg('Você deve fazer a seleção primeiro.', 'error', null);
                                                     return false;
                                                 } else {
                                                     return true;
@@ -388,7 +416,7 @@
                                     <?php } ?>
                                     <hr/>
                                     <br clear="all" />
-                                    <form name="photo" id="newPost"  enctype="multipart/form-data" action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
+                                    <form name="photo" id="newPost"  enctype="multipart/form-data" action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
                                         Photo 
                                         <input type="file" name="image" class="btn btn-primary" /> 
                                         <br>
@@ -397,10 +425,11 @@
                                 <?php } ?>
 
                             </article>
+                            </div>
                             <br clear="all"/>
                         </div>
                         <div class="panel-footer">
-                            Panel Footer
+                           
                         </div>
                     </div>
                 </div>

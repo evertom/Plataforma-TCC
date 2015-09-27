@@ -369,13 +369,12 @@ footer{
 /*Itens para controle de paineis de inserts*/
 #painel{
     display: none;
-    width: 70%;
-    height: auto;
-    background-color: #FFFFFF;
-    border: 1px solid;
-    box-shadow: 5px 0px 15px 2px #000;
-    top: 3%;
-    right: 0px;
+    width: 700px;
+    height: 410px;
+    background-color: transparent;
+    border: none;
+    top: calc(50% - 250px);
+    right: calc(52% - 350px);
     position: fixed;
     z-index: 9000;
     overflow: visible;
@@ -385,30 +384,28 @@ footer{
     position: absolute;
     width: 15px;
     height: 20px;
-    left: 15px;
-    top: 10px;
     font-size: 20px;
     font-weight: bolder;
     color: rgb(192, 55, 55);
-    /* top: 10%; */
-    /* background-image: url('../img/seta.png'); */
+    top: 6px;
+    right: 5%;
     cursor: pointer;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;
     z-index: 9998;
+    text-align: right;
 }
 #closePainel:hover, #closePainelSuper:hover{
     text-decoration: underline; 
 }
 .insertForm{
-    width: 80%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
     margin: 0px auto;
     display: block;
-    overflow: auto;
+    overflow: hidden;
     position: relative;
-    top: 5%;
 }
 div.destaque{
     width:200px; /* as dimen��es do caixa de destaque*/
@@ -457,4 +454,24 @@ fieldset{
 }
 .likethis{
     display:inline;
+}
+.msgAlert{
+    width: 40%;
+    height: auto;
+    text-align: center;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 20px;
+    font-family: Helvetica, arial;
+    font-size: 1.5em;
+    color: #FFF;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 1px #000;
+ }
+.error{
+    background-color: #d43f3a;
+}
+.success{
+    background-color: #67b168;
 }

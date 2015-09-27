@@ -125,14 +125,9 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
                 var div = $(".insertForm");
 
 
-                //fecha painel clicando na seta
-                $(close).click(function () {
-                    painel.hide({effect: 'drop', duraiton: 1000, direction: 'rigth'});
-                });
-
                 //Abrir painel e buscar dinamicamente
                 $(open).click(function () {
-                    painel.show({effect: 'drop', duraiton: 1000, direction: 'rigth'});
+                    painel.fadeIn(500);
                     var href = $(this).attr('href');
                     $.ajax({
                         url: href,
@@ -364,7 +359,7 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
     </head>
     <body>
         <!-- Div para listar forms que adicionaram itens. --->
-        <div id="painel"><div id="closePainel">X</div><div class="insertForm"></div></div>
+        <div id="painel"><div class="insertForm"></div></div>
         <!-- >Chat Messenger<--->
         <div style="position:absolute; top:0; right:0;" id="retorno"></div>
         <div id="janelas"></div>
