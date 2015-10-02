@@ -33,7 +33,9 @@
                 method: 'GET', //tipo de envio de dados
                 type: 'GET', //Tipo de envio de dados
                 cache: false, //Padrão de cache false
-                after_function: null //Alguma função que se queira executar apos o ajax.
+                after_function: null, //Alguma função que se queira executar apos o ajax.
+                processData: true,  // jQuery processo data
+                contentType: "application/x-www-form-urlencoded;charset=UTF-8"  // jQuery set contentType
             };
             
             //Nesta Etapa estou incluindo as opção passadas por parametros
@@ -58,7 +60,8 @@
                             dataType: options_conection.dataType,
                             data: options_conection.data,
                             cache: options_conection.cache,
-                            async: options_conection.async,
+                            processData: options_conection.processData,
+                            contentType: options_conection.contentType,
                             beforeSend: function(){
                                 dialogRef.enableButtons(false);
                                 dialogRef.setClosable(false);

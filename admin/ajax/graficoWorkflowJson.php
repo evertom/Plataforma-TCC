@@ -13,11 +13,10 @@
     $qtdDias = 0;
     
     $dias = $pdo->select("SELECT max(a.end) AS dataMax, min(a.end) AS dataMin "
-            . "             FROM evento a "
+            . "             FROM workflow a "
             . "             WHERE a.idGrupo = {$idGrupo} "
             . "             LIMIT 1 ;");
-    $event = $pdo->select("SELECT * FROM evento a
-                            INNER JOIN tipoevento b ON a.idTipoEvento = b.id
+    $event = $pdo->select("SELECT * FROM workflow a
                             WHERE a.idGrupo = {$idGrupo} 
                             ORDER BY a.end ASC");
             

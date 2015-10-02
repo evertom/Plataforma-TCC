@@ -20,7 +20,7 @@ if ($idProf == "" || $nomeProf == "") {
 <!DOCTYPE html>
 <html lang="en">
     <head>
-       <meta charset="utf-8"/>
+        <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta name="description" content=""/>
@@ -58,44 +58,32 @@ if ($idProf == "" || $nomeProf == "") {
                     loading_show();
                     //pegamos totos os valores do form
                     var valores = $("#contact").serializeArray();
-                    var ok = false;
-                    var id = null;
-
-                    $.ajax
-                            ({
-                                async: false,
-                                type: "POST", //metodo POST
-                                dataType: 'json',
-                                url: "ajax/insertReq.php",
-                                data: valores,
-                                success: function (data)
-                                {
-                                    console.log(data);
-                                    ok = data.msg;
-                                },
-                                error: function (data) {
-                                    showAlert('alert',{title: 'AVISO!!!', 
-                                        message:'Falha no sistema, contate seu administrador...', 
-                                        type: BootstrapDialog.TYPE_ERROR}, setTimeout("window.location = 'index.php'",4500));
-                                    ok = false;
-                                },
-                                complete: function () {
-                                    loading_hide();
-                                    return ok;
-                                }
-                            });
-
-                    if (ok === true) {
-                        showAlert('alert',{title: 'AVISO!!!', 
-                            message:'Requerimento enviado com sucesso, aguarde o professor entrar em contato...',
-                            type: BootstrapDialog.TYPE_SUCCESS}, setTimeout("window.location = 'index.php'",4500));
-                        limpa();
-                        
-                    } else {
-                        showAlert('alert',{title: 'AVISO!!!', message:'Falha ao cadastrar requerimento...', type: BootstrapDialog.TYPE_ERROR}, setTimeout("window.location = 'index.php'",4500));
-                        limpa();
-                    }
-
+                    
+                    $.ajax({
+                        type: "POST", //metodo POST
+                        dataType: 'json',
+                        url: "ajax/insertReq.php",
+                        data: valores,
+                        success: function (data)
+                        {
+                            if(data.msg === true){
+                                showAlert('alert', {title: 'AVISO!!!',
+                                    message: 'Requerimento enviado com sucesso, aguarde o professor entrar em contato...',
+                                    type: BootstrapDialog.TYPE_SUCCESS}, setTimeout("window.location = 'index.php'", 4500));
+                                limpa();
+                            }else{
+                                showAlert('alert', {title: 'AVISO!!!', message: 'Falha ao cadastrar requerimento...', type: BootstrapDialog.TYPE_ERROR}, setTimeout("window.location = 'index.php'", 4500));
+                                limpa();
+                            }
+                        },
+                        error: function (data){
+                            console.log(data);
+                            showAlert('alert', {title: 'AVISO!!!',
+                                message: 'Falha no sistema, contate seu administrador...',
+                                type: BootstrapDialog.TYPE_ERROR}, setTimeout("window.location = 'index.php'", 4500)
+                            );
+                        }   
+                    });
                     return false;
                 });
 

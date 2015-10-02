@@ -16,10 +16,8 @@
                 $(close).click(function () {
                     $(".insertForm > ").remove();
                     painel.fadeOut(500);
-                    
                 });
             });
-            
             
             function alertMsg(text, classe, location){
                 var div = $("<div class='msgAlert "+classe+"'>"+text+"</div>");
@@ -199,7 +197,6 @@
     }
 
     if (isset($_POST["upload"])) {
-        
         //Get the file information
         $userfile_name = $_FILES['image']['name'];
         $userfile_tmp = $_FILES['image']['tmp_name'];
@@ -319,7 +316,6 @@
         exit();
     }
     ?>
-    
         <section>
             <div id="coontentsAuto">
                 <div class="col-lg-12">
@@ -329,7 +325,7 @@
                             <div id="closePainel"><i class="fa fa-close"></i></div>
                         </div>
                         <div class="panel-body">
-                            <div style="position: relative; overflow-y: auto; height: 275px; margin: 0px auto;">
+                            <div>
                             <article>
                                 <?php
 //Only display the javacript if an image has been uploaded

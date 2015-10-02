@@ -2,6 +2,7 @@
 $pront1 = isset($_POST['pront1']) ? $_POST['pront1'] : "";
 $pront2 = isset($_POST['pront2']) ? $_POST['pront2'] : 2;
 $pront3 = isset($_POST['pront3']) ? $_POST['pront3'] : 3;
+
 $titulo = isset($_POST['titulo']) ? $_POST['titulo'] : "";
 $descri = isset($_POST['descri']) ? $_POST['descri'] : "";
 $user = isset($_POST['user']) ? $_POST['user'] : "";

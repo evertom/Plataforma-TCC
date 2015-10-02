@@ -24,10 +24,13 @@
                                 <li>
                                     <a href="cronogramaPizza.php">Cronograma</a>
                                 </li>
+                                <li>
+                                    <a href="graficoWorkflow.php">Workflow</a>
+                                </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-						<li>
+                        <li>
                             <a href="#"><i class="fa fa-calendar fa-fw"></i> Cronograma<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -42,16 +45,24 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        <?php
-                            if($_SESSION['tipo'] == 1){
-                        ?>
                         <li>
-                            <a href="viewPDF.php"><i class="fa fa-file-pdf-o fa-fw"></i> Verificar Monografias</a>
+                            <a href="#"><i class="fa fa-sliders"></i> &nbsp;Workflow <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="workflow.php">Fluxo do Trabalho</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
                         </li>
-                        <?php
-                            }
-                        ?>
-                        
+                        <li>
+                            <a href="#"><i class="fa fa-cloud-upload"></i> &nbsp;Envios <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="enviaPDF.php">Upload de arquivos </a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Administra&ccedil;&atilde;o<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">

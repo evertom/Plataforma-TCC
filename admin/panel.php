@@ -57,7 +57,7 @@
                 $idGrupo = $res['idgrupo'];
             }
         } else {
-            echo "<script type='text/javascript'>showAlert('alert',{type: BootstrapDialog.TYPE_WARNING, title: 'AVISO!!!', message:'Para poder acessar o painel ADM voc\u00ea deve requisitar um professor para orienta\u00e7\u00e3o e formar um grupo de TCC, volte para tela principal e escolha seu orientador...', location:'./index.php'}, null);</script>";
+            echo "<script type='text/javascript'>showAlert('alert',{type: BootstrapDialog.TYPE_WARNING, title: 'AVISO!!!', message:'Para poder acessar o painel ADM voc\u00ea deve requisitar um professor para orienta\u00e7\u00e3o e formar um grupo de TCC, volte para tela principal e escolha seu orientador...', location:'./acesso-negado.php'}, null);</script>";
             exit();
         }
     } else if ($tipo == 1) {

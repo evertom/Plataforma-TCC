@@ -1,7 +1,7 @@
 -- --------------------------------------------------------
 -- Servidor:                     127.0.0.1
 -- Versão do servidor:           5.6.17 - MySQL Community Server (GPL)
--- OS do Servidor:               Win32
+-- OS do Servidor:               Win64
 -- HeidiSQL Versão:              9.3.0.4984
 -- --------------------------------------------------------
 
@@ -19,21 +19,29 @@ USE `tcc`;
 CREATE TABLE IF NOT EXISTS `arquivos` (
   `idArquivo` int(11) NOT NULL AUTO_INCREMENT,
   `idgrupo` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `nome` varchar(300) COLLATE utf32_unicode_ci NOT NULL,
   `caminho` varchar(300) COLLATE utf32_unicode_ci NOT NULL,
-  `dtaEnvio` datetime NOT NULL,
+  `dtaEnvio` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `versao_u` smallint(6) NOT NULL DEFAULT '0',
+  `versao_d` smallint(6) NOT NULL DEFAULT '0',
+  `versao_c` smallint(6) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idArquivo`),
   KEY `idgrupo` (`idgrupo`),
-  CONSTRAINT `fk_idgrupo` FOREIGN KEY (`idgrupo`) REFERENCES `grupo` (`idgrupo`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci COMMENT='tabela de arquivos enviados';
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `fk_idgrupo` FOREIGN KEY (`idgrupo`) REFERENCES `grupo` (`idgrupo`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci COMMENT='tabela de arquivos enviados';
 
--- Copiando dados para a tabela tcc.arquivos: ~3 rows (aproximadamente)
+-- Copiando dados para a tabela tcc.arquivos: ~0 rows (aproximadamente)
 DELETE FROM `arquivos`;
 /*!40000 ALTER TABLE `arquivos` DISABLE KEYS */;
-INSERT INTO `arquivos` (`idArquivo`, `idgrupo`, `nome`, `caminho`, `dtaEnvio`) VALUES
-	(1, 63, '63_5b1bdb6551a327156776da7f5868ec08.pdf', '/GerenciamentoGrupos/63/63_5b1bdb6551a327156776da7f5868ec08.pdf', '2015-09-03 13:59:15'),
-	(2, 64, '64_f9f6c7fd1f76e36fd46487d87e31a735.pdf', '/GerenciamentoGrupos/64/64_f9f6c7fd1f76e36fd46487d87e31a735.pdf', '2015-09-03 13:59:46'),
-	(3, 63, '63_8d1e3ba1d74de71fb6c6078684bd6efd.pdf', '/GerenciamentoGrupos/63/63_8d1e3ba1d74de71fb6c6078684bd6efd.pdf', '2015-09-09 19:27:15');
+INSERT INTO `arquivos` (`idArquivo`, `idgrupo`, `user_id`, `nome`, `caminho`, `dtaEnvio`, `versao_u`, `versao_d`, `versao_c`) VALUES
+	(54, 63, 1, '963-150922.pdf', '/GerenciamentoGrupos/63/493dad3e37831d20a809ecb62c337ee2.pdf', '2015-10-02 01:04:33', 2, 0, 0),
+	(55, 63, 1, '23-09-2015-PARC115.pdf', '/GerenciamentoGrupos/63/f8c9e3b9d218694d2420808141b960d2.pdf', '2015-10-02 01:04:54', 0, 1, 0),
+	(56, 63, 1, '23-09-2015-PARC115.pdf', '/GerenciamentoGrupos/63/72cf6b08c015f7ca1c1b4b2fd197d991.pdf', '2015-10-02 01:05:18', 0, 1, 1),
+	(57, 63, 1, 'Inscrição Enem.pdf', '/GerenciamentoGrupos/63/d805b267140e2273559d6ab52bc731ed.pdf', '2015-10-02 01:05:42', 1, 0, 0),
+	(58, 63, 12, '963-150922.pdf', '/GerenciamentoGrupos/63/15e615cfe36b7dd8f24002c2e7ccc595.pdf', '2015-10-02 01:52:04', 3, 0, 0);
 /*!40000 ALTER TABLE `arquivos` ENABLE KEYS */;
 
 
@@ -71,9 +79,9 @@ CREATE TABLE IF NOT EXISTS `avisos` (
   KEY `fk_avisos_users2_idx` (`de`),
   CONSTRAINT `FK_avisos_users` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_avisos_users2` FOREIGN KEY (`de`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=294 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Copiando dados para a tabela tcc.avisos: ~40 rows (aproximadamente)
+-- Copiando dados para a tabela tcc.avisos: ~79 rows (aproximadamente)
 DELETE FROM `avisos`;
 /*!40000 ALTER TABLE `avisos` DISABLE KEYS */;
 INSERT INTO `avisos` (`idavisos`, `descricao`, `data`, `visto`, `uid`, `de`) VALUES
@@ -91,14 +99,8 @@ INSERT INTO `avisos` (`idavisos`, `descricao`, `data`, `visto`, `uid`, `de`) VAL
 	(12, 'O evento smdx com entrega prevista para 16-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-02', '1', 7, 1),
 	(13, 'O evento smdx com entrega prevista para 16-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-02', '1', 12, 1),
 	(14, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o solicitada.', '2015-09-03', '1', 12, 9),
-	(15, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-09-03', '0', 2, 12),
-	(16, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-09-03', '0', 3, 12),
 	(17, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-09-03', '1', 9, 12),
-	(18, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-09-03', '0', 2, 12),
-	(19, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-09-03', '0', 3, 12),
 	(20, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-09-03', '1', 9, 12),
-	(21, 'O evento nc jc com entrega prevista para 10-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-03', '0', 2, 9),
-	(22, 'O evento nc jc com entrega prevista para 10-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-03', '0', 3, 9),
 	(23, 'O evento nc jc com entrega prevista para 10-09-2015 foi adicionado, confira no cronograma!!!', '2015-09-03', '1', 12, 9),
 	(24, 'O Grupo: Gerenciamento de TCC, enviou sua monografia para avaliação da etapa concluida, confira...', '2015-09-03', '1', 12, 12),
 	(25, 'O Grupo: Gerenciamento de TCC, enviou sua monografia para avaliação da etapa concluida, confira...', '2015-09-03', '1', 12, 1),
@@ -107,16 +109,83 @@ INSERT INTO `avisos` (`idavisos`, `descricao`, `data`, `visto`, `uid`, `de`) VAL
 	(28, 'O professor enviou as seguintes considerações ao Grupo sobre a monografia: Vocês mandaram muito bem meninos....', '2015-09-03', '1', 1, 12),
 	(29, 'O professor enviou as seguintes considerações ao Grupo sobre a monografia: Vocês mandaram muito bem meninos....', '2015-09-03', '1', 6, 12),
 	(30, 'O professor enviou as seguintes considerações ao Grupo sobre a monografia: Vocês mandaram muito bem meninos....', '2015-09-03', '1', 7, 12),
-	(31, 'O professor enviou as seguintes considerações ao Grupo sobre a monografia: quero mais empenho', '2015-09-03', '0', 2, 12),
-	(32, 'O professor enviou as seguintes considerações ao Grupo sobre a monografia: quero mais empenho', '2015-09-03', '0', 3, 12),
 	(33, 'O professor enviou as seguintes considerações ao Grupo sobre a monografia: quero mais empenho', '2015-09-03', '1', 9, 12),
 	(34, 'O Grupo: Gerenciamento de TCC, enviou sua monografia para avaliação da etapa concluida, confira...', '2015-09-09', '1', 12, 7),
 	(35, 'O professor enviou as seguintes considerações ao Grupo sobre a monografia: <b>fico bom</b>', '2015-09-09', '1', 1, 12),
 	(36, 'O professor enviou as seguintes considerações ao Grupo sobre a monografia: <b>fico bom</b>', '2015-09-09', '1', 6, 12),
 	(37, 'O professor enviou as seguintes considerações ao Grupo sobre a monografia: <b>fico bom</b>', '2015-09-09', '0', 7, 12),
-	(38, 'O evento Everton com entrega prevista para 29-11-2015 foi adicionado, confira no cronograma!!!', '2015-09-26', '0', 1, 6),
+	(38, 'O evento Everton com entrega prevista para 29-11-2015 foi adicionado, confira no cronograma!!!', '2015-09-26', '1', 1, 6),
 	(39, 'O evento Everton com entrega prevista para 29-11-2015 foi adicionado, confira no cronograma!!!', '2015-09-26', '0', 7, 6),
-	(40, 'O evento Everton com entrega prevista para 29-11-2015 foi adicionado, confira no cronograma!!!', '2015-09-26', '0', 12, 6);
+	(40, 'O evento Everton com entrega prevista para 29-11-2015 foi adicionado, confira no cronograma!!!', '2015-09-26', '1', 12, 6),
+	(41, 'O evento Pesquisa Poetica com entrega prevista para 29-11-2015 foi atualizado, confira no cronograma!!!', '2015-09-28', '1', 1, 6),
+	(42, 'O evento Pesquisa Poetica com entrega prevista para 29-11-2015 foi atualizado, confira no cronograma!!!', '2015-09-28', '0', 7, 6),
+	(43, 'O evento Pesquisa Poetica com entrega prevista para 29-11-2015 foi atualizado, confira no cronograma!!!', '2015-09-28', '1', 12, 6),
+	(47, 'Vejam isso pelo amor de deus.', '2015-09-29', '1', 1, 6),
+	(48, 'Vejam isso pelo amor de deus.', '2015-09-29', '0', 7, 6),
+	(49, 'Vejam isso pelo amor de deus.', '2015-09-29', '1', 12, 6),
+	(50, 'O evento Fazer Monografia com entrega prevista para 15-11-2015 foi adicionado, confira no cronograma!!!', '2015-09-29', '1', 1, 12),
+	(51, 'O evento Fazer Monografia com entrega prevista para 15-11-2015 foi adicionado, confira no cronograma!!!', '2015-09-29', '1', 6, 12),
+	(52, 'O evento Fazer Monografia com entrega prevista para 15-11-2015 foi adicionado, confira no cronograma!!!', '2015-09-29', '0', 7, 12),
+	(53, 'O evento Fazer isso pelo amor de deus com entrega prevista para 27-12-2015 foi adicionado, confira no cronograma!!!', '2015-09-29', '1', 1, 12),
+	(54, 'O evento Fazer isso pelo amor de deus com entrega prevista para 27-12-2015 foi adicionado, confira no cronograma!!!', '2015-09-29', '1', 6, 12),
+	(55, 'O evento Fazer isso pelo amor de deus com entrega prevista para 27-12-2015 foi adicionado, confira no cronograma!!!', '2015-09-29', '0', 7, 12),
+	(56, 'O evento eita pelo com entrega prevista para 02-11-2015 foi adicionado, confira no cronograma!!!', '2015-09-29', '1', 1, 12),
+	(57, 'O evento eita pelo com entrega prevista para 02-11-2015 foi adicionado, confira no cronograma!!!', '2015-09-29', '1', 6, 12),
+	(58, 'O evento eita pelo com entrega prevista para 02-11-2015 foi adicionado, confira no cronograma!!!', '2015-09-29', '0', 7, 12),
+	(146, 'Próxima atividade \'Verificar o arquivo\' do Grupo \'Gerenciamento de TCC\' foi adicionada em 30-09-2015 21:09:11.Realizado updload de arquivo \'963-150922.pdf\' . Confira mais no menu workflow.', '2015-09-30', '1', 1, 12),
+	(147, 'Próxima atividade \'Verificar o arquivo\' do Grupo \'Gerenciamento de TCC\' foi adicionada em 30-09-2015 21:09:11.Realizado updload de arquivo \'963-150922.pdf\' . Confira mais no menu workflow.', '2015-09-30', '1', 6, 12),
+	(148, 'Próxima atividade \'Verificar o arquivo\' do Grupo \'Gerenciamento de TCC\' foi adicionada em 30-09-2015 21:09:11.Realizado updload de arquivo \'963-150922.pdf\' . Confira mais no menu workflow.', '2015-09-30', '0', 7, 12),
+	(149, 'Concluída atividade \'Verificar o arquivo\' do Grupo \'Gerenciamento de TCC\' em 30-09-2015 21:22:06. Confira mais no menu workflow.', '2015-09-30', '1', 1, 12),
+	(150, 'Concluída atividade \'Verificar o arquivo\' do Grupo \'Gerenciamento de TCC\' em 30-09-2015 21:22:06. Confira mais no menu workflow.', '2015-09-30', '1', 6, 12),
+	(151, 'Concluída atividade \'Verificar o arquivo\' do Grupo \'Gerenciamento de TCC\' em 30-09-2015 21:22:06. Confira mais no menu workflow.', '2015-09-30', '0', 7, 12),
+	(152, 'Próxima atividade \'Verificar TEXTOS DE JUCA CHAVEZ\' do Grupo \'Gerenciamento de TCC\' foi adicionada em 30-09-2015 21:25:11.Realizado updload de arquivo \'23-09-2015-PARC115.pdf\' . Confira mais no menu workflow.', '2015-09-30', '1', 1, 12),
+	(153, 'Próxima atividade \'Verificar TEXTOS DE JUCA CHAVEZ\' do Grupo \'Gerenciamento de TCC\' foi adicionada em 30-09-2015 21:25:11.Realizado updload de arquivo \'23-09-2015-PARC115.pdf\' . Confira mais no menu workflow.', '2015-09-30', '1', 6, 12),
+	(154, 'Próxima atividade \'Verificar TEXTOS DE JUCA CHAVEZ\' do Grupo \'Gerenciamento de TCC\' foi adicionada em 30-09-2015 21:25:11.Realizado updload de arquivo \'23-09-2015-PARC115.pdf\' . Confira mais no menu workflow.', '2015-09-30', '0', 7, 12),
+	(155, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o solicitada.', '2015-09-30', '1', 25, 17),
+	(156, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-09-30', '0', 2, 25),
+	(157, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-09-30', '0', 3, 25),
+	(158, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-09-30', '1', 17, 25),
+	(159, 'Diante de sua solicita&ccedil;&atilde;o ao Professor para Orienta&ccedil;&atilde;o do TCC, o mesmo solicita um maior detalhamento do projeto em si, para uma melhor avalia&ccedil;&atilde;o de sua proposta para poder aceitar ou n&atilde;o orient&aacute;-los, clique no link a seguir para melhorar sua proposta do Projeto para o que professor possa avalia-lo com maior riqueza nos detalhamentos e crit&eacute;rio, Obrigado. <a href="refazProposta.php?idgrupo=66"><i class="fa fa-refresh"></i> Refazer Proposta</a>', '2015-09-30', '0', 2, 25),
+	(160, 'Diante de sua solicita&ccedil;&atilde;o ao Professor para Orienta&ccedil;&atilde;o do TCC, o mesmo solicita um maior detalhamento do projeto em si, para uma melhor avalia&ccedil;&atilde;o de sua proposta para poder aceitar ou n&atilde;o orient&aacute;-los, clique no link a seguir para melhorar sua proposta do Projeto para o que professor possa avalia-lo com maior riqueza nos detalhamentos e crit&eacute;rio, Obrigado. <a href="refazProposta.php?idgrupo=66"><i class="fa fa-refresh"></i> Refazer Proposta</a>', '2015-09-30', '0', 3, 25),
+	(161, 'Diante de sua solicita&ccedil;&atilde;o ao Professor para Orienta&ccedil;&atilde;o do TCC, o mesmo solicita um maior detalhamento do projeto em si, para uma melhor avalia&ccedil;&atilde;o de sua proposta para poder aceitar ou n&atilde;o orient&aacute;-los, clique no link a seguir para melhorar sua proposta do Projeto para o que professor possa avalia-lo com maior riqueza nos detalhamentos e crit&eacute;rio, Obrigado. <a href="refazProposta.php?idgrupo=66"><i class="fa fa-refresh"></i> Refazer Proposta</a>', '2015-09-30', '1', 17, 25),
+	(163, 'Diante de seu requerimento para maiores informa&ccedil;&otilde;es sobre a descri&ccedil;&atilde;o do Projeto de TCC deste presente grupo, o mesmo foi revisado e reescrito para uma nova an&aacute;lise e aprova&ccedil;&atilde;o', '2015-09-30', '1', 25, 17),
+	(164, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-09-30', '0', 2, 25),
+	(165, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-09-30', '0', 3, 25),
+	(166, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-09-30', '1', 17, 25),
+	(167, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-09-30', '0', 2, 25),
+	(168, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-09-30', '0', 3, 25),
+	(169, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-09-30', '1', 17, 25),
+	(170, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o solicitada.', '2015-09-30', '1', 27, 30),
+	(264, 'Ola como vão', '2015-10-02', '1', 6, 1),
+	(265, 'Ola como vão', '2015-10-02', '0', 7, 1),
+	(266, 'Ola como vão', '2015-10-02', '1', 12, 1),
+	(267, 'Cascata', '2015-10-02', '1', 6, 1),
+	(268, 'Cascata', '2015-10-02', '0', 7, 1),
+	(269, 'Cascata', '2015-10-02', '1', 12, 1),
+	(270, 'Verifiquem', '2015-10-02', '1', 6, 1),
+	(271, 'Verifiquem', '2015-10-02', '0', 7, 1),
+	(272, 'Verifiquem', '2015-10-02', '1', 12, 1),
+	(273, 'O que??', '2015-10-02', '1', 6, 1),
+	(274, 'O que??', '2015-10-02', '0', 7, 1),
+	(275, 'O que??', '2015-10-02', '1', 12, 1),
+	(276, 'Minha inscrição no enem', '2015-10-02', '1', 6, 1),
+	(277, 'Minha inscrição no enem', '2015-10-02', '0', 7, 1),
+	(278, 'Minha inscrição no enem', '2015-10-02', '1', 12, 1),
+	(279, 'Próxima atividade \'Fazer tudo isso\' do Grupo \'Gerenciamento de TCC\' foi adicionada em 02-10-2015 01:47:24.Sem upload de arquivos. Confira mais no menu workflow.', '2015-10-02', '0', 1, 12),
+	(280, 'Próxima atividade \'Fazer tudo isso\' do Grupo \'Gerenciamento de TCC\' foi adicionada em 02-10-2015 01:47:24.Sem upload de arquivos. Confira mais no menu workflow.', '2015-10-02', '0', 6, 12),
+	(281, 'Próxima atividade \'Fazer tudo isso\' do Grupo \'Gerenciamento de TCC\' foi adicionada em 02-10-2015 01:47:24.Sem upload de arquivos. Confira mais no menu workflow.', '2015-10-02', '0', 7, 12),
+	(282, 'Concluída atividade \'Fazer tudo isso\' do Grupo \'Gerenciamento de TCC\' em 02-10-2015 01:51:22. Confira mais no menu workflow.', '2015-10-02', '0', 1, 12),
+	(283, 'Concluída atividade \'Fazer tudo isso\' do Grupo \'Gerenciamento de TCC\' em 02-10-2015 01:51:22. Confira mais no menu workflow.', '2015-10-02', '0', 6, 12),
+	(284, 'Concluída atividade \'Fazer tudo isso\' do Grupo \'Gerenciamento de TCC\' em 02-10-2015 01:51:22. Confira mais no menu workflow.', '2015-10-02', '0', 7, 12),
+	(285, 'Próxima atividade \'Eita pelo\' do Grupo \'Gerenciamento de TCC\' foi adicionada em 02-10-2015 01:52:04.Realizado updload de arquivo \'963-150922.pdf\' . Confira mais no menu workflow.', '2015-10-02', '0', 1, 12),
+	(286, 'Próxima atividade \'Eita pelo\' do Grupo \'Gerenciamento de TCC\' foi adicionada em 02-10-2015 01:52:04.Realizado updload de arquivo \'963-150922.pdf\' . Confira mais no menu workflow.', '2015-10-02', '0', 6, 12),
+	(287, 'Próxima atividade \'Eita pelo\' do Grupo \'Gerenciamento de TCC\' foi adicionada em 02-10-2015 01:52:04.Realizado updload de arquivo \'963-150922.pdf\' . Confira mais no menu workflow.', '2015-10-02', '0', 7, 12),
+	(288, 'Concluída atividade \'Eita pelo\' do Grupo \'Gerenciamento de TCC\' em 02-10-2015 01:53:34. Confira mais no menu workflow.', '2015-10-02', '0', 1, 12),
+	(289, 'Concluída atividade \'Eita pelo\' do Grupo \'Gerenciamento de TCC\' em 02-10-2015 01:53:34. Confira mais no menu workflow.', '2015-10-02', '0', 6, 12),
+	(290, 'Concluída atividade \'Eita pelo\' do Grupo \'Gerenciamento de TCC\' em 02-10-2015 01:53:34. Confira mais no menu workflow.', '2015-10-02', '0', 7, 12),
+	(291, 'Próxima atividade \'Eita Pelo 2\' do Grupo \'Gerenciamento de TCC\' foi adicionada em 02-10-2015 01:54:22.Sem upload de arquivos. Confira mais no menu workflow.', '2015-10-02', '0', 1, 12),
+	(292, 'Próxima atividade \'Eita Pelo 2\' do Grupo \'Gerenciamento de TCC\' foi adicionada em 02-10-2015 01:54:22.Sem upload de arquivos. Confira mais no menu workflow.', '2015-10-02', '0', 6, 12),
+	(293, 'Próxima atividade \'Eita Pelo 2\' do Grupo \'Gerenciamento de TCC\' foi adicionada em 02-10-2015 01:54:22.Sem upload de arquivos. Confira mais no menu workflow.', '2015-10-02', '0', 7, 12);
 /*!40000 ALTER TABLE `avisos` ENABLE KEYS */;
 
 
@@ -245,15 +314,11 @@ CREATE TABLE IF NOT EXISTS `evento` (
   KEY `idcronograma` (`idcronograma`),
   CONSTRAINT `evento_ibfk_1` FOREIGN KEY (`idGrupo`) REFERENCES `grupo` (`idgrupo`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `evento_ibfk_2` FOREIGN KEY (`idcronograma`) REFERENCES `cronograma` (`idcronograma`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Copiando dados para a tabela tcc.evento: ~3 rows (aproximadamente)
+-- Copiando dados para a tabela tcc.evento: ~0 rows (aproximadamente)
 DELETE FROM `evento`;
 /*!40000 ALTER TABLE `evento` DISABLE KEYS */;
-INSERT INTO `evento` (`idEvento`, `idGrupo`, `participantes`, `start`, `end`, `allday`, `nomeEvento`, `descricao`, `idcronograma`, `idTipoEvento`, `concluido`, `data_conclusao`) VALUES
-	(4, 63, '7,12,6,1', '2015-09-02 00:00:00', '2015-09-09 00:00:00', 1, 'pesmismd', 'oxkcidnvcidcnicndns', 2, 1, 1, '2015-09-02 18:23:33'),
-	(6, 64, '9', '2015-09-03 00:00:00', '2015-09-10 00:00:00', 1, 'nc jc', 'sncsncjns', 3, 3, 0, NULL),
-	(7, 63, '12,6', '2015-09-26 00:00:00', '2015-11-29 00:00:00', 1, 'Everton', 'Descrições genericas', 2, 1, 0, NULL);
 /*!40000 ALTER TABLE `evento` ENABLE KEYS */;
 
 
@@ -277,14 +342,17 @@ CREATE TABLE IF NOT EXISTS `grupo` (
   `preProjeto` int(1) NOT NULL DEFAULT '0' COMMENT 'utilizado para controle de tela, para forçar o aluno a cadastrar o pre projeto',
   `cronograma` int(1) NOT NULL DEFAULT '0' COMMENT 'utilizado no controle de tela para forçar o aluno a cadastrar o cronograma apos o pre projeto',
   PRIMARY KEY (`idgrupo`)
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Copiando dados para a tabela tcc.grupo: ~2 rows (aproximadamente)
+-- Copiando dados para a tabela tcc.grupo: ~4 rows (aproximadamente)
 DELETE FROM `grupo`;
 /*!40000 ALTER TABLE `grupo` DISABLE KEYS */;
 INSERT INTO `grupo` (`idgrupo`, `dataCriacao`, `titulo`, `descricao`, `objetivoGeral`, `objetivoEspecifico`, `justificativa`, `tipodePesquisa`, `metodologia`, `resultadoEsperado`, `fraselema`, `aceito`, `visto`, `recusado`, `revisando`, `preProjeto`, `cronograma`) VALUES
 	(63, '2015-09-02', 'Gerenciamento de TCC', 'Gerenciamento de TCC HUASUHHSAHAUHSAHUUSHAHU SUAHSUHA', 'h', 'h', 'h', 'h', 'h', 'h', NULL, 1, 1, 0, 0, 0, 0),
-	(64, '2015-09-03', 'cmskcskcs', 'amsiwnduwnduwnduwnd', 'k', 'k', 'k', 'k', 'k', 'k', NULL, 1, 1, 0, 0, 0, 0);
+	(64, '2015-09-03', 'cmskcskcs', 'amsiwnduwnduwnduwnd', 'k', 'k', 'k', 'k', 'k', 'k', NULL, 1, 1, 0, 0, 0, 0),
+	(65, '2015-09-30', 'Olaaaaaaa', 'Olaaaaaaaaaaa Pelo amor de deus', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0),
+	(66, '2015-09-30', 'Space Jam', 'TCC Sobre o brilhante filme Space Jam, o qual fala muito sobre o futuro.\nProfessora é o que é, ou você aceita ou não.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 0, 0, 1, 0),
+	(67, '2015-09-30', 'Éééééééééééééé', 'Projeto sobre éééééé.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0);
 /*!40000 ALTER TABLE `grupo` ENABLE KEYS */;
 
 
@@ -300,7 +368,7 @@ CREATE TABLE IF NOT EXISTS `grupo_has_users` (
   CONSTRAINT `FK_grupo_has_users_users` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Copiando dados para a tabela tcc.grupo_has_users: ~8 rows (aproximadamente)
+-- Copiando dados para a tabela tcc.grupo_has_users: ~14 rows (aproximadamente)
 DELETE FROM `grupo_has_users`;
 /*!40000 ALTER TABLE `grupo_has_users` DISABLE KEYS */;
 INSERT INTO `grupo_has_users` (`idgrupo`, `uid`, `tipo`) VALUES
@@ -308,10 +376,17 @@ INSERT INTO `grupo_has_users` (`idgrupo`, `uid`, `tipo`) VALUES
 	(63, 6, 1),
 	(63, 7, 1),
 	(63, 12, 2),
-	(64, 2, 1),
-	(64, 3, 1),
 	(64, 9, 1),
-	(64, 12, 2);
+	(64, 12, 2),
+	(65, 8, 1),
+	(66, 2, 1),
+	(66, 3, 1),
+	(66, 17, 1),
+	(66, 25, 2),
+	(67, 2, 1),
+	(67, 3, 1),
+	(67, 27, 2),
+	(67, 30, 1);
 /*!40000 ALTER TABLE `grupo_has_users` ENABLE KEYS */;
 
 
@@ -331,8 +406,6 @@ CREATE TABLE IF NOT EXISTS `likes` (
 DELETE FROM `likes`;
 /*!40000 ALTER TABLE `likes` DISABLE KEYS */;
 INSERT INTO `likes` (`idlikes`, `uid`, `msg_id`) VALUES
-	(6, 2, 128),
-	(7, 3, 128),
 	(21, 6, 128),
 	(24, 6, 127),
 	(25, 6, 120),
@@ -481,37 +554,37 @@ INSERT INTO `tipoevento` (`id`, `nome`, `imagem`, `color`, `textcolor`) VALUES
 -- Copiando estrutura para tabela tcc.users
 CREATE TABLE IF NOT EXISTS `users` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(30) CHARACTER SET latin1 NOT NULL,
-  `password` varchar(44) CHARACTER SET latin1 NOT NULL,
-  `email` varchar(100) CHARACTER SET latin1 NOT NULL,
-  `prontuario` int(11) NOT NULL,
-  `fotouser` varchar(100) CHARACTER SET latin1 NOT NULL,
-  `horario` datetime NOT NULL,
-  `limite` datetime NOT NULL,
+  `username` varchar(30) CHARACTER SET latin1 DEFAULT NULL,
+  `password` varchar(44) CHARACTER SET latin1 DEFAULT NULL,
+  `email` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `prontuario` int(11) DEFAULT NULL,
+  `fotouser` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `horario` datetime DEFAULT NULL,
+  `limite` datetime DEFAULT NULL,
   `descricao` text CHARACTER SET latin1,
-  `cargo` varchar(100) CHARACTER SET latin1 NOT NULL,
-  `tipo` int(2) NOT NULL DEFAULT '0',
-  `primeiroacesso` int(11) NOT NULL DEFAULT '0' COMMENT '0 = primeiro acesso',
+  `cargo` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `tipo` int(2) DEFAULT '0',
+  `primeiroacesso` int(11) DEFAULT '0' COMMENT '0 = primeiro acesso',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Copiando dados para a tabela tcc.users: ~23 rows (aproximadamente)
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`uid`, `username`, `password`, `email`, `prontuario`, `fotouser`, `horario`, `limite`, `descricao`, `cargo`, `tipo`, `primeiroacesso`) VALUES
-	(1, 'Leonardo Martins', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'leo.piracaia@hotmail.com', 1262751, 'fotoUser/thumbnail_1443295549.jpg', '2015-09-26 17:40:16', '2015-09-26 17:42:16', 'Programador Júnior, Formando em Análise e Desenvolvimento de Sistemas', 'Aluno', 0, 1),
-	(2, '-----', '123', '-----', 0, 'fotoUser/padraoUser.jpg', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Admin', 'Admin', 0, 0),
-	(3, '-----', '123', '-----', 0, 'fotoUser/padraoUser.jpg', '2015-04-07 00:00:00', '2015-04-07 00:00:00', 'Admin', 'Admin', 0, 0),
-	(6, 'Everton de Paula', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'everton.projetos@gmail.com', 0, 'fotoUser/thumbnail_1443293367.jpg', '2015-09-26 17:43:00', '2015-09-26 17:45:00', 'teste', 'Aluno', 0, 1),
+	(1, 'Leonardo Martins', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'leo.piracaia@hotmail.com', 1262751, 'fotoUser/thumbnail_1443588915.jpg', '2015-10-01 20:32:11', '2015-10-01 20:34:11', 'Programador Júnior, Formando em Análise e Desenvolvimento de Sistemas', 'Aluno', 0, 1),
+	(2, '---', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'admin@admin.com', NULL, 'fotoUser/padraoUser.jpg', '2014-09-30 21:45:15', '2015-09-30 21:45:17', 'admin', 'admin', 0, 0),
+	(3, '---', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'admin@admin.com', NULL, 'fotoUser/padraoUser.jpg', '2015-09-30 21:46:15', '2015-09-30 21:46:17', 'admin', 'admin', 0, 0),
+	(6, 'Everton de Paula', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'everton.projetos@gmail.com', 0, 'fotoUser/thumbnail_1443387799.jpg', '2015-10-02 01:11:21', '2015-10-02 01:13:21', 'teste', 'Aluno', 0, 1),
 	(7, 'Ana carolina', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'ana@hotmail.com', 0, 'fotoUser/thumbnail_1427733717.jpg', '2015-09-09 19:25:19', '2015-09-09 19:27:19', 'teste', 'Aluno', 0, 0),
-	(8, 'Rodrigo Adolfo', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'rodrigo@hotmail.com', 0, 'fotoUser/thumbnail_1427733865.jpg', '2015-08-11 20:55:52', '2015-08-11 20:57:52', 'teste', 'Aluno', 0, 0),
+	(8, 'Rodrigo Adolfo', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'rodrigo@hotmail.com', 0, 'fotoUser/thumbnail_1427733865.jpg', '2015-09-30 21:30:11', '2015-09-30 21:32:11', 'teste', 'Aluno', 0, 0),
 	(9, 'Marcio Vianna', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'marcio@hotmail.com', 111111111, 'fotoUser/thumbnail_1427734132.jpg', '2015-09-03 15:18:27', '2015-09-03 15:20:27', 'teste', 'Aluno', 0, 0),
 	(10, 'Marcos Martins', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'marcosevmartins@gmail.com', 22222222, 'fotoUser/thumbnail_1427734208.jpg', '2015-08-10 14:38:58', '2015-08-10 14:40:58', 'Programador e Analista de Sistemas', 'Aluno', 0, 0),
 	(11, 'Claudia Martins', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'claubmartins@gmail.com', 3333333, 'fotoUser/thumbnail_1427733083.jpg', '2015-08-10 22:24:48', '2015-08-10 22:26:48', 'teste', 'Aluno', 0, 0),
-	(12, 'Ana Giancoli', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'paulagiancoli@gmail.com', 1234567, 'fotoUser/thumbnail_1443294351.jpg', '2015-09-26 16:08:03', '2015-09-26 16:10:03', 'teste', 'Professor', 1, 0),
+	(12, 'Ana Giancoli', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'paulagiancoli@gmail.com', 1234567, 'fotoUser/thumbnail_1443294351.jpg', '2015-10-02 01:26:40', '2015-10-02 01:28:40', 'teste', 'Professor', 1, 1),
 	(14, 'Jefferson de Souza', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'jeff@hotmail.com', 1234567, 'fotoUser/thumbnail_1427771298.jpg', '2015-03-30 19:28:05', '2015-03-30 19:30:05', 'Prof. Dr. Jefferson de Souza Pinto\r\nDoutor em Engenharia Mecânica - DEF/FEM/UNICAMP\r\nPós-doutor em Engenharia Mecânica - DEMM/FEM/UNICAMP\r\nPós-doutorando em Engenharia Mecânica - DEMM/FEM/UNICAMP\r\nInstituto Federal de São Paulo - Campus Bragança Paulista', 'Professor', 1, 0),
 	(15, 'João Paulo', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'joaolds@gmail.com', 1234567, 'fotoUser/thumbnail_1427919145.jpg', '2015-08-11 21:12:12', '2015-08-11 21:14:12', 'I\'M GAY', 'Aluno', 0, 0),
-	(17, 'Mauro Mazzola', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'mauro@hotmail.com', 1234567, 'fotoUser/thumbnail_1427919031.jpg', '2015-08-10 23:12:18', '2015-08-10 23:14:18', NULL, 'Aluno', 0, 0),
+	(17, 'Mauro Mazzola', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'mauro@hotmail.com', 1234567, 'fotoUser/thumbnail_1427919031.jpg', '2015-09-30 21:59:53', '2015-09-30 22:01:53', NULL, 'Aluno', 0, 0),
 	(18, 'André Lemme', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'andre@hotmail.com', 1234567, 'fotoUser/thumbnail_1427920239.png', '2015-04-15 18:52:49', '2015-04-15 18:54:49', 'Enquetes - Servidores , Coordenadoria de Extensão - Uso Interno, Coordenação do Curso de ADS, Coordenadoria de Área - Informática, Coordenação de Pesquisa (2015), Engenharia de Software - ESWI2, Projeto de Sistemas II - PS2I6, Gerencia de Projetos - GPSIIP3, Treinamento Professor', 'Professor', 1, 0),
 	(19, 'Wilson Vendramel', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'vendramel@hotmail.com', 1234567, 'fotoUser/thumbnail_1427920193.png', '2015-06-03 15:04:10', '2015-06-03 15:06:10', 'Professor e Coordenador ADS Enquetes - Servidores , Coordenadoria de Extensão - Uso Interno, Coordenação do Curso de ADS, Coordenadoria de Área - Informática, Coordenação de Pesquisa (2015), Análise Orientada a Objetos - AOOI3, Arquitetura de Software - ASWI4, Qualidade de Software - QSWI5, Treinamento Professor, Alunos ADS', 'Coordenador ADS', 1, 0),
 	(20, 'André Panhan', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'apanhan@gmail.com', 1234567, 'fotoUser/thumbnail_1427930009.png', '2015-08-11 21:08:47', '2015-08-11 21:10:47', 'Enquetes - Servidores , Coordenadoria de Extensão - Uso Interno, Coordenação do Curso de ADS, Coordenadoria de Área - Informática, Coordenação de Pesquisa (2015), Desenvolvimento para Web II - DW2A6, Programação Orientada a Objetos - POOI4, Treinamento Professor', 'Professor', 1, 0),
@@ -519,10 +592,39 @@ INSERT INTO `users` (`uid`, `username`, `password`, `email`, `prontuario`, `foto
 	(22, 'Marcel Zacarias', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'marcel@hotmail.com', 111111111, 'fotoUser/thumbnail_1428453049.jpg', '2015-04-07 21:31:57', '2015-04-07 21:33:57', NULL, 'Aluno', 0, 0),
 	(23, 'Eliane Andreoli', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'eliane@hotmail.com', 1234567, 'fotoUser/thumbnail_1428721478.jpg', '2015-04-11 00:05:20', '2015-04-11 00:07:20', 'Professora de Português e Inglês', 'Professor', 1, 0),
 	(24, 'Rosalvo Soares C. Filho', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'rosalvo@hotmail.com', 123456, 'fotoUser/thumbnail_1429109792.jpg', '2015-04-15 11:56:49', '2015-04-15 11:58:49', 'Professor de Redes de Computadores', 'Professor', 1, 0),
-	(25, 'Ana Cristina Gobbo César', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'anacristina@hotmail.com', 1234567, 'fotoUser/thumbnail_1429109742.jpg', '2015-04-15 11:55:59', '2015-04-15 11:57:59', 'Professora de TCC', 'Professor', 1, 0),
+	(25, 'Ana Cristina Gobbo César', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'anacristina@hotmail.com', 1234567, 'fotoUser/thumbnail_1429109742.jpg', '2015-09-30 21:58:57', '2015-09-30 22:00:57', 'Professora de TCC', 'Professor', 1, 0),
 	(26, 'Bianca Maria Pedrosa', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'bianca@hotmail.com', 1234567, 'fotoUser/thumbnail_1429109829.jpg', '2015-04-15 11:57:30', '2015-04-15 11:59:30', 'Professora de WEB', 'Professor', 1, 0),
-	(27, 'Flavio César Amate', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'flavio@hotmail.com', 1234567, 'fotoUser/thumbnail_1429109684.jpg', '2015-04-15 11:55:06', '2015-04-15 11:57:06', 'Professor de Matemática', 'Professor', 1, 0);
+	(27, 'Flavio César Amate', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'flavio@hotmail.com', 1234567, 'fotoUser/thumbnail_1429109684.jpg', '2015-09-30 22:03:22', '2015-09-30 22:05:22', 'Professor de Matemática', 'Professor', 1, 0),
+	(30, 'João Antunes Pereira da Cunha ', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'jj@gmail.com', 1231231, 'fotoUser/padraoUser.jpg', '2015-09-30 22:02:42', '2015-09-30 22:04:42', NULL, NULL, 0, 0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela tcc.workflow
+CREATE TABLE IF NOT EXISTS `workflow` (
+  `idWorkflow` int(11) NOT NULL AUTO_INCREMENT,
+  `idGrupo` int(11) DEFAULT NULL,
+  `participantes` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `start` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `end` datetime NOT NULL,
+  `data_conclusao` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `concluido` tinyint(4) NOT NULL DEFAULT '0',
+  `nomeEvento` varchar(150) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `descricao` text COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`idWorkflow`),
+  KEY `idGrupo` (`idGrupo`),
+  CONSTRAINT `fk_idGrupo_workflow` FOREIGN KEY (`idGrupo`) REFERENCES `grupo` (`idgrupo`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Copiando dados para a tabela tcc.workflow: ~1 rows (aproximadamente)
+DELETE FROM `workflow`;
+/*!40000 ALTER TABLE `workflow` DISABLE KEYS */;
+INSERT INTO `workflow` (`idWorkflow`, `idGrupo`, `participantes`, `start`, `end`, `data_conclusao`, `concluido`, `nomeEvento`, `descricao`) VALUES
+	(23, 63, '7,12,6,1', '2015-09-30 21:09:11', '2015-10-05 00:00:00', '2015-10-15 21:22:06', 1, 'Verificar o arquivo', 'Verificar arquivo de como Elaborar um TCC.'),
+	(24, 63, '7,12,6', '2015-09-30 21:25:11', '2015-10-20 00:00:00', '2015-10-19 22:09:42', 1, 'Verificar TEXTOS DE JUCA CHAVEZ', 'Por favor façam alguma coisa, por que eu já estou muito nervoso..... \\ /'),
+	(25, 63, '7,12,6,1', '2015-10-02 01:47:24', '2015-11-15 00:00:00', '2015-11-20 01:51:22', 1, 'Fazer tudo isso', 'É só fazer mano jow.'),
+	(26, 63, '7,12,6,1', '2015-10-02 01:52:04', '2015-11-07 00:00:00', '2015-11-04 01:53:34', 1, 'Eita pelo', 'Fazer sem demora'),
+	(27, 63, '7,12,6', '2015-10-02 01:54:22', '2015-12-10 00:00:00', '0000-00-00 00:00:00', 0, 'Eita Pelo 2', 'Fazer novamente tudo.');
+/*!40000 ALTER TABLE `workflow` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

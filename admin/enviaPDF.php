@@ -1,150 +1,227 @@
 <?php
 require_once('verifica-logado.php');
+require_once('./includes/Conexao.class.php');
+
+date_default_timezone_set("America/Sao_Paulo");
+$pdo = new Conexao();
+$result = $pdo->select("SELECT idgrupo FROM grupo_has_users WHERE uid = $id_users ORDER BY idgrupo desc;");
+
+if (count($result)) {
+    foreach ($result as $res) {
+        $idgrupo = $res['idgrupo'];
+        $array_grupos = array('id' => $idgrupo);
+    }
+} else {
+    echo "<script type='text/javascript'>location.href='panel.php'</script>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <meta name="description" content=""/>
-        <meta name="author" content=""/>
-        <title>Admin</title>
-        <!-- Bootstrap Core CSS -->
-        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-        <!-- MetisMenu CSS -->
-        <link href="metisMenu/dist/metisMenu.min.css" rel="stylesheet"/>
-        <script type="text/javascript" src="js/jquery-1.7.js"></script>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Admin</title>
 
-        <script type="text/javascript" src="js/jquery.form.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+     <!-- boostrap switch -->
+     <link href="js/bootstrap-switch-master/css/bootstrap-switch.min.css" rel="stylesheet"/>
+    <!-- MetisMenu CSS -->
+    <link href="metisMenu/dist/metisMenu.min.css" rel="stylesheet"/>
+    <!-- Custom CSS -->
+    <link href="sb-admin-2/css/sb-admin-2.css" rel="stylesheet"/>
+    <!-- select bootstrap -->
+    <link href="js/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" type="text/css"/>
+   <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <!-- Dialog -->
+    <link rel="stylesheet" href="bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css" />
 
-        <!-- Custom CSS -->
-        <link href="sb-admin-2/css/sb-admin-2.css" rel="stylesheet"/>
-        <!-- Custom Fonts -->
-        <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
-        <script>
+    <!-- jQuery -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script type="text/javascript" src="js/metisMenu.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script type="text/javascript" src="js/sb-admin-2.js"></script>
+    <!-- boostrap select -->
+    <script type="text/javascript" src="js/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <!-- boostrap switch -->
+    <script type="text/javascript" src="js/bootstrap-switch-master/js/bootstrap-switch.min.js"></script>
+    <script type="text/javascript" src="bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js"></script>
+    <script type="text/javascript" src="bootstrap3-dialog-master/alertsMsg.js"></script>
 
-            $('#form').ajaxForm({
-                uploadProgress: function (event, position, total, percentComplete) {
-                    $('.progress-bar').css('width', percentComplete);
-                    $('#porcentagem').html(percentComplete + '%');
-                },
-                success: function (data) {
-                    console.log(data);
-                    $('.progress-bar').css('width', '100%');
-                    $('#porcentagem').html('100%');
-                    $('#visualizar').slideDown(3000, function () {
-                        $('#visualizar').html(data);
-                    })
-                    $('.progress-bar').fadeOut(3000);
-                }
-            });
-            
-            $('.arqs').live('click', function(){
-                var idUser = <?php echo $id_users;?>;
-                $.ajax
-                ({
-                    type: "POST",
-                    url: "ajax/listaArquivos.php",
-                    data: "idUser="+idUser,
-                    success: function (data)
-                    {
-                        console.log(data);
-                        $(".modal-body").html(data);
-                    },
-                    error: function (data) {
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var IDGRUPO = $("#idgrupo").val();
 
+            $('#select-idgrupo').on('change', function(){
+                var id = $(this).val();
+                if (id !== null) {
+                    var idO;
+                    for (var i = 0; i < id.length; i++) {
+                        idO = id[i];
                     }
-                });
-                return false;
+                    IDGRUPO = idO;
+                    $("#idgrupo").val(IDGRUPO);
+                    LoadFiles();
+                }else {
+                    IDGRUPO = "";
+                    $("#idgrupo").val(IDGRUPO);
+                    LoadFiles();
+                }
+            }); 
+            
+            LoadFiles();
+        });
+        
+        function LoadFiles(){
+            var href = "ajax/listaArquivos.php";
+            var post = {idgrupo: $("#idgrupo").val()};
+            $.ajax({
+               url: href,
+               data: post,
+               dataType: 'HTML',
+               method: 'POST',
+               success: function(data){
+                   $('#listArquivos > ').remove();
+                   var retorno = $(data);
+                   $('#listArquivos').html(retorno).fadeIn();
+               },
+               error: function(msg){
+                   $('#listArquivos > ').remove();
+                   var retorno = $(msg);
+                   $('#listArquivos').html(retorno).fadeIn();
+               }
             });
             
-        </script>
-    </head>
-    <body>
-        <div id="wrapper">
-            <!-- Navigation -->
-            <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-                <?php require_once('pages/headerAdmin.php'); ?>
-                <?php require_once('pages/menuLateralAdmin.php'); ?>
-            </nav>
+        }
+        
+        function openUpload(){
+            var href = "modelos/filesUpload.php";
+            var post = {idgrupo: $("#idgrupo").val()};
+            getAjaxPage(href, post);
+            $('.modal-title').text("Realizar upload de arquivos");
+        }
+        
+        function getAjaxPage(href, post){
+            $.ajax({
+               url: href,
+               data: post,
+               method: 'POST',
+               dataType: 'HTML',
+               success: function(data){
+                   $(".content_ajax > ").remove();
+                   var retorno = $(data);
+                   $(".content_ajax").html(retorno).fadeIn();
+                   $('#modal').modal('show');
+               },
+               error: function(msg){
+                   $(".content_ajax > ").remove();
+                   var retorno = $(msg);
+                   $(".content_ajax").html(retorno).fadeIn();
+                   $('#modal').modal('show');
+               }
+            });
+        }
+        
+    </script>
+    
+    <style>
+        .readerPDF{position: fixed;width: 90%;height: 95%;overflow-y: hidden;overflow-x: hidden;left: 5%;top: 2.5%;display: none;z-index: 9999;}
+    </style>
+</head>
+<body>
+    
+    <div class="readerPDF"></div>
+    <input type="hidden" id="idgrupo" name="idgrupo" value="<?php echo $idgrupo; ?>"/>
 
-            <!-- Page Content -->
-            <div id="page-wrapper">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <h2 class="page-header">Envio <span class="text-danger">de Arquivos</span></h2>
-                        </div>
-                    </div>
-                    <br/>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <blockquote>
-                                Mande seu arquivo em formato PDF para que o(a) professor(a) possa fazer suas consideracoes sobre o TCC
-                            </blockquote>
-                            <br>
-                            <form action="ajax/upload.php" method="post" id="form">
-                                <div id="file">
-                                    <input type="file" name="file" class="btn btn-primary"/>
-                                    <br ><br >
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <?php require_once('pages/headerAdmin.php'); ?>
+            <?php require_once('pages/menuLateralAdmin.php'); ?>
+        </nav>
 
-                                    <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                                            <span id="porcentagem">0%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br />
-                                <input type="submit" class="btn btn-primary"/>
-                                <input type="button" class="btn btn-info arqs" value="Ver Arquivos enviados" data-toggle="modal" data-target="#myModal"/>
-                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                <h4 class="modal-title" id="myModalLabel">Arquivos Enviados</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
-                                            </div>
-                                        </div>
-                                        <!-- /.modal-content -->
-                                    </div>
-                                    <!-- /.modal-dialog -->
-                                </div>
-                                <!-- /.modal -->
-                            </form> 
-                            <br style="clear: both;">
-                            <br style="clear: both;">
-                            <div id="visualizar"></div>
-                        </div>
+        <!-- Page Content -->
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                
+                <div class="modal fade" id="modal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span style="top: -5px;position: relative;" aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title"></h4>
+                            </div>
+                            <div class='content_ajax'>
+
+                            </div><!-- /.content_ajax -->
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+                
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h2 class="page-header">Envio <span class="text-danger">de Arquivos</span></h2>
+                        <blockquote>
+                            Nesta área você pode gerenciar todos os arquivos do grupo.
+                        </blockquote>
                     </div>
-                    <!-- /.row -->
                 </div>
-                <!-- /.container-fluid -->
-                <div class="row"></div>
-                <!-- /.row -->
-            </div>
-            <!-- /#page-wrapper -->
-        </div>
-        <!-- /#wrapper -->
-        <!-- jQuery -->
-        <script src="js/jquery.min.js"></script>
-        <!-- Bootstrap Core JavaScript -->
-        <script src="js/bootstrap.min.js"></script>
-        <!-- Metis Menu Plugin JavaScript -->
-        <script src="js/metisMenu.min.js"></script>
-        <!-- Custom Theme JavaScript -->
-        <script src="js/sb-admin-2.js"></script>
-    </body>
+                
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <?php
+                        if ($tipo_users > 0) {
+                            echo '<h4> Selecione o Grupo</h4>'
+                            . '<div class="form-group input-group">'
+                                . '<select name="select-idgrupo" id="select-idgrupo"'
+                                . ' class="selectpicker" multiple  data-max-options="1" '
+                                . 'data-min-options="1" required data-style="btn-info" '
+                                . 'title="Selecione o grupo de trabalho?" data-live-search="true" >';
+
+
+                            $pdo = new Conexao();
+                            echo "<optgroup label='Grupos - Títulos'>";
+
+                            foreach ($array_grupos as $id) {
+                                $result = $pdo->select("SELECT * FROM grupo_has_users a INNER JOIN grupo b ON a.idgrupo = b.idgrupo WHERE a.uid = {$id_users} AND b.recusado = 0 ORDER BY titulo");
+                                foreach ($result as $res) {
+                                    if ($idgrupo == $res['idgrupo']) {
+                                        echo "<option selected value='" . $res['idgrupo'] . "'>" . $res['titulo'] . "</option>";
+                                    } else {
+                                        echo "<option value='" . $res['idgrupo'] . "'>" . $res['titulo'] . "</option>";
+                                    }
+                                }
+                            }
+                            echo "</optgroup></select></div>";
+                        }
+                        ?>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div style="text-align: right">
+                            <button class="btn btn-primary" type="button" onclick="openUpload();">upload <i class="fa fa-upload"></i></button>
+                        </div>
+                        <div style="margin:10px auto;" id="listArquivos"></div>
+                    </div>
+                </div><!-- /.row -->
+                
+            </div><!-- /.container-fluid -->
+        </div><!-- /#page-wrapper -->
+    </div><!-- /#wrapper -->
+</body>
 </html>

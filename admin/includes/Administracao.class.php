@@ -1,6 +1,7 @@
 <?php
 require_once('Conexao.class.php');
 require_once('Auxiliar.class.php');
+
 class Administracao extends Conexao {
 
     private $data = array();
@@ -187,7 +188,7 @@ class Administracao extends Conexao {
                 $stmt->bindValue(':pidgrupo', $IdGrupoCriado, PDO::PARAM_INT);
                 $stmt->bindValue(':puid', $this->pront1, PDO::PARAM_INT);
 
-                if ($stmt->execute()) {
+                if ($stmt->execute()){
                     $stmt = $this->pdo->prepare('INSERT INTO grupo_has_users(idgrupo,uid,tipo) VALUES(:pidgrupo,:puid,1)');
                     $stmt->bindValue(':pidgrupo', $IdGrupoCriado, PDO::PARAM_INT);
                     $stmt->bindValue(':puid', $this->pront2, PDO::PARAM_INT);

@@ -77,7 +77,7 @@ class Cronograma extends Conexao {
             $stmt->bindValue(':pisClonclusion', $this->isClonclusion, PDO::PARAM_BOOL);
 
             if ($stmt->execute()) {
-                $this->msg = "O evento " . $this->nomeEvento . " com entrega prevista para " . date('d-m-Y', strtotime($this->end)) . " foi adicionado, confira no cronograma!!!";
+                $this->msg = "O evento '" . $this->nomeEvento . "' com entrega prevista para " . date('d-m-Y', strtotime($this->end)) . " foi adicionado, confira no cronograma!!!";
                 $this->sendMsg();
                 parent::desconectar();
                 return true;
@@ -163,7 +163,7 @@ class Cronograma extends Conexao {
             $stmt->bindValue(':pisClonclusion', $this->isClonclusion, PDO::PARAM_BOOL);
 
             if ($stmt->execute()) {
-                $this->msg = "O evento " . $this->nomeEvento . " com entrega prevista para " . date('d-m-Y', strtotime($this->end)) . " foi atualizado, confira no cronograma!!!";
+                $this->msg = "O evento '" . $this->nomeEvento . "' com entrega prevista para " . date('d-m-Y', strtotime($this->end)) . " foi atualizado, confira no cronograma!!!";
                 $this->sendMsg();
                 parent::desconectar();
                 return true;
