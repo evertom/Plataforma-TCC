@@ -1,5 +1,5 @@
 <?php
-$base = "http:". DIRECTORY_SEPARATOR ."". DIRECTORY_SEPARATOR ."localhost". DIRECTORY_SEPARATOR ."Plataforma-TCC". DIRECTORY_SEPARATOR ."admin"; //$_SERVER['SERVER_NAME'];
+$base = "http:". DIRECTORY_SEPARATOR ."". DIRECTORY_SEPARATOR ."localhost". DIRECTORY_SEPARATOR ."projeto-tcc". DIRECTORY_SEPARATOR ."Plataforma-TCC". DIRECTORY_SEPARATOR ."admin"; //$_SERVER['SERVER_NAME'];
 $file = isset($_POST['file']) ? $_POST['file'] : null;
 
 require_once '../includes/Conexao.class.php';
