@@ -19,8 +19,9 @@
                 time_to_close_dialog: 3000, //em milisegundo
                 label_button_close: 'cancelar', //texto do botão cancelar
                 draggable: true, //pode redimensionar 
-                closable: true
-
+                closable: true,
+                EnterHotkey: 13, //TECLA ENTER
+                EscHotkey: 27 //TECLA ESC
             };
 
             //Nesta Etapa estou incluindo as opção passadas por parametros
@@ -51,6 +52,7 @@
                     label: options_style.label_button_confirm,
                     cssClass: options_style.label_class_confirm,
                     autospin: options_style.spin,
+                    hotkey: options_style.EnterHotkey,
                     action: function(dialogRef){
                         $.ajax({
                             async: options_conection.async,
@@ -87,7 +89,8 @@
                     label: options_style.label_button_close,
                     action: function(dialogRef){
                         dialogRef.close();
-                    }
+                    },
+                    hotkey: options_style.EscHotkey,
                 }]
             });
         }
@@ -100,7 +103,8 @@
                 label_button: 'Ok',
                 draggable: true, //pode redimensionar 
                 location: null, //parametro para redirecionamento caso exista.
-                closable: false //padrão nao fechavel de dialog box.
+                closable: false, //padrão nao fechavel de dialog box.
+                EnterHotkey: 13 //TECLA ENTER
             };
 
             //Nesta Etapa estou incluindo as opção passadas por parametros
@@ -119,8 +123,9 @@
                             if(options_style.location !== null){
                                 location.href=options_style.location;
                             }
-                        }
-                    }   
+                        },
+                        hotkey: options_style.EnterHotkey
+                    }
                 ]
             });
         }

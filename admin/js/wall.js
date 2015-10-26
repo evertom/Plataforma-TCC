@@ -30,7 +30,7 @@ $(document).ready(function () {
     });
 
     //commment Submint
-    $('.comment_button').live("click", function () {
+    $('.comment_button').on("click", function () {
 
         var ID = $(this).attr("id");
 
@@ -57,14 +57,14 @@ $(document).ready(function () {
     });
 
     // commentopen 
-    $('.commentopen').live("click", function () {
+    $('.commentopen').on("click", function () {
         var ID = $(this).attr("id");
         $("#commentbox" + ID).slideToggle('slow');
         return false;
     });
 
     // delete comment
-    $('.stcommentdelete').live("click", function () {
+    $('.stcommentdelete').on("click", function () {
         var ID = $(this).attr("id");
         
         showAlert('confirm',{
@@ -91,7 +91,7 @@ $(document).ready(function () {
     });
 
     // delete update
-    $('.stdelete').live("click", function () {
+    $('.stdelete').on("click", function () {
         var ID = $(this).attr("id");
         
         showAlert('confirm',{

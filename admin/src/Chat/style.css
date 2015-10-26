@@ -1,0 +1,7 @@
+div#chat{width: 100%;}
+.erroChat{position: fixed;top: 10px;right: 10px;width: 550px;color: #FFF;background-color: #FAA;box-shadow: 0px 0px 5px 0px;border-radius: 9px;padding: 10px;}
+.chat select{width: 100%;}
+.chat ul{list-style: none; list-style-type: none;padding: 0px; width: 100%;}
+.chat button{width: 135px; padding: 5px !important; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;text-align: left;}
+.chat button:hover{}
+.chat i{float: right;margin-top: 10px!important;}
