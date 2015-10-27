@@ -69,10 +69,13 @@ if ($idProf == "" || $nomeProf == "") {
                             if(data.msg === true){
                                 showAlert('alert', {title: 'AVISO!!!',
                                     message: 'Requerimento enviado com sucesso, aguarde o professor entrar em contato...',
-                                    type: BootstrapDialog.TYPE_SUCCESS}, setTimeout("window.location = 'index.php'", 4500));
+                                    type: BootstrapDialog.TYPE_SUCCESS,location:'index.php'}, null);
                                 limpa();
                             }else{
-                                showAlert('alert', {title: 'AVISO!!!', message: 'Falha ao cadastrar requerimento...', type: BootstrapDialog.TYPE_ERROR}, setTimeout("window.location = 'index.php'", 4500));
+                                console.log(data);
+                                showAlert('alert', {title: 'AVISO!!!', 
+                                    message: 'Falha ao cadastrar requerimento...', 
+                                    type: BootstrapDialog.TYPE_ERROR,location:'index.php'}, null);
                                 limpa();
                             }
                         },
@@ -80,8 +83,7 @@ if ($idProf == "" || $nomeProf == "") {
                             console.log(data);
                             showAlert('alert', {title: 'AVISO!!!',
                                 message: 'Falha no sistema, contate seu administrador...',
-                                type: BootstrapDialog.TYPE_ERROR}, setTimeout("window.location = 'index.php'", 4500)
-                            );
+                                type: BootstrapDialog.TYPE_ERROR,location:'index.php'}, null);
                         }   
                     });
                     return false;

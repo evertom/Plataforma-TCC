@@ -26,7 +26,6 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
         <title>Plataforma de Gerenciamento de TCC</title>
         <meta http-equiv="cache-control" content="no-cache"/>
         <meta http-equiv="pragma" content="no-cache" />
-        
         <link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
         <!-- Bootstrap Core CSS -->
         <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -38,37 +37,35 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
         <!-- jQuery -->
         <script src="js/jquery-2.1.3.js"></script>
         <script src="js/intro.js"></script>
-        
+
         <!-- Bootstrap Core JavaScript -->
         <script src="js/bootstrap.min.js"></script>
-        
+
         <link rel="stylesheet" href="bootstrap3-dialog-master/src/css/bootstrap-dialog.css"/>
         <script src="bootstrap3-dialog-master/src/js/bootstrap-dialog.js"></script>
         <script src="bootstrap3-dialog-master/alertsMsg.js"></script>
 
-        
-        
-        
+
         <!-- >Chat Messenger
         <link href="chat/css/style.css" rel="stylesheet" type="text/css" />
         <!--script type="text/javascript" src="chat/js/functions.js"></script>
         <script type="text/javascript" src="chat/js/chat.js"></script>
         <script type="text/javascript" src="chat/js/jquery.js"></script>-->
-        
+
         <!-- >Chat Messenger<--->
         <link href="src/Chat/style.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="fullcalendar-2.3.1/lib/moment.min.js"></script>
         <script type="text/javascript" src="vendor/components/autobahn/autobahn.min.wamp1.js"></script>
         <script type="text/javascript" src="src/Chat/chat.min.js"></script>
         <!-- >Chat Messenger<--->
-        
-        
+
+
         <!-- >Mural<--->
         <link rel="stylesheet" type="text/css" media="all" href="css/wall.css" />
         <script type="text/javascript" src="js/jquery.oembed.js"></script>
         <script type="text/javascript" src="js/wall.js"></script>
         <!-- >Mural<--->
-        
+
         <script type="text/javascript">
             var pagina = 0;
 
@@ -91,15 +88,15 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
             ;
 
             $(document).ready(function () {
-                
-                chat_init({userId: <?php echo $id_users;?>});
 
-                <?php if ($primeroAcesso[0]['primeiroacesso'] == 0){ ?>
+                chat_init({userId: <?php echo $id_users; ?>});
+
+<?php if ($primeroAcesso[0]['primeiroacesso'] == 0) { ?>
                     introJs().start();
-                <?php } ?>
-                
+<?php } ?>
+
                 carrega();
-                
+
                 //evento para chamar o form dinamico
                 $(function ($) {
                     var painel = $("#painel");
@@ -122,8 +119,8 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
                     });
                 });
             });
-            
-            $(function (){
+
+            $(function () {
                 var PassosCompletosIntro = 1;
                 $('.NextIntro').on('click', function () {
                     PassosCompletosIntro = parseInt(PassosCompletosIntro) + 1;
@@ -143,164 +140,6 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
                     }
                 });
 
-                //funcao para editar o post do feeds
-                $('.EditarPostBt').on('click', function () {
-                    var div = $(this).parents('.stbody');
-                    var id = div.find('.comment_button').attr('id');
-
-                    var texto = div.find('.EditarPost').text();
-
-                    div.find('.EditarPost').html('<textarea style="width:100%;height:60px;"class="meuform postText">' + $.trim(texto) + '</textarea><input class="btn btn-primary btn-sm btnEditaPost" type="button" value="Salvar"></input> <input class="btn btn-info btn-sm btnEditaPostCancela" type="button" value="Cancelar"></input>');
-                });
-                //funcao para cancelar a edicao do post no feeds, caso ele apague, e feito um busca no bd para trazer a msg correta
-                $('.btnEditaPostCancela').on('click', function () {
-
-                    var div = $(this).parents('.stbody');
-                    var texto = div.find('.postText').val();
-                    var id = div.find('.comment_button').attr('id');
-
-                    if (texto === '') {
-                        loading_show();
-                        $.ajax({
-                            type: "POST",
-                            url: "ajax/cancelaPost.php",
-                            data: "id=" + id,
-                            success: function (html) {
-                                loading_hide();
-                                div.find('.EditarPost').html(html).fadeIn('fast');
-                            }
-                        });
-                        return false;
-                    } else {
-                        div.find('.EditarPost').html(texto).fadeIn('fast');
-                    }
-                });
-                //funcao para atulizar o post quando clica no botao salvar
-                $('.btnEditaPost').on('click', function () {
-
-                    var div = $(this).parents('.stbody');
-                    var texto = div.find('.postText').val();
-                    texto = $.trim(texto);
-                    var id = div.find('.comment_button').attr('id');
-
-                    if (texto === '') {
-                        showAlert('alert',{title: 'AVISO!!!', message:'Por favor digite seu Post !!!', type: BootstrapDialog.TYPE_WARNING}, null);
-                        div.find('.postText').focus();
-                    } else {
-                        $.ajax({
-                            type: "POST",
-                            url: "ajax/updatePost.php",
-                            data: "texto=" + texto + "&id=" + id,
-                            success: function (html) {
-                                div.find('.EditarPost').html(texto).fadeIn('fast');
-                            }
-                        });
-                        return false;
-                    }
-                });
-
-                //funcao para editar o comentario post do feeds
-                $('.EditaComentPost').on('click',  function () {
-                    var div = $(this).parents('.stcommenttext');
-                    var id = div.attr('id');
-                    var texto = div.find('.EditarComment').text();
-                    texto = $.trim(texto);
-
-                    div.find('.EditarComment').html('<textarea style="width:100%;height:60px;"class="meuform ComentarioText">' + texto + '</textarea><input class="btn btn-primary btn-sm btnEditaComentario" type="button" value="Salvar"></input> <input class="btn btn-info btn-sm btnEditaComentarioCancela" type="button" value="Cancelar"></input><br/><br/>');
-                });
-                //funcao para cancelar a edicao do comentario post no feeds, caso ele apague, e feito um busca no bd para trazer a msg correta
-                $('.btnEditaComentarioCancela').on('click', function () {
-
-                    var div = $(this).parents('.stcommenttext');
-                    var id = div.attr('id');
-                    var texto = div.find('.EditarComment').text();
-                    texto = $.trim(texto);
-
-                    if (texto === '') {
-                        loading_show();
-                        $.ajax({
-                            type: "POST",
-                            url: "ajax/cancelaComentario.php",
-                            data: "id=" + id,
-                            success: function (html) {
-                                loading_hide();
-                                div.find('.EditarComment').html(html).fadeIn('fast');
-                            }
-                        });
-                        return false;
-                    } else {
-                        div.find('.EditarComment').html(texto).fadeIn('fast');
-                    }
-                });
-
-                //funcao para atulizar o comentario do post quando clica no botao salvar
-                $('.btnEditaComentario').on('click', function () {
-
-                    var div = $(this).parents('.stcommenttext');
-                    var id = div.attr('id');
-                    var texto = div.find('.ComentarioText').val();
-                    texto = $.trim(texto);
-
-                    if (texto === '') {
-                        showAlert('alert',{title: 'AVISO!!!', message:'Por favor digite seu Coment\u00e1rio !!!', type: BootstrapDialog.TYPE_WARNING}, null);
-                        div.find('.ComentarioText').focus();
-                    } else {
-                        $.ajax({
-                            type: "POST",
-                            url: "ajax/updateComentPost.php",
-                            data: "texto=" + texto + "&id=" + id,
-                            success: function (html) {
-                                div.find('.EditarComment').html(texto).fadeIn('fast');
-                            }
-                        });
-                        return false;
-                    }
-                });
-
-                $('.like').on('click', function () {
-                    var div = $(this).parents('.stbody');
-                    var idmsg = div.find('.comment_button').attr('id');
-                    var iduser = <?php echo $id_users; ?>;
-
-                    $.ajax({
-                        type: "POST",
-                        url: "ajax/like.php",
-                        data: "idmsg=" + idmsg + "&iduser=" + iduser,
-                        success: function (html) {
-
-                            div.find('.likethis').html('<span class="badge">' + html + '</span>').fadeIn('fast');
-                            div.find('.like').removeClass('like').addClass('unlike');
-                            div.find('.unlike').html('<i class="fa fa-thumbs-o-down"></i> Descurtir');
-                        }
-                    });
-                    return false;
-                });
-
-                $('.unlike').on('click', function () {
-                    var div = $(this).parents('.stbody');
-                    var idmsg = div.find('.comment_button').attr('id');
-                    var iduser = <?php echo $id_users; ?>;
-
-                    $.ajax({
-                        type: "POST",
-                        url: "ajax/like.php",
-                        data: "idmsg=" + idmsg + "&iduser=" + iduser,
-                        success: function (html) {
-                            if (html === 0) {
-                                div.find('.likethis').html('').fadeIn('fast');
-                                div.find('.unlike').removeClass('unlike').addClass('like');
-                                div.find('.like').html('<i class="fa fa-thumbs-o-up"></i> Curtir');
-                            } else {
-                                div.find('.likethis').html('<span class="badge">' + html + '</span>').fadeIn('fast');
-                                div.find('.unlike').removeClass('unlike').addClass('like');
-                                div.find('.like').html('<i class="fa fa-thumbs-o-up"></i> Curtir');
-                            }
-                        }
-                    });
-                    return false;
-                });
-        
-        
                 $('.destaque').hover(function () {
                     //eleva a descricao para cima
                     $(this).find('p').stop().animate({top: '160px'}, 300);
@@ -325,7 +164,7 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
                     }
                 });
             });
-            
+
             function confirmIntro() {
                 $.ajax({
                     type: "POST",
@@ -341,7 +180,7 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
                 return false;
             }
 
-            
+
 
             $(window).scroll(function () {
 
@@ -349,7 +188,6 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
                     pagina += 1;
                     carrega();
                 }
-                ;
             });
             function rolar_para(elemento) {
                 $('html, body').animate({
@@ -360,14 +198,223 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
             function loading_show() {
                 $('#loading').html("<img src='images/loader.gif'/>").fadeIn('fast');
             }
-            ;
 
             function loading_hide() {
                 $('#loading').fadeOut('fast');
             }
-            ;
 
+            //funcao para editar o post do feeds
+            function EditarPostBt(elemento) {
+                var div = $(elemento).parents('.stbody');
+                var id = div.find('.comment_button').attr('id');
+                var texto = div.find('.EditarPost').text();
+
+                div.find('.EditarPost').html('<textarea style="width:100%;height:60px;"class="meuform postText">' + $.trim(texto) + '</textarea><input class="btn btn-primary btn-sm " onclick="btnEditaPost(this)" type="button" value="Salvar"></input> <input class="btn btn-info btn-sm " onclick="btnEditaPostCancela(this)" type="button" value="Cancelar"></input>');
+            }
+
+
+            //funcao para cancelar a edicao do post no feeds, caso ele apague, e feito um busca no bd para trazer a msg correta
+            function btnEditaPostCancela(elemento) {
+
+                var div = $(elemento).parents('.stbody');
+                var texto = div.find('.postText').val();
+                var id = div.find('.comment_button').attr('id');
+
+                if (texto === '') {
+                    loading_show();
+                    $.ajax({
+                        type: "POST",
+                        url: "ajax/cancelaPost.php",
+                        data: "id=" + id,
+                        success: function (html) {
+                            loading_hide();
+                            div.find('.EditarPost').html(html).fadeIn('fast');
+                        }
+                    });
+                    return false;
+                } else {
+                    div.find('.EditarPost').html(texto).fadeIn('fast');
+                }
+            }
+
+            //funcao para atulizar o post quando clica no botao salvar
+            function btnEditaPost(elemento) {
+
+                var div = $(elemento).parents('.stbody');
+                var texto = div.find('.postText').val();
+                texto = $.trim(texto);
+                var id = div.find('.comment_button').attr('id');
+
+                if (texto === '') {
+                    showAlert('alert', {title: 'AVISO!!!', message: 'Por favor digite seu Post !!!', type: BootstrapDialog.TYPE_WARNING}, null);
+                    div.find('.postText').focus();
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: "ajax/updatePost.php",
+                        data: "texto=" + texto + "&id=" + id,
+                        success: function (html) {
+                            div.find('.EditarPost').html(texto).fadeIn('fast');
+                        }
+                    });
+                    return false;
+                }
+            }
+
+            function like(elemento) {
+                var div = $(elemento).parents('.stbody');
+                var idmsg = div.find('.comment_button').attr('id');
+                var iduser = <?php echo $id_users; ?>;
+
+                $.ajax({
+                    type: "POST",
+                    url: "ajax/like.php",
+                    data: "idmsg=" + idmsg + "&iduser=" + iduser,
+                    success: function (html) {
+
+                        $(elemento).next('.likethis').html('<span class="badge">' + html + '</span>').fadeIn('fast');
+                        $(elemento).removeClass('like').addClass('unlike');
+                        $(elemento).html('<i class="fa fa-thumbs-o-down"></i> Descurtir');
+                        $(elemento).attr('onclick','unlike(this)');
+                    }
+                });
+                return false;
+            }
             
+            function curtirComments(elemento){
+                var div = $(elemento).parents('.stcommenttext');
+                var idmsg = div.attr('id');
+                var iduser = <?php echo $id_users; ?>;
+            
+                 $.ajax({
+                    type: "POST",
+                    url: "ajax/likeComment.php",
+                    data: "idmsg=" + idmsg + "&iduser=" + iduser,
+                    success: function (html) {
+
+                        $(elemento).next('.commentThis').html('<span class="badge">' + html + '</span>').fadeIn('fast');
+                        $(elemento).removeClass('like').addClass('unlike');
+                        $(elemento).html('<i class="fa fa-thumbs-o-down"></i> Descurtir');
+                        $(elemento).attr('onclick','unlikeComment(this)');
+                    }
+                });
+                return false;
+            }
+            
+            
+            function unlikeComment(elemento) {
+                var div = $(elemento).parents('.stcommenttext');
+                var idmsg = div.attr('id');
+                var iduser = <?php echo $id_users; ?>;
+
+                $.ajax({
+                    type: "POST",
+                    url: "ajax/likeComment.php",
+                    data: "idmsg=" + idmsg + "&iduser=" + iduser,
+                    success: function (html) {
+                        if (html === '0') {
+                            $(elemento).next('.commentThis').html('').fadeIn('fast');
+                            $(elemento).removeClass('unlike').addClass('like');
+                            $(elemento).html('<i class="fa fa-thumbs-o-up"></i> Curtir');
+                            $(elemento).attr('onclick','curtirComments(this)');
+                        } else {
+                            $(elemento).next('.commentThis').html('<span class="badge">' + html + '</span>').fadeIn('fast');
+                            $(elemento).removeClass('unlike').addClass('like');
+                            $(elemento).html('<i class="fa fa-thumbs-o-up"></i> Curtir');
+                            $(elemento).attr('onclick','curtirComments(this)');
+                        }
+                    }
+                });
+                return false;
+            }
+            
+
+            function unlike(elemento) {
+                var div = $(elemento).parents('.stbody');
+                var idmsg = div.find('.comment_button').attr('id');
+                var iduser = <?php echo $id_users; ?>;
+
+                $.ajax({
+                    type: "POST",
+                    url: "ajax/like.php",
+                    data: "idmsg=" + idmsg + "&iduser=" + iduser,
+                    success: function (html) {
+                        if (html === '0') {
+                            $(elemento).next('.likethis').html('').fadeIn('fast');
+                            $(elemento).removeClass('unlike').addClass('like');
+                            $(elemento).html('<i class="fa fa-thumbs-o-up"></i> Curtir');
+                            $(elemento).attr('onclick','like(this)');
+                        } else {
+                            $(elemento).next('.likethis').html('<span class="badge">' + html + '</span>').fadeIn('fast');
+                            $(elemento).removeClass('unlike').addClass('like');
+                            $(elemento).html('<i class="fa fa-thumbs-o-up"></i> Curtir');
+                            $(elemento).attr('onclick','like(this)');
+                        }
+                    }
+                });
+                return false;
+            }
+            
+            
+
+            //funcao para atulizar o comentario do post quando clica no botao salvar
+            function btnEditaComentario(elemento) {
+
+                var div = $(elemento).parents('.stcommenttext');
+                var id = div.attr('id');
+                var texto = div.find('.ComentarioText').val();
+                texto = $.trim(texto);
+
+                if (texto === '') {
+                    showAlert('alert', {title: 'AVISO!!!', message: 'Por favor digite seu Coment\u00e1rio !!!', type: BootstrapDialog.TYPE_WARNING}, null);
+                    div.find('.ComentarioText').focus();
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: "ajax/updateComentPost.php",
+                        data: "texto=" + texto + "&id=" + id,
+                        success: function (html) {
+                            div.find('.EditarComment').html(texto).fadeIn('fast');
+                        }
+                    });
+                    return false;
+                }
+            }
+
+            //funcao para editar o comentario post do feeds
+            function EditaComentPost(elemento) {
+                var div = $(elemento).parents('.stcommenttext');
+                var id = div.attr('id');
+                var texto = div.find('.EditarComment').text();
+                texto = $.trim(texto);
+
+                div.find('.EditarComment').html('<textarea style="width:100%;height:60px;"class="meuform ComentarioText"  >' + texto + '</textarea><input class="btn btn-primary btn-sm btnEditaComentario" onclick="btnEditaComentario(this)" type="button" value="Salvar"></input> <input class="btn btn-info btn-sm btnEditaComentarioCancela" onclick="btnEditaComentarioCancela(this)" type="button" value="Cancelar"></input><br/><br/>');
+            }
+
+            //funcao para cancelar a edicao do comentario post no feeds, caso ele apague, e feito um busca no bd para trazer a msg correta
+            function btnEditaComentarioCancela(elemento) {
+
+                var div = $(elemento).parents('.stcommenttext');
+                var id = div.attr('id');
+                var texto = div.find('.EditarComment').text();
+                texto = $.trim(texto);
+
+                if (texto === '') {
+                    loading_show();
+                    $.ajax({
+                        type: "POST",
+                        url: "ajax/cancelaComentario.php",
+                        data: "id=" + id,
+                        success: function (html) {
+                            loading_hide();
+                            div.find('.EditarComment').html(html).fadeIn('fast');
+                        }
+                    });
+                    return false;
+                } else {
+                    div.find('.EditarComment').html(texto).fadeIn('fast');
+                }
+            }
         </script>
     </head>
     <body>

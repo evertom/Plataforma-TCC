@@ -3,6 +3,7 @@
 ob_start();
 $id_users = isset($_SESSION['id_login']) ? $_SESSION['id_login'] : "";
 $nome_user = isset($_SESSION['user']) ? $_SESSION['user'] : "";
+$nick_users = isset($_SESSION['nick']) ? $_SESSION['nick'] : "";
 $email_users = isset($_SESSION['email_login']) ? $_SESSION['email_login'] : "";
 $pass_users = isset($_SESSION['pass_login']) ? $_SESSION['pass_login'] : "";
 $fotouser = isset($_SESSION['fotouser']) ? $_SESSION['fotouser'] : "";

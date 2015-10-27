@@ -7,7 +7,7 @@ require_once('../includes/Administracao.class.php');
 require_once('../includes/Conexao.class.php');
 
 $pdo = new Conexao();
-$result = $pdo->select("SELECT * FROM likes WHERE uid = " . $iduser . " AND msg_id = " . $idmsg . "");
+$result = $pdo->select("SELECT * FROM likecomment WHERE uid = " . $iduser . " AND com_id = " . $idmsg . "");
 
 if (count($result)) {
     try {
@@ -16,7 +16,7 @@ if (count($result)) {
         $Administracao->idmsg = $idmsg;
         $Administracao->iduser = $iduser;
 
-        $result = $Administracao->Unlike();
+        $result = $Administracao->UnlikeComment();
         if ($result != false) {
             echo $result;
         } else {
@@ -33,7 +33,7 @@ if (count($result)) {
         $Administracao->idmsg = $idmsg;
         $Administracao->iduser = $iduser;
 
-        $result = $Administracao->InsertLike();
+        $result = $Administracao->InsertLikeComment();
         if ($result != false) {
             echo $result;
         } else {

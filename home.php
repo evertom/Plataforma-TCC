@@ -15,13 +15,6 @@ ob_start();
         <link rel="stylesheet" href="admin/bootstrap3-dialog-master/src/css/bootstrap-dialog.css"/>
         <script src="admin/bootstrap3-dialog-master/src/js/bootstrap-dialog.js"></script>
         <script src="admin/bootstrap3-dialog-master/alertsMsg.js"></script>
-        <script>
-            //Aqui inicio do c�digo Jquery
-            $(document).ready(function () {
-
-
-            });
-        </script>
     </head>
     <body>
         <article>
