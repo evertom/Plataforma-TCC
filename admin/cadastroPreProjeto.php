@@ -66,7 +66,7 @@ if ($idgrupo == "") {
                                 error: function (data) {
                                     showAlert('alert', {title: 'AVISO!!!',
                                         message: 'Falha no sistema contate o adiministrador...',
-                                        type: BootstrapDialog.TYPE_ERROR}, setTimeout("window.location = 'index.php'", 4000));
+                                        type: BootstrapDialog.TYPE_ERROR,location:'panel.php'},null);
                                     ok = false;
                                 },
                                 complete: function () {
@@ -78,12 +78,12 @@ if ($idgrupo == "") {
                     if (ok == true) {
                         showAlert('alert', {title: 'AVISO!!!',
                             message: 'Pré Projeto cadastrado com sucesso...',
-                            type: BootstrapDialog.TYPE_SUCCESS}, setTimeout("window.location = 'panel.php'", 4000));
+                            type: BootstrapDialog.TYPE_SUCCESS,location:'panel.php'}, null);
                         limpa();
                     } else {
                         showAlert('alert', {title: 'AVISO!!!',
                             message: 'Falha ao cadastrar Pré Projeto...',
-                            type: BootstrapDialog.TYPE_ERROR}, setTimeout("window.location = 'panel.php'", 4000));
+                            type: BootstrapDialog.TYPE_ERROR,location:'panel.php'}, null);
                         limpa();
                     }
 

@@ -392,8 +392,16 @@ class Administracao extends Conexao {
                         $stmt->bindValue(':pde', $this->idProf, PDO::PARAM_INT);
 
                         if ($stmt->execute()) {
-                            parent::desconectar();
-                            return true;
+                            
+                            $stmt = $this->pdo->prepare('DELETE FROM grupo WHERE idgrupo = :pidgrupo');
+                            $stmt->bindValue(':pidgrupo', $this->idgrupo, PDO::PARAM_INT);
+
+                            if ($stmt->execute()){
+                                parent::desconectar();
+                                return true;
+                            }
+                            
+                            
                         } else {
                             parent::desconectar();
                             return false;
@@ -668,7 +676,8 @@ class Administracao extends Conexao {
                     parent::desconectar();
                     return false;
                 }
-            }
+            }           
+            
             parent::desconectar();
             return true;
         } catch (PDOException $e) {

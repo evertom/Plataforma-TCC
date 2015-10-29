@@ -64,6 +64,7 @@
                         data: valores,
                         success: function (data)
                         {
+                            console.log(data);
                             ok = data.msg;
                         },
                         error: function (data) {
@@ -77,6 +78,7 @@
                     });
 
                     if (ok == true) {
+                        
                         $('.alert-success').fadeIn('fast');
                         limpa();
                     } else {
