@@ -603,7 +603,7 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
                                  ?>
                             <div id="blocoprofessores">
                                 <div id="fotoprof">
-                                    <img src="<?php echo $res['fotouser'] ?>" width="59px"/>
+                                    <img src="<?php echo $res['fotouser'] ?>" width="59" alt="Usuário"/>
                                 </div>
                                 <div id="descricaoprof" class="descricaoprof">
 
@@ -636,7 +636,7 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
                     Todos os Direitos reservados
                 </div>
                 <div id="ifroda">
-                    <img src="img/if.png" width="200px"/>
+                    <img src="img/if.png" width="200" alt="IFSP" title="IFSP"/>
                 </div>
             </section>
         </footer>

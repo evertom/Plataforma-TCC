@@ -28,11 +28,19 @@ $(document).ready(function () {
         }
         return false;
     });
+});
 
+// commentopen 
+    function commentopen(elemento) {
+        var ID = $(elemento).attr("id");
+        $("#commentbox" + ID).slideToggle('slow');
+        return false;
+    }
+    
     //commment Submint
-    $('.comment_button').on("click", function () {
+   function  comment_button(elemento) {
 
-        var ID = $(this).attr("id");
+        var ID = $(elemento).attr("id");
 
         var comment = $("#ctextarea" + ID).val();
         var dataString = 'comment=' + comment + '&msg_id=' + ID;
@@ -54,45 +62,11 @@ $(document).ready(function () {
             });
         }
         return false;
-    });
-
-    // commentopen 
-    $('.commentopen').on("click", function () {
-        var ID = $(this).attr("id");
-        $("#commentbox" + ID).slideToggle('slow');
-        return false;
-    });
-
-    // delete comment
-    $('.stcommentdelete').on("click", function () {
-        var ID = $(this).attr("id");
-        
-        showAlert('confirm',{
-            type: BootstrapDialog.TYPE_DANGER, 
-            title: 'AVISO!!!', message:'Tem certeza que deseja excluir este coment\u00e1rio?'
-        },
-        {
-            method:'POST', 
-            type: 'POST', // Só ta funcionado com type, deve ser versão de lib jquery
-            url: "delete_comment_ajax.php", 
-            data: {'com_id': ID },
-            cache: false,
-            after_function: function(data, dialogRef){
-                if(data){
-                    dialogRef.getModalBody().html('procedimento realizado com sucesso!');
-                    dialogRef.setType(BootstrapDialog.TYPE_SUCCESS);
-                    $("#stcommentbody" + ID).slideUp();
-                }else{
-                    dialogRef.getModalBody().html('falha ao realizar o procedimento!');
-                }
-            }
-        });
-        return false;
-    });
-
-    // delete update
-    $('.stdelete').on("click", function () {
-        var ID = $(this).attr("id");
+    }
+    
+     // delete update
+    function stdelete (elemento) {
+        var ID = $(elemento).attr("id");
         
         showAlert('confirm',{
             type: BootstrapDialog.TYPE_DANGER, 
@@ -115,5 +89,31 @@ $(document).ready(function () {
             }
         });
         return false;
-    });
-});
+    }
+    
+    // delete comment
+    function stcommentdelete(elemento) {
+        var ID = $(elemento).attr("id");
+        
+        showAlert('confirm',{
+            type: BootstrapDialog.TYPE_DANGER, 
+            title: 'AVISO!!!', message:'Tem certeza que deseja excluir este coment\u00e1rio?'
+        },
+        {
+            method:'POST', 
+            type: 'POST', // Só ta funcionado com type, deve ser versão de lib jquery
+            url: "delete_comment_ajax.php", 
+            data: {'com_id': ID },
+            cache: false,
+            after_function: function(data, dialogRef){
+                if(data){
+                    dialogRef.getModalBody().html('procedimento realizado com sucesso!');
+                    dialogRef.setType(BootstrapDialog.TYPE_SUCCESS);
+                    $("#stcommentbody" + ID).slideUp();
+                }else{
+                    dialogRef.getModalBody().html('falha ao realizar o procedimento!');
+                }
+            }
+        });
+        return false;
+    }

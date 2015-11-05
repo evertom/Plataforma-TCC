@@ -74,6 +74,32 @@ class Administracao extends Conexao {
             return null;
         }
     }
+    
+    public function InsertLikeComment() {
+        try {
+            if (parent::getPDO() == null) {parent::conectar();}
+
+            $stmt = $this->pdo->prepare('INSERT INTO likecomment(uid,com_id) VALUES(:puid,:pcom_id)');
+            $stmt->bindValue(':puid', $this->iduser, PDO::PARAM_INT);
+            $stmt->bindValue(':pcom_id', $this->idmsg, PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+
+                $result = $this->select("SELECT count(com_id) as total FROM likecomment WHERE com_id = " . $this->idmsg . "");
+                foreach ($result as $res) {
+                    $total = $res['total'];
+                }
+                parent::desconectar();
+                return $total;
+            } else {
+                parent::desconectar();
+                return false;
+            }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
 
     public function Unlike() {
         try {
@@ -84,6 +110,33 @@ class Administracao extends Conexao {
 
             if ($stmt->execute()) {
                 $result = $this->select("SELECT count(msg_id) as total FROM likes WHERE msg_id = " . $this->idmsg . "");
+                if (count($result)) {
+                    foreach ($result as $res) {
+                        $total = $res['total'];
+                    }
+                } else {
+                    $total = 0;
+                }
+                parent::desconectar();
+                return $total;
+            } else {
+                parent::desconectar();
+                return $total;
+            }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return null;
+        }
+    }
+    public function UnlikeComment() {
+        try {
+            if (parent::getPDO() == null) {parent::conectar();}
+            $stmt = $this->pdo->prepare('DELETE FROM likecomment WHERE uid = :puid AND com_id = :pcom_id');
+            $stmt->bindValue(':puid', $this->iduser, PDO::PARAM_INT);
+            $stmt->bindValue(':pcom_id', $this->idmsg, PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                $result = $this->select("SELECT count(com_id) as total FROM likecomment WHERE com_id = " . $this->idmsg . "");
                 if (count($result)) {
                     foreach ($result as $res) {
                         $total = $res['total'];
