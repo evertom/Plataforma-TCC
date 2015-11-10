@@ -235,7 +235,11 @@ class Administracao extends Conexao {
             if ($stmt->execute()) {
                 $IdGrupoCriado = $this->pdo->lastInsertId();
                 $diretorio = '../GerenciamentoGrupos/'.$IdGrupoCriado;
-                mkdir($diretorio);
+                
+                if (!file_exists($diretorio)){
+                    mkdir($diretorio);
+                }
+                 
 
                 $stmt = $this->pdo->prepare('INSERT INTO grupo_has_users(idgrupo,uid,tipo) VALUES(:pidgrupo,:puid,1)');
                 $stmt->bindValue(':pidgrupo', $IdGrupoCriado, PDO::PARAM_INT);

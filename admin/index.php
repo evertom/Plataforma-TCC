@@ -24,9 +24,8 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
     <head>
         <meta charset="utf-8" />
         <title>Plataforma de Gerenciamento de TCC</title>
-        <meta http-equiv="cache-control" content="no-cache"/>
-        <meta http-equiv="pragma" content="no-cache" />
         <link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
+        
         <!-- Bootstrap Core CSS -->
         <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -359,7 +358,6 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
 
             //funcao para atulizar o comentario do post quando clica no botao salvar
             function btnEditaComentario(elemento) {
-
                 var div = $(elemento).parents('.stcommenttext');
                 var id = div.attr('id');
                 var texto = div.find('.ComentarioText').val();
@@ -431,8 +429,10 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
                      a desenvolver sua monografia, mapeando todos os passos do grupo como um histórico de processos 
                      feitos, atas de reuniões automatizadas, sistema de bate-papo, acompanhamento por gráficos, 
                      enfim, tudo muito intuitivo e dinâmico, fazendo assim com que seu grupo tenha um maior controle 
-                     sobre oque está sendo feito e sobre oque ainda precisa fazer, mantendo assim um ótimo fluxo no desenvolvimento, e com o professor acompanhando passo
-                     a passo todas as etapas, conheça um pouco nossa plataforma !!!"></div>
+                     sobre oque está sendo feito e sobre oque ainda precisa fazer, mantendo assim um ótimo fluxo no 
+                     desenvolvimento, e com o professor acompanhando passo a passo todas as etapas, conheça um pouco
+                     nossa plataforma !!!"></div>
+                
                 <div id="forumimg" data-step="2" data-intro="Aqui na página principal, você encontra nossa mini rede social, 
                      na qual você poderá compartilhar suas ideias, comentar ideias dos seus amigos, bater papo no privado, 
                      ver possíveis ideias de tema para TCC postada por todos integrantes da plataforma, visualizar monografias de 
