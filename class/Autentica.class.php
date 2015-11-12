@@ -32,7 +32,8 @@ class Autentica extends Conexao {
         $senha = sha1(antiInjection($senha));
 
         $pdo = new Conexao();
-        $resultado = $pdo->select("SELECT uid, username, password, email, fotouser, descricao, prontuario, cargo, tipo FROM users WHERE email = '" . $this->email . "' AND password = '$senha' ");
+        $resultado = $pdo->select("SELECT uid, username, password, email, fotouser, descricao, prontuario, cargo, tipo "
+                . "FROM users WHERE email = '" . $this->email . "' AND password = '$senha' ");
 
         if (count($resultado)) {
 

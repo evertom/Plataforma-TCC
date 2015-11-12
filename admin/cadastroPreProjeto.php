@@ -1,8 +1,32 @@
 <?php
 require_once('verifica-logado.php');
 $idgrupo = isset($_GET['idgrupo']) ? $_GET['idgrupo'] : "";
+$action = isset($_GET['action']) ? $_GET['action'] : "";
+
+$objetivoGeral = NULL;
+$objetivoEspecifico = NULL;
+$justificativa = NULL;
+$tipodePesquisa = NULL;
+$metodologia = NULL;
+$resultadoEsperado = NULL;
+
 if ($idgrupo == "") {
     echo "<script type='text/javascript'>location.href='panel.php'</script>";
+}
+
+if ($action == 'update') {
+    require_once './includes/Conexao.class.php';
+    $pdo = new Conexao();
+
+    $result = $pdo->select("SELECT * FROM grupo WHERE idgrupo = {$idgrupo}");
+    foreach ($result as $res) {
+        $objetivoGeral = $res['objetivoGeral'];
+        $objetivoEspecifico = $res['objetivoEspecifico'];
+        $justificativa = $res['justificativa'];
+        $tipodePesquisa = $res['tipodePesquisa'];
+        $metodologia = $res['metodologia'];
+        $resultadoEsperado = $res['resultadoEsperado'];
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -42,6 +66,43 @@ if ($idgrupo == "") {
         <script src="bootstrap3-dialog-master/alertsMsg.js"></script>
         <script>
             $(document).ready(function () {
+
+<?php
+if ($action === 'update') {
+    ?>
+                    $('form').attr('id', 'UpdatePreProjeto');
+         
+    <?php
+}
+?>
+
+                $('#UpdatePreProjeto').submit(function (e) {
+                    showAlert('confirm', {
+                        type: BootstrapDialog.TYPE_DANGER,
+                        title: 'COFIRMAÇÃO', 
+                        message: 'Tem certeza que deseja alterar o Pré Projeto?',
+                        time_to_close_dialog:4000
+                    },
+                    {
+                        method: 'POST',
+                        type: 'POST', // Só ta funcionado com type, deve ser versão de lib jquery
+                        url: "ajax/updatePreProjeto.php",
+                        data: $('#UpdatePreProjeto').serializeArray(),
+                        cache: false,
+                        after_function: function (data, dialogRef) {
+                            if (data.ok === true) {
+                                dialogRef.getModalBody().html(data.msg);
+                                dialogRef.setType(BootstrapDialog.TYPE_SUCCESS);
+                                setTimeout('window.location="panel.php"',3000);
+                            } else {
+                                dialogRef.getModalBody().html(data.msg);
+                            }
+                        }
+                    });
+                    e.preventDefault();
+                });
+
+
                 $("#contact").submit(function () {
                     //pegamos totos os valores do form
                     var valores = $("#contact").serializeArray();
@@ -66,7 +127,7 @@ if ($idgrupo == "") {
                                 error: function (data) {
                                     showAlert('alert', {title: 'AVISO!!!',
                                         message: 'Falha no sistema contate o adiministrador...',
-                                        type: BootstrapDialog.TYPE_ERROR,location:'panel.php'},null);
+                                        type: BootstrapDialog.TYPE_ERROR, location: 'panel.php'}, null);
                                     ok = false;
                                 },
                                 complete: function () {
@@ -75,15 +136,15 @@ if ($idgrupo == "") {
                                 }
                             });
 
-                    if (ok == true) {
+                    if (ok === true) {
                         showAlert('alert', {title: 'AVISO!!!',
                             message: 'Pré Projeto cadastrado com sucesso...',
-                            type: BootstrapDialog.TYPE_SUCCESS,location:'panel.php'}, null);
+                            type: BootstrapDialog.TYPE_SUCCESS, location: 'panel.php'}, null);
                         limpa();
                     } else {
                         showAlert('alert', {title: 'AVISO!!!',
                             message: 'Falha ao cadastrar Pré Projeto...',
-                            type: BootstrapDialog.TYPE_ERROR,location:'panel.php'}, null);
+                            type: BootstrapDialog.TYPE_ERROR, location: 'panel.php'}, null);
                         limpa();
                     }
 
@@ -129,37 +190,37 @@ if ($idgrupo == "") {
                                     <legend>Formul&aacute;rio Pr&eacute; Projeto</legend>
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <textarea class="form-control" style="height:130px;" id="objGeral" name="objGeral" placeholder="Objetivo Geral" required></textarea>
+                                            <textarea class="form-control" style="height:130px;" id="objGeral" name="objGeral" placeholder="Objetivo Geral" required><?php echo $objetivoGeral; ?></textarea>
                                         </div>
                                     </div>
                                     <br style="clear:both;"/>
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <textarea class="form-control" style="height:130px;" id="objEspec" name="objEspec" placeholder="Objetivo Especifico" required></textarea>
+                                            <textarea class="form-control" style="height:130px;" id="objEspec" name="objEspec" placeholder="Objetivo Especifico" required><?php echo $objetivoEspecifico; ?></textarea>
                                         </div>
                                     </div>
                                     <br style="clear:both;"/>
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <textarea class="form-control" style="height:130px;" id="justificativa" name="justificativa" placeholder="Justificativa" required></textarea>
+                                            <textarea class="form-control" style="height:130px;" id="justificativa" name="justificativa" placeholder="Justificativa" required><?php echo $justificativa; ?></textarea>
                                         </div>
                                     </div>
                                     <br style="clear:both;"/>
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <textarea class="form-control" style="height:130px;" id="tipoPesquisa" name="tipoPesquisa" placeholder="Tipo de Pesquisa" required></textarea>
+                                            <textarea class="form-control" style="height:130px;" id="tipoPesquisa" name="tipoPesquisa" placeholder="Tipo de Pesquisa" required><?php echo $tipodePesquisa; ?></textarea>
                                         </div>
                                     </div>
                                     <br style="clear:both;"/>
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <textarea class="form-control" style="height:130px;" id="metodologia" name="metodologia" placeholder="Metodologia de Desenvolvimento" required></textarea>
+                                            <textarea class="form-control" style="height:130px;" id="metodologia" name="metodologia" placeholder="Metodologia de Desenvolvimento" required><?php echo $metodologia ?></textarea>
                                         </div>
                                     </div>
                                     <br style="clear:both;"/>
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <textarea class="form-control" style="height:130px;" id="resultados" name="resultados" placeholder="Resultados Esperados" required></textarea>
+                                            <textarea class="form-control" style="height:130px;" id="resultados" name="resultados" placeholder="Resultados Esperados" required><?php echo $resultadoEsperado ?></textarea>
                                         </div>
                                     </div>
                                 </fieldset>

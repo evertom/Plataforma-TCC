@@ -1,5 +1,5 @@
 <?php
-@session_start();
+session_start();
 ob_start();
 $id_users = isset($_SESSION['id_login']) ? $_SESSION['id_login'] : "";
 $nome_user = isset($_SESSION['user']) ? $_SESSION['user'] : "";

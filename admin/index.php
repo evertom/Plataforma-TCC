@@ -25,7 +25,7 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
         <meta charset="utf-8" />
         <title>Plataforma de Gerenciamento de TCC</title>
         <link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
-        
+
         <!-- Bootstrap Core CSS -->
         <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -274,18 +274,18 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
                         $(elemento).next('.likethis').html('<span class="badge">' + html + '</span>').fadeIn('fast');
                         $(elemento).removeClass('like').addClass('unlike');
                         $(elemento).html('<i class="fa fa-thumbs-o-down"></i> Descurtir');
-                        $(elemento).attr('onclick','unlike(this)');
+                        $(elemento).attr('onclick', 'unlike(this)');
                     }
                 });
                 return false;
             }
-            
-            function curtirComments(elemento){
+
+            function curtirComments(elemento) {
                 var div = $(elemento).parents('.stcommenttext');
                 var idmsg = div.attr('id');
                 var iduser = <?php echo $id_users; ?>;
-            
-                 $.ajax({
+
+                $.ajax({
                     type: "POST",
                     url: "ajax/likeComment.php",
                     data: "idmsg=" + idmsg + "&iduser=" + iduser,
@@ -294,13 +294,13 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
                         $(elemento).next('.commentThis').html('<span class="badge">' + html + '</span>').fadeIn('fast');
                         $(elemento).removeClass('like').addClass('unlike');
                         $(elemento).html('<i class="fa fa-thumbs-o-down"></i> Descurtir');
-                        $(elemento).attr('onclick','unlikeComment(this)');
+                        $(elemento).attr('onclick', 'unlikeComment(this)');
                     }
                 });
                 return false;
             }
-            
-            
+
+
             function unlikeComment(elemento) {
                 var div = $(elemento).parents('.stcommenttext');
                 var idmsg = div.attr('id');
@@ -315,18 +315,18 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
                             $(elemento).next('.commentThis').html('').fadeIn('fast');
                             $(elemento).removeClass('unlike').addClass('like');
                             $(elemento).html('<i class="fa fa-thumbs-o-up"></i> Curtir');
-                            $(elemento).attr('onclick','curtirComments(this)');
+                            $(elemento).attr('onclick', 'curtirComments(this)');
                         } else {
                             $(elemento).next('.commentThis').html('<span class="badge">' + html + '</span>').fadeIn('fast');
                             $(elemento).removeClass('unlike').addClass('like');
                             $(elemento).html('<i class="fa fa-thumbs-o-up"></i> Curtir');
-                            $(elemento).attr('onclick','curtirComments(this)');
+                            $(elemento).attr('onclick', 'curtirComments(this)');
                         }
                     }
                 });
                 return false;
             }
-            
+
 
             function unlike(elemento) {
                 var div = $(elemento).parents('.stbody');
@@ -342,19 +342,19 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
                             $(elemento).next('.likethis').html('').fadeIn('fast');
                             $(elemento).removeClass('unlike').addClass('like');
                             $(elemento).html('<i class="fa fa-thumbs-o-up"></i> Curtir');
-                            $(elemento).attr('onclick','like(this)');
+                            $(elemento).attr('onclick', 'like(this)');
                         } else {
                             $(elemento).next('.likethis').html('<span class="badge">' + html + '</span>').fadeIn('fast');
                             $(elemento).removeClass('unlike').addClass('like');
                             $(elemento).html('<i class="fa fa-thumbs-o-up"></i> Curtir');
-                            $(elemento).attr('onclick','like(this)');
+                            $(elemento).attr('onclick', 'like(this)');
                         }
                     }
                 });
                 return false;
             }
-            
-            
+
+
 
             //funcao para atulizar o comentario do post quando clica no botao salvar
             function btnEditaComentario(elemento) {
@@ -432,7 +432,7 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
                      sobre oque está sendo feito e sobre oque ainda precisa fazer, mantendo assim um ótimo fluxo no 
                      desenvolvimento, e com o professor acompanhando passo a passo todas as etapas, conheça um pouco
                      nossa plataforma !!!"></div>
-                
+
                 <div id="forumimg" data-step="2" data-intro="Aqui na página principal, você encontra nossa mini rede social, 
                      na qual você poderá compartilhar suas ideias, comentar ideias dos seus amigos, bater papo no privado, 
                      ver possíveis ideias de tema para TCC postada por todos integrantes da plataforma, visualizar monografias de 

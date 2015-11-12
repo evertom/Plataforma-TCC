@@ -57,6 +57,44 @@ if ($cronograma == 1) {
 		</div>';
 }
 ?>
+<script>
+    $(document).ready(function () {
+        $("#fraseLema").dblclick(function () {
+            var text = $(this).text();
+            $(this).html('<textarea onblur="atualizaLema($(this));" style="height:80px;resize:none;" name="fraselema" id="FrasLema" class="form-control">' + text + '</textarea>');
+        });
+        
+    });
+    function atualizaLema(textarea){
+        var nova = $(textarea).val();
+        
+        $.ajax({
+            type: 'POST',
+            url: "ajax/updateFraseLema.php",
+            dataType: 'JSON',
+            data: {idgrupo: <?php echo $idGrupo?>, fraselema: nova},
+            success: function (data, textStatus, jqXHR) {
+                if (data.ok === true) {
+                    showAlert('alert', {title: 'AVISO!!!',
+                                    message: data.msg,
+                                    type: BootstrapDialog.TYPE_SUCCESS}, null);
+                     $('#fraseLema').html(nova);     
+                }else{
+                    showAlert('alert', {title: 'AVISO!!!',
+                                    message: data.msg,
+                                    type: BootstrapDialog.TYPE_ERROR}, null);
+                    $('#fraseLema').html(nova); 
+                }     
+            },error: function (data, textStatus, errorThrown) {
+                showAlert('alert', {title: 'AVISO!!!',
+                                    message: 'Falha no sistema contate o adiministrador...',
+                                    type: BootstrapDialog.TYPE_ERROR, location: 'panel.php'}, null);
+            }
+        });
+        return false;
+    }
+</script>
+
 <!-- Page Content -->
 <div id="page-wrapper">
     <?php
@@ -65,9 +103,8 @@ if ($cronograma == 1) {
             . "AND g.visto = 1 AND g.idgrupo = " . $idGrupo . " and u.uid = " . $id_users . "");
 
     foreach ($result as $res) {
-        $fraseLema = isset($res['fraselema']) ? $res['fraselema'] : "Voc&ecirc; ainda n&atilde;o "
-            . "possui uma frase lema, v&aacute; ao painel de configura&ccedil;&otilde;es e "
-            . "cadastre sua frase que est&aacute; na monografia para exibila.";
+        $fraseLema = isset($res['fraselema']) ? $res['fraselema'] : "Você ainda não possui"
+            . "uma Frase Lema, dê um duplo clique aqui, e faça sua frase.";
     }
     ?>
     <div class="container-fluid">
@@ -77,7 +114,7 @@ if ($cronograma == 1) {
             </div>
 
             <div style="font-size:11px;" class="col-xs-6 col-md-4">
-                <br/><p><i class="fa fa-quote-left"></i> <?php echo $fraseLema; ?> <i class="fa fa-quote-right"></i></p>
+                <br/><p><i class="fa fa-quote-left"></i> <span id="fraseLema" style="cursor: pointer;"><?php echo $fraseLema; ?></span> <i class="fa fa-quote-right"></i></p>
             </div>
         </div>
 
@@ -86,34 +123,34 @@ if ($cronograma == 1) {
     <!-- /.container-fluid -->
     <!-- /.row -->
     <?php
-        $concluido = 0;
-        $atrasado = 0;
-        $registros = 0;
-        $participo = 0;
-        $resultado = $pdo->select("SELECT * FROM evento WHERE idGrupo = {$idGrupo}");
-        if(count($resultado)){
-            foreach($resultado as $ress){
-                $registros ++;
-                
-                $aux = $ress['participantes'];
-                $aux = explode(",", $aux);
-                
-                for($i=0; $i < count($aux); $i++){
-                    if($id_users == $aux[$i]){
-                        $participo ++;
-                    }
-                }
-                
-                if($ress['concluido'] == 1){
-                    $concluido ++;
-                    continue;
-                }
-                
-                if(strtotime($ress['end']) < strtotime(date('Y-m-d'))){
-                    $atrasado ++;
+    $concluido = 0;
+    $atrasado = 0;
+    $registros = 0;
+    $participo = 0;
+    $resultado = $pdo->select("SELECT * FROM evento WHERE idGrupo = {$idGrupo}");
+    if (count($resultado)) {
+        foreach ($resultado as $ress) {
+            $registros ++;
+
+            $aux = $ress['participantes'];
+            $aux = explode(",", $aux);
+
+            for ($i = 0; $i < count($aux); $i++) {
+                if ($id_users == $aux[$i]) {
+                    $participo ++;
                 }
             }
+
+            if ($ress['concluido'] == 1) {
+                $concluido ++;
+                continue;
+            }
+
+            if (strtotime($ress['end']) < strtotime(date('Y-m-d'))) {
+                $atrasado ++;
+            }
         }
+    }
     ?>    
     <div class="row">
         <div class="col-lg-3 col-md-6">
@@ -124,7 +161,7 @@ if ($cronograma == 1) {
                             <i class="fa fa-list-alt fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge"><?php echo $registros?></div>
+                            <div class="huge"><?php echo $registros ?></div>
                             <div>Total de Eventos</div>
                         </div>
                     </div>
@@ -146,7 +183,7 @@ if ($cronograma == 1) {
                             <i class="fa fa-check-square-o fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge"><?php echo $concluido?></div>
+                            <div class="huge"><?php echo $concluido ?></div>
                             <div>Eventos Concluidos</div>
                         </div>
                     </div>
@@ -160,7 +197,7 @@ if ($cronograma == 1) {
                 </a>
             </div>
         </div>
-         <div class="col-lg-3 col-md-6">
+        <div class="col-lg-3 col-md-6">
             <div class="panel panel-red">
                 <div class="panel-heading">
                     <div class="row">
@@ -168,7 +205,7 @@ if ($cronograma == 1) {
                             <i class="fa fa-times fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge"><?php echo $atrasado?></div>
+                            <div class="huge"><?php echo $atrasado ?></div>
                             <div>Eventos Atrasados</div>
                         </div>
                     </div>
@@ -190,7 +227,7 @@ if ($cronograma == 1) {
                             <i class="fa fa-child fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge"><?php echo $participo?></div>
+                            <div class="huge"><?php echo $participo ?></div>
                             <div>Eventos que Participo</div>
                         </div>
                     </div>
@@ -215,15 +252,15 @@ if ($cronograma == 1) {
 
         foreach ($result as $res) {
             echo '<div class="col-lg-3 col-md-6">
-							<div class="thumbnail">
-							  <img src="' . $res['fotouser'] . '" width="242px" alt="' . $res['username'] . '">
-							  <div class="caption">
-								<h3>' . $res['username'] . '</h3>
-								<p><i class="fa fa-envelope-o"></i> ' . $res['email'] . '</p>
-								<p><i class="fa fa-key"></i> ' . $res['prontuario'] . '</p>
-							  </div>
-							</div>
-						</div>';
+                        <div class="thumbnail">
+                          <img src="' . $res['fotouser'] . '" width="242px" alt="' . $res['username'] . '">
+                          <div class="caption">
+                                <h3>' . $res['username'] . '</h3>
+                                <p><i class="fa fa-envelope-o"></i> ' . $res['email'] . '</p>
+                                <p><i class="fa fa-key"></i> ' . $res['prontuario'] . '</p>
+                          </div>
+                        </div>
+                </div>';
         }
         ?>
     </div>
@@ -244,24 +281,25 @@ if ($cronograma == 1) {
         }
         ?>
         <div class="col-xs-12 col-sm-6 col-md-8">
-            <h3><?php echo $titulo; ?></h3><hr/>
-            <p><?php echo $descricao; ?></p>
+            <h3><?php echo $titulo; ?></h3>
+            <a href="cadastroPreProjeto.php?idgrupo=<?php echo $idGrupo ?>&action=update"><button class="btn btn-info"><i class="fa fa-edit"></i> Editar Pré Projeto</button></a>
+            <h3>Descrição</h3><hr/>
+            <p><?php echo $descricao; ?></p><br>
             <h3>Justificativa</h3><hr/>
-            <p><?php echo $justificativa; ?></p>
+            <p><?php echo $justificativa; ?></p><br>
             <h3>Tipo de Pesquisa</h3><hr/>
-            <p><?php echo $tipodePesquisa; ?></p>
+            <p><?php echo $tipodePesquisa; ?></p><br>
             <h3>Metodologia de Desenvolvimento</h3><hr/>
-            <p><?php echo $metodologia; ?></p>
+            <p><?php echo $metodologia; ?></p><br>
 
         </div>
         <div class="col-xs-6 col-md-4">
             <h3>Objetivo Geral</h3><hr/>
-            <p><?php echo $objetivoGeral; ?></p>
-            <br/>
+            <p><?php echo $objetivoGeral; ?></p><br/><br>
             <h3>Objetivo Espec&iacute;fico</h3><hr/>
-            <p><?php echo $objetivoEspecifico; ?></p>
+            <p><?php echo $objetivoEspecifico; ?></p><br>
             <h3>Resultados Esperados</h3><hr/>
-            <p><?php echo $resultadoEsperado; ?></p>
+            <p><?php echo $resultadoEsperado; ?></p><br>
         </div>
     </div>
 </div>

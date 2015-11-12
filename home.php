@@ -104,7 +104,7 @@ ob_start();
                                     </div>
                                     <div class="col-lg-6">
                                         <label class="label-control">Senha:</label>
-                                        <input class="form-control" type="text" name="senha" required="required" placeholder="Digite sua senha..."/>
+                                        <input class="form-control" type="password" name="senha" required="required" placeholder="Digite sua senha..."/>
                                         <input type="hidden" name="acao" value="createLogin"/>
                                     </div>
                                     <br style="clear: both;">
@@ -226,4 +226,3 @@ if (isset($action) && $action != "") {
             break;
     }
 }
-?>
