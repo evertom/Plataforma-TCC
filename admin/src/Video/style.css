@@ -1,0 +1,9 @@
+div#online-video-conf{width: 100%;}
+.erroVideo{position: fixed;top: 10px;right: 10px;width: 550px;color: #FFF;background-color: #FAA;box-shadow: 0px 0px 5px 0px;border-radius: 9px;padding: 10px;}
+.video-conf select{width: 100%;}
+.video-conf ul{list-style: none; list-style-type: none;padding: 0px; width: 100%;}
+.video-conf button{width: 135px; padding: 5px !important; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;text-align: left;}
+.video-conf i{float: right;margin-top: 10px!important;}
+div#modal-video-conf button{outline: none;}
+div#modal-video-conf button.btnFullscream:hover{background-color: #FFCC33; border-color: #FFCC33;}
+div#modal-video-conf button.btnChat:hover{background-color: #66afe9; border-color: #66afe9;}
