@@ -1,5 +1,6 @@
 <?php
 namespace Video;
+
 use Ratchet\Wamp\WampServerInterface;
 use Ratchet\ConnectionInterface;
 

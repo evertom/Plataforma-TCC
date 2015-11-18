@@ -63,9 +63,6 @@
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
-            <li>
-                <a href="videoConferencia.php"><i class='fa fa-video-camera'></i> &nbsp;Vídeo Conferência</a>
-            </li>
             <?php
             if ($cargo_users === 'Admin') {
                 echo '<li>

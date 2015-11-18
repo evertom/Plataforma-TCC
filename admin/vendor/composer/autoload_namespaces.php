@@ -13,5 +13,6 @@ return array(
     'Evenement' => array($vendorDir . '/evenement/evenement/src'),
     'ComponentInstaller' => array($vendorDir . '/robloach/component-installer/src'),
     'Chat' => array($baseDir . '/src'),
+    'Video' => array($baseDir . '/src'),
     'Assetic' => array($vendorDir . '/kriswallsmith/assetic/src'),
 );

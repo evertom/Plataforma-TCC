@@ -36,7 +36,6 @@ class Autentica extends Conexao {
                 . "FROM users WHERE email = '" . $this->email . "' AND password = '$senha' ");
 
         if (count($resultado)) {
-
             foreach ($resultado as $res) {
                 $_SESSION['id_login'] = $res['uid'];
                 $_SESSION['user'] = $res['username'];
@@ -48,8 +47,17 @@ class Autentica extends Conexao {
                 $_SESSION['prontuario'] = $res['prontuario'];
                 $_SESSION['tipo'] = $res['tipo'];
                 $_SESSION['logado'] = 'S';
+                
+                $selec_grupo = $pdo->select("SELECT * FROM grupo_has_users a 
+                WHERE a.uid =  {$res['uid']}
+                ORDER BY a.idgrupo DESC
+                LIMIT 1;");
+                
+                if(count($selec_grupo)){
+                    $_SESSION['grupo_id'] = $selec_grupo[0]['idgrupo'];
+                }
             }
-
+            
             //Aqui usado para o chat
             $atual = date('Y-m-d H:i:s');
             $expira = date('Y-m-d H:i:s', strtotime('+1 min'));

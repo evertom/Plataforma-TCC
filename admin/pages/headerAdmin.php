@@ -1,3 +1,8 @@
+<link href="src/Video/style.css" rel="stylesheet"/>
+<script type="text/javascript" src="vendor/components/autobahn/autobahn.min.wamp1.js"></script>
+<script type="text/javascript" src="fullcalendar-2.3.1/lib/moment.min.js"></script>
+<script type="text/javascript" src="src/Video/adapter.js"></script>
+<script type="text/javascript" src="src/Video/video.min.js"></script>
 <script>
     $(document).ready(function () {
         //evento do botao editar para chamar o form dinamico
@@ -14,6 +19,7 @@
                 }
             });
         });
+        video_init({userId: <?php echo $id_users; ?>});
     });
 </script>
 <div class="navbar-header">
@@ -306,6 +312,18 @@
     <?php
 }
 ?>
+<!-- /.dropdown -->
+<li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        <i class="fa fa-video-camera"></i>  <i class="fa fa-caret-down"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-user" style="width: 230px;">
+        <li id="online-video-conf" class="online-video-conf" style="width: 230px; padding: 10px;"></li>
+    </ul>
+    <!-- /.dropdown-user -->
+</li>
+<!-- /.dropdown -->    
+    
 <!-- /.dropdown -->
 <li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
