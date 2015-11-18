@@ -105,7 +105,7 @@ require_once('verifica-logado.php');
                                             $k = 1;
                                             foreach ($resultado as $ress) {
                                                 echo '<div class="col-sm-4 aluno' . $k . '" id="' . $ress['uid'] . '">
-                                                        <p><img src="' . $ress['fotouser'] . '" width="60px" alt="' . $ress['username'] . '"/>
+                                                        <p><img src="' . $ress['fotouser'] . '" width="100" alt="' . $ress['username'] . '" style="border:4px solid #9C9C9C;border-radius:10px;"/>
                                                         </p>
                                                         <p>
                                                         <i class="fa fa-graduation-cap"></i><strong>' . $ress['username'] . '</strong><br/>
@@ -130,7 +130,7 @@ require_once('verifica-logado.php');
                                             if (count($resultadoCori)) {
                                                 foreach ($resultadoCori as $resCori) {
                                                     echo '<hr/><p><strong>Coorientador</strong></p>'
-                                                        . '<p><img src="' . $resCori['fotouser'] . '" width="60px" alt="' . $resCori['username'] . '"/></p>'
+                                                        . '<p><img src="' . $resCori['fotouser'] . '" width="100" alt="' . $resCori['username'] . '" style="border:4px solid #9C9C9C;border-radius:10px;"/></p>'
                                                         . '<p><i class="fa fa-graduation-cap"></i><strong>' . $resCori['username'] . '</strong><br/>'
                                                         . '<i class="fa fa-envelope-o"></i> ' . $resCori['email'] . '</p>';
                                                 }

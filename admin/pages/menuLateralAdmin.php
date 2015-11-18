@@ -74,9 +74,6 @@
                                 <li>
                                     <a href="addProf.php">Adicionar Professores</a>
                                 </li>
-                                <li>
-                                    <a href="requerimentoProf.php">Requerimento de Professor</a>
-                                </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>';

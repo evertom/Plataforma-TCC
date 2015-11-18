@@ -33,8 +33,8 @@ require_once('verifica-logado.php');
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-        
-        
+
+
         <script>
             $(document).ready(function () {
                 $('.panel-red a').click(function () {
@@ -53,7 +53,7 @@ require_once('verifica-logado.php');
                             expansivePainel.removeClass('panel-red').addClass('panel-green');
                         },
                         error: function (html) {
-                            showAlert('alert',{title: 'ERRO!!!', message:'Erro de processo!!!', type: BootstrapDialog.TYPE_DANGER}, null);
+                            showAlert('alert', {title: 'ERRO!!!', message: 'Erro de processo!!!', type: BootstrapDialog.TYPE_DANGER}, null);
                         }
                     });
 
@@ -137,45 +137,45 @@ require_once('verifica-logado.php');
                                     $pdo = new Conexao();
 
                                     $result = $pdo->select("SELECT g.idgrupo,date_format(g.dataCriacao, '%d/%m/%Y') as dataCriacao,g.titulo,g.descricao,g.visto
-															FROM grupo g
-															INNER JOIN grupo_has_users gu ON gu.idgrupo = g.idgrupo
-															INNER JOIN users u ON u.uid = gu.uid
-															WHERE u.uid = " . $id_users . "
-															AND g.aceito = 0
-															AND g.recusado = 0
-															AND g.revisando = 0
-															AND gu.tipo = 2");
+                                                            FROM grupo g
+                                                            INNER JOIN grupo_has_users gu ON gu.idgrupo = g.idgrupo
+                                                            INNER JOIN users u ON u.uid = gu.uid
+                                                            WHERE u.uid = " . $id_users . "
+                                                            AND g.aceito = 0
+                                                            AND g.recusado = 0
+                                                            AND g.revisando = 0
+                                                            AND gu.tipo = 2");
                                     if (count($result)) {
                                         $i = 0;
                                         foreach ($result as $res) {
                                             if ($res['visto'] == 0) {
                                                 echo '<div class="panel panel-red">
-														<div class="panel-heading">
-															<h4 class="panel-title">
-																<a style="color:#FFF!important;" data-toggle="collapse" data-parent="#accordion" id="' . $res['idgrupo'] . '" href="#collapse' . $i . '"><i class="fa fa-th-list"></i> ' . $res['titulo'] . '</a>
-															</h4>
-														</div>
-													<div id="collapse' . $i . '" class="panel-collapse collapse">
-														<div class="panel-body">
-															<p><smal><i class="fa fa-calendar"></i> Enviado <strong>' . $res['dataCriacao'] . '</strong></smal></p><hr/>
-															<div class="row">';
+                                                            <div class="panel-heading">
+                                                                    <h4 class="panel-title">
+                                                                            <a style="color:#FFF!important;" data-toggle="collapse" data-parent="#accordion" id="' . $res['idgrupo'] . '" href="#collapse' . $i . '"><i class="fa fa-th-list"></i> ' . $res['titulo'] . '</a>
+                                                                    </h4>
+                                                            </div>
+                                                    <div id="collapse' . $i . '" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                    <p><smal><i class="fa fa-calendar"></i> Enviado <strong>' . $res['dataCriacao'] . '</strong></smal></p><hr/>
+                                                                    <div class="row">';
 
                                                 $resultado = $pdo->select("SELECT u.uid,username,email,fotouser
-																				FROM users u
-																				INNER JOIN grupo_has_users gu ON gu.uid = u.uid
-																				where gu.idgrupo = " . $res['idgrupo'] . "
-																				AND u.tipo = 0
-																				AND gu.tipo = 1");
+                                                                            FROM users u
+                                                                            INNER JOIN grupo_has_users gu ON gu.uid = u.uid
+                                                                            where gu.idgrupo = " . $res['idgrupo'] . "
+                                                                            AND u.tipo = 0
+                                                                            AND gu.tipo = 1");
                                                 $idGrupo = null;
                                                 $k = 1;
                                                 foreach ($resultado as $ress) {
                                                     echo '<div class="col-sm-4 aluno' . $k . '" id="' . $ress['uid'] . '">
-																<p><img src="' . $ress['fotouser'] . '" width="60px" alt="' . $ress['username'] . '"/>
-																</p>
-																<p>
-																<i class="fa fa-graduation-cap"></i><strong>' . $ress['username'] . '</strong><br/>
-																<i class="fa fa-envelope-o"></i> ' . $ress['email'] . '</p>
-																</div>';
+                                                            <p><img src="' . $ress['fotouser'] . '" width="100" alt="' . $ress['username'] . '" style="border:4px solid #9C9C9C;border-radius:10px;"/>
+                                                            </p>
+                                                            <p>
+                                                            <i class="fa fa-graduation-cap"></i><strong>' . $ress['username'] . '</strong><br/>
+                                                            <i class="fa fa-envelope-o"></i> ' . $ress['email'] . '</p>
+                                                            </div>';
 
                                                     $idGrupo .= chr(39) . $ress['uid'] . chr(39) . ',';
                                                     $k++;
@@ -187,71 +187,71 @@ require_once('verifica-logado.php');
                                                 echo '			</div>';
 
                                                 $resultadoCori = $pdo->select("SELECT u.uid,username,email,fotouser
-																				FROM users u
-																				INNER JOIN grupo_has_users gu ON gu.uid = u.uid
-																				where gu.idgrupo = " . $res['idgrupo'] . "
-																				AND gu.tipo = 3");
+                                                                                FROM users u
+                                                                                INNER JOIN grupo_has_users gu ON gu.uid = u.uid
+                                                                                where gu.idgrupo = " . $res['idgrupo'] . "
+                                                                                AND gu.tipo = 3");
 
                                                 if (count($resultadoCori)) {
                                                     foreach ($resultadoCori as $resCori) {
                                                         echo '<hr/>
-																		<p><strong>Coorientador</strong></p>
-																		<p><img src="' . $resCori['fotouser'] . '" width="60px" alt="' . $resCori['username'] . '"/></p>
-																		<p><i class="fa fa-graduation-cap"></i><strong>' . $resCori['username'] . '</strong><br/>
-																		<i class="fa fa-envelope-o"></i> ' . $resCori['email'] . '</p>
-																		';
+                                                                <p><strong>Coorientador</strong></p>
+                                                                <p><img src="' . $resCori['fotouser'] . '" width="100" alt="' . $resCori['username'] . '" style="border:4px solid #9C9C9C;border-radius:10px;" /></p>
+                                                                <p><i class="fa fa-graduation-cap"></i><strong>' . $resCori['username'] . '</strong><br/>
+                                                                <i class="fa fa-envelope-o"></i> ' . $resCori['email'] . '</p>
+                                                                ';
                                                     }
                                                 }
 
                                                 echo '		
-															<hr/>
-															<p><strong>Descri&ccedil;&atilde;o</strong></p>
-															<p>' . $res['descricao'] . '</p><hr/>
-															<p>
-								<button type="button" onclick="montaGrupo(' . $condicao2 . ')" class="btn btn-outline btn-success">Aceitar</button>
-                                <button type="button" onclick="recusaGrupo(' . $condicao2 . ')" class="btn btn-outline btn-danger">Recusar</button>
-								<a href="" data-toggle="modal" data-target="#myModal"><button type="button" onclick="maisDetalhes(' . $condicao2 . ')" class="btn btn-outline btn-warning">Mais Detalhes</button></a></p>
-							</p>
-														<br/>
-														<div id="loading"></div>
-														<div class="alert alert-success alert-dismissable" style="display:none">
-								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-								Opera&ccedil;&atilde;o realizada com sucesso...
-							</div>
-														</div>
-													</div>
-												</div>';
+                                                    <hr/>
+                                                    <p><strong>Descri&ccedil;&atilde;o</strong></p>
+                                                    <p>' . $res['descricao'] . '</p><hr/>
+                                                    <p>
+                                                    <button type="button" onclick="montaGrupo(' . $condicao2 . ')" class="btn btn-outline btn-success">Aceitar</button>
+                                                    <button type="button" onclick="recusaGrupo(' . $condicao2 . ')" class="btn btn-outline btn-danger">Recusar</button>
+                                                    <a href="" data-toggle="modal" data-target="#myModal"><button type="button" onclick="maisDetalhes(' . $condicao2 . ')" class="btn btn-outline btn-warning">Mais Detalhes</button></a></p>
+                                                    </p>
+                                                    <br/>
+                                                    <div id="loading"></div>
+                                                    <div class="alert alert-success alert-dismissable" style="display:none">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                    Opera&ccedil;&atilde;o realizada com sucesso...
+                                                    </div>
+                                                                </div>
+                                                        </div>
+                                                </div>';
 
                                                 $i++;
                                             } else if ($res['visto'] == 1) {
                                                 echo '<div class="panel panel-green">
-														<div class="panel-heading">
-															<h4 class="panel-title">
-																<a style="color:#FFF!important;" data-toggle="collapse" data-parent="#accordion" id="' . $res['idgrupo'] . '" href="#collapse' . $i . '"><i class="fa fa-th-list"></i> ' . $res['titulo'] . '</a>
-															</h4>
-														</div>
-													<div id="collapse' . $i . '" class="panel-collapse collapse">
-														<div class="panel-body">
-															<p><smal><i class="fa fa-calendar"></i> Enviado <strong>' . $res['dataCriacao'] . '</strong></smal></p><hr/>
-															<div class="row">';
+                                                            <div class="panel-heading">
+                                                                    <h4 class="panel-title">
+                                                                            <a style="color:#FFF!important;" data-toggle="collapse" data-parent="#accordion" id="' . $res['idgrupo'] . '" href="#collapse' . $i . '"><i class="fa fa-th-list"></i> ' . $res['titulo'] . '</a>
+                                                                    </h4>
+                                                            </div>
+                                                    <div id="collapse' . $i . '" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                    <p><smal><i class="fa fa-calendar"></i> Enviado <strong>' . $res['dataCriacao'] . '</strong></smal></p><hr/>
+                                                                    <div class="row">';
 
                                                 $resultado = $pdo->select("SELECT u.uid,username,email,fotouser
-																				FROM users u
-																				INNER JOIN grupo_has_users gu ON gu.uid = u.uid
-																				where gu.idgrupo = " . $res['idgrupo'] . "
-																				AND u.tipo = 0
-																				AND gu.tipo = 1");
+                                                                            FROM users u
+                                                                            INNER JOIN grupo_has_users gu ON gu.uid = u.uid
+                                                                            where gu.idgrupo = " . $res['idgrupo'] . "
+                                                                            AND u.tipo = 0
+                                                                            AND gu.tipo = 1");
                                                 $idGrupo = null;
                                                 $k = 1;
                                                 echo '<p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Alunos</strong></p>';
                                                 foreach ($resultado as $ress) {
                                                     echo '<div class="col-sm-4 aluno' . $k . '" id="' . $ress['uid'] . '">
-																<p><img src="' . $ress['fotouser'] . '" width="60px" alt="' . $ress['username'] . '"/>
-																</p>
-																<p>
-																<i class="fa fa-graduation-cap"></i><strong>' . $ress['username'] . '</strong><br/>
-																<i class="fa fa-envelope-o"></i> ' . $ress['email'] . '</p>
-																</div>';
+                                                            <p><img src="' . $ress['fotouser'] . '" width="100" alt="' . $ress['username'] . '" style="border:4px solid #9C9C9C;border-radius:10px;"/>
+                                                            </p>
+                                                            <p>
+                                                            <i class="fa fa-graduation-cap"></i><strong>' . $ress['username'] . '</strong><br/>
+                                                            <i class="fa fa-envelope-o"></i> ' . $ress['email'] . '</p>
+                                                            </div>';
 
                                                     $idGrupo .= chr(39) . $ress['uid'] . chr(39) . ',';
                                                     $k++;
@@ -260,52 +260,52 @@ require_once('verifica-logado.php');
                                                 $size = strlen($idGrupo);
                                                 $condicao2 = substr($idGrupo, 0, $size - 1);
 
-                                                echo '		
-															</div>';
+                                                echo '
+                                                    </div>';
 
                                                 $resultadoCori = $pdo->select("SELECT u.uid,username,email,fotouser
-																				FROM users u
-																				INNER JOIN grupo_has_users gu ON gu.uid = u.uid
-																				where gu.idgrupo = " . $res['idgrupo'] . "
-																				
-																				AND gu.tipo = 3");
+                                                                                FROM users u
+                                                                                INNER JOIN grupo_has_users gu ON gu.uid = u.uid
+                                                                                where gu.idgrupo = " . $res['idgrupo'] . "
+
+                                                                                AND gu.tipo = 3");
 
                                                 if (count($resultadoCori)) {
                                                     foreach ($resultadoCori as $resCori) {
                                                         echo '<hr/>
-																		<p><strong>Coorientador</strong></p>
-																		<p><img src="' . $resCori['fotouser'] . '" width="60px" alt="' . $resCori['username'] . '"/>
-																		</p>
-																		<p>
-																		<i class="fa fa-graduation-cap"></i><strong>' . $resCori['username'] . '</strong><br/>
-																		<i class="fa fa-envelope-o"></i> ' . $resCori['email'] . '</p>
-																		';
+                                                                <p><strong>Coorientador</strong></p>
+                                                                <p><img src="' . $resCori['fotouser'] . '" width="100" alt="' . $resCori['username'] . '" style="border:4px solid #9C9C9C;border-radius:10px;"/>
+                                                                </p>
+                                                                <p>
+                                                                <i class="fa fa-graduation-cap"></i><strong>' . $resCori['username'] . '</strong><br/>
+                                                                <i class="fa fa-envelope-o"></i> ' . $resCori['email'] . '</p>
+                                                                ';
                                                     }
                                                 }
 
                                                 echo '	<hr/>
-															<p><strong>Descri&ccedil;&atilde;o</strong></p>
-															<p>' . $res['descricao'] . '</p><hr/>
-															<p>
+                                                            <p><strong>Descri&ccedil;&atilde;o</strong></p>
+                                                            <p>' . $res['descricao'] . '</p><hr/>
+                                                            <p>
 								<button type="button" onclick="montaGrupo(' . $condicao2 . ')" class="btn btn-outline btn-success">Aceitar</button>
                                 <button type="button" onclick="recusaGrupo(' . $condicao2 . ')" class="btn btn-outline btn-danger">Recusar</button>
 								<a href="" data-toggle="modal" data-target="#myModal"><button type="button" onclick="maisDetalhes(' . $condicao2 . ')" class="btn btn-outline btn-warning">Mais Detalhes</button></a></p>
-														<br/>
-														<div class="alert alert-success alert-dismissable" style="display:none">
+                                                            <br/>
+                                                            <div class="alert alert-success alert-dismissable" style="display:none">
 								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 								Opera&ccedil;&atilde;o realizada com sucesso...
 							</div>
-														</div>
-													</div>
-												</div>';
+                                                                        </div>
+                                                                </div>
+                                                        </div>';
 
                                                 $i++;
                                             }
                                         }
                                     } else {
                                         echo '<div class="alert alert-success alert-dismissable">'
-                                            . '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'
-                                            . 'N&atilde;o h&agrave; requisi&ccedil;&otilde;es para aceitar...</div>';
+                                        . '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'
+                                        . 'N&atilde;o h&agrave; requisi&ccedil;&otilde;es para aceitar...</div>';
                                     }
                                     ?>
                                 </div>
@@ -352,9 +352,9 @@ require_once('verifica-logado.php');
 
         <!-- Custom Theme JavaScript -->
         <script src="js/sb-admin-2.js"></script>
-        
+
         <script src="bootstrap3-dialog-master/src/js/bootstrap-dialog.js"></script>
         <script src="bootstrap3-dialog-master/alertsMsg.js"></script>
-        
+
     </body>
 </html>
