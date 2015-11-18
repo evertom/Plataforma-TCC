@@ -12,6 +12,7 @@ $cargo_users = isset($_SESSION['cargo']) ? $_SESSION['cargo'] : "";
 $prontuario_users = isset($_SESSION['prontuario']) ? $_SESSION['prontuario'] : "";
 $tipo_users = isset($_SESSION['tipo']) ? $_SESSION['tipo'] : "";
 $logado = isset($_SESSION['logado']) ? $_SESSION['logado'] : "N";
+$grupo_id = isset($_SESSION['grupo_id']) ? $_SESSION['grupo_id'] : "N";
 
 date_default_timezone_set('America/Sao_Paulo');
 

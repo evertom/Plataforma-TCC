@@ -11,6 +11,12 @@ require_once("../../includes/Conexao.class.php");
 $userId = isset($_POST['userId'])? $_POST['userId'] : null;
 
 /**
+ * varibel que traz o id do usuario no bando de dados
+ */
+session_start();
+$grupoId = isset($_SESSION['grupo_id']) ? $_SESSION['grupo_id'] : $_SESSION['grupo_id'] ;
+
+/**
  *variavel que indica ao switch o processo que deva ser realizado no banco de dados; 
  */
 $process = isset($_POST['process'])? $_POST['process'] : null;
@@ -23,19 +29,22 @@ switch($process){
         $pdo = new Conexao();
         //Aqui lista todos os integrantes do chat, neste caso todos cadastrados, pode ser feito regras de amizades aqui
         //Por exemplo so carrega os amigos de tal usuario atráves do $idUser;
-        $retorno = $pdo->select("SELECT * FROM users a ORDER BY a.nome;");
+        $retorno = $pdo->select("SELECT * FROM grupo_has_users a
+                                   INNER JOIN users b ON a.uid = b.uid
+                                   WHERE a.idgrupo =  {$grupoId}
+                                   ORDER BY b.nick");
         
         $dados = array();
         if(count($retorno)){
             foreach($retorno as $res){
                 //Aqui retorna a quantidade de mensagens ainda não lida para o usuário
                 $msgNotRead = $pdo->select("SELECT COUNT(*) AS msgNotRead FROM mensagens a 
-                                            WHERE a._read = false AND  a._from = {$res['idUsers']} 
+                                            WHERE a._read = false AND  a._from = {$res['uid']} 
                                             AND a._to = {$userId} ;");
                 array_push($dados, array(
-                   "userId" => $res['idUsers'],
-                   "nome" => $res['nome'],
-                   "nick" => $res['nick'],
+                   "userId" => $res['uid'],
+                   "nome" => $res['username'],
+                   "nick" => ($res['nick'] != null) ? $res['nick'] : "",
                    "msgNotRead" => $msgNotRead[0]['msgNotRead']
                 ));
             }
@@ -57,7 +66,7 @@ switch($process){
         $retorno = $pdo->select("SELECT * FROM mensagens a 
                                 WHERE ( a._from = {$from} AND a._to = {$userId} )
                                 OR ( a._from = {$userId} AND a._to = {$from} )
-                                ORDER BY a.idMensagens DESC LIMIT {$qtdMessage} ;");
+                                ORDER BY a.idMensagens DESC LIMIT {$qtdMessage};");
         $pdo->desconectar();
         $dados = array();
         if(count($retorno)){
@@ -107,7 +116,7 @@ switch($process){
         $from = isset($_POST['from'])? $_POST['from']:null;
         $to = isset($_POST['to'])?  $_POST['to']:null;
         
-        $arr['_read'] = 1;
+        $arr['_read'] = true;
         
         $where = "( _from = {$from} AND _to = {$to} );";
         $set = $pdo->update($arr,"mensagens",$where);
