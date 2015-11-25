@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 26-Out-2015 às 21:50
+-- Generation Time: 25-Nov-2015 às 16:55
 -- Versão do servidor: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -28,6 +28,7 @@ USE `tcc`;
 -- Estrutura da tabela `arquivos`
 --
 
+DROP TABLE IF EXISTS `arquivos`;
 CREATE TABLE IF NOT EXISTS `arquivos` (
   `idArquivo` int(11) NOT NULL AUTO_INCREMENT,
   `idgrupo` int(11) NOT NULL,
@@ -41,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `arquivos` (
   PRIMARY KEY (`idArquivo`),
   KEY `idgrupo` (`idgrupo`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci COMMENT='tabela de arquivos enviados' AUTO_INCREMENT=60 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci COMMENT='tabela de arquivos enviados' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -49,6 +50,7 @@ CREATE TABLE IF NOT EXISTS `arquivos` (
 -- Estrutura da tabela `atadefesa`
 --
 
+DROP TABLE IF EXISTS `atadefesa`;
 CREATE TABLE IF NOT EXISTS `atadefesa` (
   `idAtaDefesa` int(11) NOT NULL AUTO_INCREMENT,
   `idgrupo` int(11) NOT NULL,
@@ -58,10 +60,20 @@ CREATE TABLE IF NOT EXISTS `atadefesa` (
   `prof3` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `dia` date NOT NULL,
   `hora` time NOT NULL,
-  `status` int(11) NOT NULL,
-  `nota` int(11) NOT NULL,
-  PRIMARY KEY (`idAtaDefesa`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+  `status` int(1) DEFAULT '0' COMMENT '0=não visto / 1=aprovado / 2=reprovado',
+  `nota` decimal(10,2) DEFAULT '0.00',
+  `disponibilizar` int(11) DEFAULT '0' COMMENT '0=não / 1=sim',
+  `arqFinal` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`idAtaDefesa`),
+  KEY `idgrupo` (`idgrupo`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Extraindo dados da tabela `atadefesa`
+--
+
+INSERT INTO `atadefesa` (`idAtaDefesa`, `idgrupo`, `titulo`, `prof1`, `prof2`, `prof3`, `dia`, `hora`, `status`, `nota`, `disponibilizar`, `arqFinal`) VALUES
+(1, 13, 'Plataforma de Gerenciamento de TCC', 'Ana Giancoli', 'Eliane Andreoli', 'Flavio César Amate', '2015-12-10', '19:00:00', 1, '10.00', 1, 'GerenciamentoGrupos/ArquivoFinal/plataforma-de-gerenciamento-de-tcc.pdf');
 
 -- --------------------------------------------------------
 
@@ -69,6 +81,7 @@ CREATE TABLE IF NOT EXISTS `atadefesa` (
 -- Estrutura da tabela `avisos`
 --
 
+DROP TABLE IF EXISTS `avisos`;
 CREATE TABLE IF NOT EXISTS `avisos` (
   `idavisos` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` text COLLATE utf8_unicode_ci,
@@ -79,7 +92,45 @@ CREATE TABLE IF NOT EXISTS `avisos` (
   PRIMARY KEY (`idavisos`),
   KEY `fk_avisos_users1_idx1` (`uid`),
   KEY `fk_avisos_users2_idx` (`de`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=42 ;
+
+--
+-- Extraindo dados da tabela `avisos`
+--
+
+INSERT INTO `avisos` (`idavisos`, `descricao`, `data`, `visto`, `uid`, `de`) VALUES
+(10, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o solicitada.', '2015-11-11', '1', 12, 4),
+(11, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-11-11', '1', 4, 12),
+(12, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-11-11', '0', 6, 12),
+(13, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-11-11', '1', 7, 12),
+(14, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-11-11', '1', 4, 12),
+(15, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-11-11', '0', 6, 12),
+(16, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o aceita.', '2015-11-11', '1', 7, 12),
+(17, 'O evento ''Aprovar'' com entrega prevista para 11-11-2015 foi adicionado, confira no cronograma!!!', '2015-11-11', '0', 6, 4),
+(18, 'O evento ''Aprovar'' com entrega prevista para 11-11-2015 foi adicionado, confira no cronograma!!!', '2015-11-11', '1', 7, 4),
+(19, 'O evento ''Aprovar'' com entrega prevista para 11-11-2015 foi adicionado, confira no cronograma!!!', '2015-11-11', '1', 12, 4),
+(20, 'Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o solicitada.', '2015-11-17', '1', 12, 9),
+(21, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-11-17', '0', 8, 12),
+(22, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-11-17', '0', 9, 12),
+(23, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-11-17', '0', 17, 12),
+(24, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-11-17', '0', 8, 12),
+(25, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-11-17', '0', 9, 12),
+(26, 'Sua Requisi&ccedil;&atilde;o de Orienta&ccedil;&atilde;o ao professor foi Visualizada, e est&aacute; sendo analisada mediante sua descri&ccedil;&atilde;o do projeto e disponibilidade do mesmo.', '2015-11-17', '0', 17, 12),
+(27, 'O evento ''zcisn'' com entrega prevista para 02-12-2015 foi adicionado, confira no cronograma!!!', '2015-11-18', '0', 6, 4),
+(28, 'O evento ''zcisn'' com entrega prevista para 02-12-2015 foi adicionado, confira no cronograma!!!', '2015-11-18', '1', 7, 4),
+(29, 'O evento ''zcisn'' com entrega prevista para 02-12-2015 foi adicionado, confira no cronograma!!!', '2015-11-18', '1', 12, 4),
+(30, 'O evento ''mxoscjz'' com entrega prevista para 31-12-2015 foi adicionado, confira no cronograma!!!', '2015-11-18', '0', 6, 4),
+(31, 'O evento ''mxoscjz'' com entrega prevista para 31-12-2015 foi adicionado, confira no cronograma!!!', '2015-11-18', '1', 7, 4),
+(32, 'O evento ''mxoscjz'' com entrega prevista para 31-12-2015 foi adicionado, confira no cronograma!!!', '2015-11-18', '1', 12, 4),
+(33, 'Atenção, o(a) Orientador(a) responsável pelo seu grupo, lançou sua nota no sistema e disponibilizou o arquivo na plataforma para consulta.', '2015-11-25', '1', 4, 12),
+(34, 'Atenção, o(a) Orientador(a) responsável pelo seu grupo, lançou sua nota no sistema e disponibilizou o arquivo na plataforma para consulta.', '2015-11-25', '0', 6, 12),
+(35, 'Atenção, o(a) Orientador(a) responsável pelo seu grupo, lançou sua nota no sistema e disponibilizou o arquivo na plataforma para consulta.', '2015-11-25', '0', 7, 12),
+(36, 'Atenção, o(a) Orientador(a) responsável pelo seu grupo, lançou sua nota no sistema', '2015-11-25', '0', 4, 12),
+(37, 'Atenção, o(a) Orientador(a) responsável pelo seu grupo, lançou sua nota no sistema', '2015-11-25', '0', 6, 12),
+(38, 'Atenção, o(a) Orientador(a) responsável pelo seu grupo, lançou sua nota no sistema', '2015-11-25', '0', 7, 12),
+(39, 'Atenção, o(a) Orientador(a) responsável pelo seu grupo, lançou sua nota no sistema e disponibilizou o arquivo na plataforma para consulta.', '2015-11-25', '0', 4, 12),
+(40, 'Atenção, o(a) Orientador(a) responsável pelo seu grupo, lançou sua nota no sistema e disponibilizou o arquivo na plataforma para consulta.', '2015-11-25', '0', 6, 12),
+(41, 'Atenção, o(a) Orientador(a) responsável pelo seu grupo, lançou sua nota no sistema e disponibilizou o arquivo na plataforma para consulta.', '2015-11-25', '0', 7, 12);
 
 -- --------------------------------------------------------
 
@@ -87,6 +138,7 @@ CREATE TABLE IF NOT EXISTS `avisos` (
 -- Estrutura da tabela `comments`
 --
 
+DROP TABLE IF EXISTS `comments`;
 CREATE TABLE IF NOT EXISTS `comments` (
   `com_id` int(11) NOT NULL AUTO_INCREMENT,
   `comment` varchar(200) CHARACTER SET latin1 DEFAULT NULL,
@@ -97,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   PRIMARY KEY (`com_id`),
   KEY `fk_comments_messages1_idx1` (`msg_id_fk`),
   KEY `fk_comments_users1_idx1` (`uid_fk`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=132 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=116 ;
 
 --
 -- Extraindo dados da tabela `comments`
@@ -136,6 +188,7 @@ INSERT INTO `comments` (`com_id`, `comment`, `msg_id_fk`, `uid_fk`, `ip`, `creat
 -- Estrutura da tabela `cronograma`
 --
 
+DROP TABLE IF EXISTS `cronograma`;
 CREATE TABLE IF NOT EXISTS `cronograma` (
   `idcronograma` int(11) NOT NULL AUTO_INCREMENT,
   `idgrupo` int(11) NOT NULL,
@@ -146,7 +199,14 @@ CREATE TABLE IF NOT EXISTS `cronograma` (
   PRIMARY KEY (`idcronograma`),
   UNIQUE KEY `idgrupo` (`idgrupo`),
   KEY `idgrupo_2` (`idgrupo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Extraindo dados da tabela `cronograma`
+--
+
+INSERT INTO `cronograma` (`idcronograma`, `idgrupo`, `aprovado`, `analisando`, `revisando`, `enviado`) VALUES
+(1, 13, 0, 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -154,6 +214,7 @@ CREATE TABLE IF NOT EXISTS `cronograma` (
 -- Estrutura da tabela `desistenciaaluno`
 --
 
+DROP TABLE IF EXISTS `desistenciaaluno`;
 CREATE TABLE IF NOT EXISTS `desistenciaaluno` (
   `idDesistencia` int(11) NOT NULL AUTO_INCREMENT,
   `idUsers` int(11) NOT NULL,
@@ -161,8 +222,10 @@ CREATE TABLE IF NOT EXISTS `desistenciaaluno` (
   `motivo` int(11) NOT NULL,
   `dataDesistencia` date NOT NULL,
   `descricao` text COLLATE utf32_unicode_ci NOT NULL,
-  PRIMARY KEY (`idDesistencia`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci AUTO_INCREMENT=1 ;
+  PRIMARY KEY (`idDesistencia`),
+  KEY `idUsers` (`idUsers`),
+  KEY `idGrupo` (`idGrupo`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf32 COLLATE=utf32_unicode_ci AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -170,6 +233,7 @@ CREATE TABLE IF NOT EXISTS `desistenciaaluno` (
 -- Estrutura da tabela `desistenciaprof`
 --
 
+DROP TABLE IF EXISTS `desistenciaprof`;
 CREATE TABLE IF NOT EXISTS `desistenciaprof` (
   `idDesistencia` int(11) NOT NULL AUTO_INCREMENT,
   `idUsers` int(11) NOT NULL,
@@ -177,8 +241,10 @@ CREATE TABLE IF NOT EXISTS `desistenciaprof` (
   `descricao` text COLLATE utf8_unicode_ci NOT NULL,
   `dataDesistencia` date NOT NULL,
   `motivo` int(11) NOT NULL,
-  PRIMARY KEY (`idDesistencia`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+  PRIMARY KEY (`idDesistencia`),
+  KEY `idUsers` (`idUsers`),
+  KEY `idGrupo` (`idGrupo`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -186,6 +252,7 @@ CREATE TABLE IF NOT EXISTS `desistenciaprof` (
 -- Estrutura da tabela `evento`
 --
 
+DROP TABLE IF EXISTS `evento`;
 CREATE TABLE IF NOT EXISTS `evento` (
   `idEvento` int(11) NOT NULL AUTO_INCREMENT,
   `idGrupo` int(11) NOT NULL,
@@ -201,8 +268,18 @@ CREATE TABLE IF NOT EXISTS `evento` (
   `data_conclusao` datetime DEFAULT NULL,
   PRIMARY KEY (`idEvento`),
   KEY `idGrupo` (`idGrupo`,`idcronograma`),
-  KEY `idcronograma` (`idcronograma`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+  KEY `idcronograma` (`idcronograma`),
+  KEY `idTipoEvento` (`idTipoEvento`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+
+--
+-- Extraindo dados da tabela `evento`
+--
+
+INSERT INTO `evento` (`idEvento`, `idGrupo`, `participantes`, `start`, `end`, `allday`, `nomeEvento`, `descricao`, `idcronograma`, `idTipoEvento`, `concluido`, `data_conclusao`) VALUES
+(1, 13, '7,12,6,4', '2015-11-11 00:00:00', '2015-11-11 00:00:00', 1, 'Aprovar', 'Aprovação', 1, 3, 0, NULL),
+(2, 13, '7,12,6,4', '2015-11-25 00:00:00', '2015-12-02 00:00:00', 1, 'zcisn', 'sndijwisjz', 1, 3, 0, NULL),
+(3, 13, '7,6,4', '2015-12-15 00:00:00', '2015-12-31 00:00:00', 1, 'mxoscjz', 'nscinsfc', 1, 4, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -210,6 +287,7 @@ CREATE TABLE IF NOT EXISTS `evento` (
 -- Estrutura da tabela `grupo`
 --
 
+DROP TABLE IF EXISTS `grupo`;
 CREATE TABLE IF NOT EXISTS `grupo` (
   `idgrupo` int(11) NOT NULL AUTO_INCREMENT,
   `dataCriacao` date NOT NULL,
@@ -229,7 +307,15 @@ CREATE TABLE IF NOT EXISTS `grupo` (
   `preProjeto` int(1) NOT NULL DEFAULT '0' COMMENT 'utilizado para controle de tela, para forçar o aluno a cadastrar o pre projeto',
   `cronograma` int(1) NOT NULL DEFAULT '0' COMMENT 'utilizado no controle de tela para forçar o aluno a cadastrar o cronograma apos o pre projeto',
   PRIMARY KEY (`idgrupo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=73 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=15 ;
+
+--
+-- Extraindo dados da tabela `grupo`
+--
+
+INSERT INTO `grupo` (`idgrupo`, `dataCriacao`, `titulo`, `descricao`, `objetivoGeral`, `objetivoEspecifico`, `justificativa`, `tipodePesquisa`, `metodologia`, `resultadoEsperado`, `fraselema`, `aceito`, `visto`, `recusado`, `revisando`, `preProjeto`, `cronograma`) VALUES
+(13, '2015-11-11', 'Plataforma de Gerenciamento de TCC', 'Plataforma de Gerenciamento de TCC', 'hhhhldomowdms', 'h', 'h', 'haaaa', 'h', 'h', 'Você ainda não possui uma Frase Lema, dê um duplo clique aqui, e faça sua frase.', 1, 1, 0, 0, 0, 0),
+(14, '2015-11-17', 'Cloud', 'cloud', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -237,6 +323,7 @@ CREATE TABLE IF NOT EXISTS `grupo` (
 -- Estrutura da tabela `grupo_has_users`
 --
 
+DROP TABLE IF EXISTS `grupo_has_users`;
 CREATE TABLE IF NOT EXISTS `grupo_has_users` (
   `idgrupo` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
@@ -246,12 +333,27 @@ CREATE TABLE IF NOT EXISTS `grupo_has_users` (
   KEY `fk_grupo_has_users_grupo_idx` (`idgrupo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Extraindo dados da tabela `grupo_has_users`
+--
+
+INSERT INTO `grupo_has_users` (`idgrupo`, `uid`, `tipo`) VALUES
+(13, 4, 1),
+(13, 6, 1),
+(13, 7, 1),
+(13, 12, 2),
+(14, 8, 1),
+(14, 9, 1),
+(14, 12, 2),
+(14, 17, 1);
+
 -- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `likecomment`
 --
 
+DROP TABLE IF EXISTS `likecomment`;
 CREATE TABLE IF NOT EXISTS `likecomment` (
   `idLikeComment` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL,
@@ -259,7 +361,14 @@ CREATE TABLE IF NOT EXISTS `likecomment` (
   PRIMARY KEY (`idLikeComment`),
   KEY `uid` (`uid`),
   KEY `Com_id` (`com_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=27 ;
+
+--
+-- Extraindo dados da tabela `likecomment`
+--
+
+INSERT INTO `likecomment` (`idLikeComment`, `uid`, `com_id`) VALUES
+(26, 4, 114);
 
 -- --------------------------------------------------------
 
@@ -267,6 +376,7 @@ CREATE TABLE IF NOT EXISTS `likecomment` (
 -- Estrutura da tabela `likes`
 --
 
+DROP TABLE IF EXISTS `likes`;
 CREATE TABLE IF NOT EXISTS `likes` (
   `idlikes` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL,
@@ -274,7 +384,7 @@ CREATE TABLE IF NOT EXISTS `likes` (
   PRIMARY KEY (`idlikes`),
   KEY `uid` (`uid`),
   KEY `msg_id` (`msg_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=57 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=61 ;
 
 --
 -- Extraindo dados da tabela `likes`
@@ -294,7 +404,8 @@ INSERT INTO `likes` (`idlikes`, `uid`, `msg_id`) VALUES
 (35, 4, 125),
 (36, 17, 127),
 (41, 4, 127),
-(52, 4, 128);
+(52, 4, 128),
+(59, 4, 130);
 
 -- --------------------------------------------------------
 
@@ -302,6 +413,7 @@ INSERT INTO `likes` (`idlikes`, `uid`, `msg_id`) VALUES
 -- Estrutura da tabela `mensagens`
 --
 
+DROP TABLE IF EXISTS `mensagens`;
 CREATE TABLE IF NOT EXISTS `mensagens` (
   `idMensagens` int(11) NOT NULL AUTO_INCREMENT,
   `msg` text COLLATE utf8_unicode_ci,
@@ -312,7 +424,7 @@ CREATE TABLE IF NOT EXISTS `mensagens` (
   PRIMARY KEY (`idMensagens`),
   KEY `_from` (`_from`),
   KEY `_to` (`_to`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=120 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=128 ;
 
 --
 -- Extraindo dados da tabela `mensagens`
@@ -327,9 +439,17 @@ INSERT INTO `mensagens` (`idMensagens`, `msg`, `data`, `_from`, `_to`, `_read`) 
 (114, 'tempo real', '2015-10-26 16:08:03', 6, 4, 1),
 (115, 'ola mundo', '2015-10-26 16:08:07', 4, 6, 1),
 (116, 'oiii', '2015-10-26 17:45:17', 4, 6, 1),
-(117, 'jdhncd', '2015-10-26 17:45:21', 4, 6, 1),
-(118, 'cjdnbvd', '2015-10-26 17:45:22', 4, 6, 1),
-(119, 'oide', '2015-10-26 17:45:27', 6, 4, 1);
+(117, 'tdo bem?', '2015-10-26 17:45:21', 4, 6, 1),
+(118, 'onde você está?', '2015-10-26 17:45:22', 4, 6, 1),
+(119, 'oiee', '2015-10-26 17:45:27', 6, 4, 1),
+(120, 'Tdo bem sim e vc?', '2015-11-17 21:56:30', 6, 4, 0),
+(121, 'estou no IFSP', '2015-11-17 21:57:50', 6, 4, 0),
+(122, 'estudando para prova...', '2015-11-17 21:58:02', 6, 4, 0),
+(123, 'Anna você fez o TCC?', '2015-11-17 21:58:26', 4, 7, 1),
+(124, 'pelo amor de deus...', '2015-11-17 21:58:34', 4, 7, 1),
+(125, 'estou terminando, falta só mais alguns detalhes...', '2015-11-17 21:59:06', 7, 4, 1),
+(126, 'Marcio vamos jogar bolaa??', '2015-11-17 22:00:05', 4, 9, 0),
+(127, 'acorda', '2015-11-25 09:08:17', 7, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -337,6 +457,7 @@ INSERT INTO `mensagens` (`idMensagens`, `msg`, `data`, `_from`, `_to`, `_read`) 
 -- Estrutura da tabela `messages`
 --
 
+DROP TABLE IF EXISTS `messages`;
 CREATE TABLE IF NOT EXISTS `messages` (
   `msg_id` int(11) NOT NULL AUTO_INCREMENT,
   `message` varchar(200) CHARACTER SET latin1 DEFAULT NULL,
@@ -346,7 +467,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   PRIMARY KEY (`msg_id`),
   KEY `ip` (`ip`),
   KEY `fk_messages_users1_idx` (`uid_fk`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=139 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=132 ;
 
 --
 -- Extraindo dados da tabela `messages`
@@ -377,7 +498,7 @@ INSERT INTO `messages` (`msg_id`, `message`, `uid_fk`, `ip`, `created`) VALUES
 (126, 'Facebook do IFSP HAHAHA kkkk', 15, '127.0.0.1', 1428454260),
 (127, '#Partiu Paratti haha', 7, '127.0.0.1', 1428785816),
 (128, 'Eu sou um gordinho gostoso, gordinhoo gostosoooo haha', 9, '127.0.0.1', 1428791672),
-(130, 'Intro JS success...', 12, '::1', 1441809367);
+(130, 'Intro JS success... :D', 12, '::1', 1441809367);
 
 -- --------------------------------------------------------
 
@@ -385,6 +506,7 @@ INSERT INTO `messages` (`msg_id`, `message`, `uid_fk`, `ip`, `created`) VALUES
 -- Estrutura da tabela `tipoevento`
 --
 
+DROP TABLE IF EXISTS `tipoevento`;
 CREATE TABLE IF NOT EXISTS `tipoevento` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
@@ -392,7 +514,7 @@ CREATE TABLE IF NOT EXISTS `tipoevento` (
   `color` varchar(15) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'black',
   `textcolor` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
 
 --
 -- Extraindo dados da tabela `tipoevento`
@@ -406,7 +528,8 @@ INSERT INTO `tipoevento` (`id`, `nome`, `imagem`, `color`, `textcolor`) VALUES
 (5, 'Revisão', '<i class=''fa fa-eye''></i>', '#FF3030', '#FFF'),
 (6, 'Produção/Programação', '<i class=''fa fa-file-code-o''></i>', '#000', '#FFF'),
 (7, 'Comissão de Ética', '<i class=''fa fa-paperclip''></i>', '#E6E6FA', '#FFF'),
-(8, 'Outros', '<i class=''fa fa-asterisk''></i>', '#1E90FF', '#FFF');
+(8, 'Outros', '<i class=''fa fa-asterisk''></i>', '#1E90FF', '#FFF'),
+(9, 'Banca Final', '<i class=''fa fa-graduation-cap''></i>', '#1A731A', '#FFF');
 
 -- --------------------------------------------------------
 
@@ -414,6 +537,7 @@ INSERT INTO `tipoevento` (`id`, `nome`, `imagem`, `color`, `textcolor`) VALUES
 -- Estrutura da tabela `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(30) CHARACTER SET latin1 DEFAULT NULL,
@@ -429,23 +553,23 @@ CREATE TABLE IF NOT EXISTS `users` (
   `tipo` int(2) DEFAULT '0',
   `primeiroacesso` int(11) DEFAULT '0' COMMENT '0 = primeiro acesso',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=32 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=33 ;
 
 --
 -- Extraindo dados da tabela `users`
 --
 
 INSERT INTO `users` (`uid`, `username`, `nick`, `password`, `email`, `prontuario`, `fotouser`, `horario`, `limite`, `descricao`, `cargo`, `tipo`, `primeiroacesso`) VALUES
-(2, '---', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'admin@admin.com', NULL, 'fotoUser/padraoUser.jpg', '2014-09-30 21:45:15', '2015-09-30 21:45:17', 'admin', 'admin', 0, 0),
-(3, '---', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'admin@admin.com', NULL, 'fotoUser/padraoUser.jpg', '2015-09-30 21:46:15', '2015-09-30 21:46:17', 'admin', 'admin', 0, 0),
-(4, 'Leonardo Martins', 'Leozinho', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'leo.piracaia@hotmail.com', 1262751, 'fotoUser/thumbnail_1445882460.jpg', '2015-10-26 21:48:56', '2015-10-26 21:50:56', 'Programador Júnior, Formando em Análise e Desenvolvimento de Sistemas', 'Aluno', 0, 1),
-(6, 'Everton de Paula', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'everton.projetos@gmail.com', 0, 'fotoUser/thumbnail_1443387799.jpg', '2015-10-26 17:52:44', '2015-10-26 17:54:44', 'teste', 'Aluno', 0, 1),
-(7, 'Ana carolina', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'ana@hotmail.com', 0, 'fotoUser/thumbnail_1427733717.jpg', '2015-09-09 19:25:19', '2015-09-09 19:27:19', 'teste', 'Aluno', 0, 0),
+(2, '---', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'admin@admin.com', NULL, 'fotoUser/padraoUser.jpg', '2014-09-30 21:45:15', '2015-09-30 21:45:17', 'admin', 'Admin', 0, 0),
+(3, '---', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'admin@admin.com', NULL, 'fotoUser/padraoUser.jpg', '2015-09-30 21:46:15', '2015-09-30 21:46:17', 'admin', 'Admin', 0, 0),
+(4, 'Leonardo Bueno Martins', 'Leozinho', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'leo.piracaia@hotmail.com', 1262751, 'fotoUser/thumbnail_1446131811.jpg', '2015-11-25 15:18:16', '2015-11-25 15:20:16', 'Programador Júnior, Formando em Análise e Desenvolvimento de Sistemas', 'Admin', 0, 1),
+(6, 'Everton de Paula', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'everton.projetos@gmail.com', 0, 'fotoUser/thumbnail_1443387799.jpg', '2015-11-17 21:57:18', '2015-11-17 21:59:18', 'teste', 'Aluno', 0, 1),
+(7, 'Ana carolina', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'ana@hotmail.com', 0, 'fotoUser/thumbnail_1427733717.jpg', '2015-11-25 09:06:50', '2015-11-25 09:08:50', 'teste', 'Aluno', 0, 0),
 (8, 'Rodrigo Adolfo', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'rodrigo@hotmail.com', 0, 'fotoUser/thumbnail_1427733865.jpg', '2015-09-30 21:30:11', '2015-09-30 21:32:11', 'teste', 'Aluno', 0, 0),
-(9, 'Marcio Vianna', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'marcio@hotmail.com', 111111111, 'fotoUser/thumbnail_1427734132.jpg', '2015-10-26 21:27:00', '2015-10-26 21:29:00', 'teste', 'Aluno', 0, 0),
+(9, 'Marcio Vianna', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'marcio@hotmail.com', 111111111, 'fotoUser/thumbnail_1427734132.jpg', '2015-11-17 20:57:27', '2015-11-17 20:59:27', 'teste', 'Aluno', 0, 0),
 (10, 'Marcos Martins', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'marcosevmartins@gmail.com', 22222222, 'fotoUser/thumbnail_1427734208.jpg', '2015-08-10 14:38:58', '2015-08-10 14:40:58', 'Programador e Analista de Sistemas', 'Aluno', 0, 0),
 (11, 'Claudia Martins', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'claubmartins@gmail.com', 3333333, 'fotoUser/thumbnail_1427733083.jpg', '2015-08-10 22:24:48', '2015-08-10 22:26:48', 'teste', 'Aluno', 0, 0),
-(12, 'Ana Giancoli', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'paulagiancoli@gmail.com', 1234567, 'fotoUser/thumbnail_1445882980.jpg', '2015-10-26 16:10:01', '2015-10-26 16:12:01', 'teste', 'Professor', 1, 1),
+(12, 'Ana Giancoli', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'paulagiancoli@gmail.com', 1234567, 'fotoUser/thumbnail_1446131849.jpg', '2015-11-25 16:33:36', '2015-11-25 16:35:36', 'teste', 'Professor', 1, 1),
 (14, 'Jefferson de Souza', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'jeff@hotmail.com', 1234567, 'fotoUser/thumbnail_1427771298.jpg', '2015-03-30 19:28:05', '2015-03-30 19:30:05', 'Prof. Dr. Jefferson de Souza Pinto\r\nDoutor em Engenharia Mecânica - DEF/FEM/UNICAMP\r\nPós-doutor em Engenharia Mecânica - DEMM/FEM/UNICAMP\r\nPós-doutorando em Engenharia Mecânica - DEMM/FEM/UNICAMP\r\nInstituto Federal de São Paulo - Campus Bragança Paulista', 'Professor', 1, 0),
 (15, 'João Paulo', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'joaolds@gmail.com', 1234567, 'fotoUser/thumbnail_1427919145.jpg', '2015-08-11 21:12:12', '2015-08-11 21:14:12', 'I''M GAY', 'Aluno', 0, 0),
 (17, 'Mauro Mazzola', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'mauro@hotmail.com', 1234567, 'fotoUser/thumbnail_1427919031.jpg', '2015-09-30 21:59:53', '2015-09-30 22:01:53', NULL, 'Aluno', 0, 0),
@@ -460,7 +584,8 @@ INSERT INTO `users` (`uid`, `username`, `nick`, `password`, `email`, `prontuario
 (26, 'Bianca Maria Pedrosa', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'bianca@hotmail.com', 1234567, 'fotoUser/thumbnail_1429109829.jpg', '2015-04-15 11:57:30', '2015-04-15 11:59:30', 'Professora de WEB', 'Professor', 1, 0),
 (27, 'Flavio César Amate', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'flavio@hotmail.com', 1234567, 'fotoUser/thumbnail_1429109684.jpg', '2015-09-30 22:03:22', '2015-09-30 22:05:22', 'Professor de Matemática', 'Professor', 1, 0),
 (30, 'João Antunes Pereira da Cunha ', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'jj@gmail.com', 1231231, 'fotoUser/padraoUser.jpg', '2015-09-30 22:02:42', '2015-09-30 22:04:42', NULL, NULL, 0, 0),
-(31, 'Josefino', 'fininho', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'josefino@hotmail.com', 123455, 'fotoUser/padraoUser.jpg', NULL, NULL, NULL, NULL, 0, 0);
+(31, 'Josefino', 'fininho', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'josefino@hotmail.com', 123455, 'fotoUser/padraoUser.jpg', NULL, NULL, NULL, NULL, 0, 0),
+(32, 'Josué', NULL, '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'jos@hotmail.com', 1234567, 'fotoUser/padraoUser.jpg', '2015-11-12 08:27:20', '2015-11-12 08:29:20', 'Teste', 'Aluno', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -468,6 +593,7 @@ INSERT INTO `users` (`uid`, `username`, `nick`, `password`, `email`, `prontuario
 -- Estrutura da tabela `workflow`
 --
 
+DROP TABLE IF EXISTS `workflow`;
 CREATE TABLE IF NOT EXISTS `workflow` (
   `idWorkflow` int(11) NOT NULL AUTO_INCREMENT,
   `idGrupo` int(11) DEFAULT NULL,
@@ -480,7 +606,7 @@ CREATE TABLE IF NOT EXISTS `workflow` (
   `descricao` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`idWorkflow`),
   KEY `idGrupo` (`idGrupo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
 -- Constraints for dumped tables
@@ -492,6 +618,12 @@ CREATE TABLE IF NOT EXISTS `workflow` (
 ALTER TABLE `arquivos`
   ADD CONSTRAINT `fk_idgrupo` FOREIGN KEY (`idgrupo`) REFERENCES `grupo` (`idgrupo`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limitadores para a tabela `atadefesa`
+--
+ALTER TABLE `atadefesa`
+  ADD CONSTRAINT `FK_atadefesa_grupo` FOREIGN KEY (`idgrupo`) REFERENCES `grupo` (`idgrupo`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `avisos`
@@ -511,13 +643,27 @@ ALTER TABLE `comments`
 -- Limitadores para a tabela `cronograma`
 --
 ALTER TABLE `cronograma`
-  ADD CONSTRAINT `cronograma_grupo` FOREIGN KEY (`idgrupo`) REFERENCES `grupo` (`idgrupo`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `idgrupo` FOREIGN KEY (`idgrupo`) REFERENCES `grupo` (`idgrupo`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limitadores para a tabela `desistenciaaluno`
+--
+ALTER TABLE `desistenciaaluno`
+  ADD CONSTRAINT `FK_desistenciaaluno_grupo` FOREIGN KEY (`idGrupo`) REFERENCES `grupo` (`idgrupo`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_desistenciaaluno_users` FOREIGN KEY (`idUsers`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limitadores para a tabela `desistenciaprof`
+--
+ALTER TABLE `desistenciaprof`
+  ADD CONSTRAINT `FK_desistenciaprof_users` FOREIGN KEY (`idUsers`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_desistenciaprof_grupo` FOREIGN KEY (`idGrupo`) REFERENCES `grupo` (`idgrupo`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `evento`
 --
 ALTER TABLE `evento`
-  ADD CONSTRAINT `evento_ibfk_1` FOREIGN KEY (`idGrupo`) REFERENCES `grupo` (`idgrupo`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_evento_tipoevento` FOREIGN KEY (`idTipoEvento`) REFERENCES `tipoevento` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `evento_ibfk_2` FOREIGN KEY (`idcronograma`) REFERENCES `cronograma` (`idcronograma`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --

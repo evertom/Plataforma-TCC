@@ -75,6 +75,9 @@
                             <!-- /.nav-second-level -->
                         </li>';
             }
+            if ($tipo_users === '1') {
+                echo '<li><a href="aprovacoes.php"><i class="fa fa-graduation-cap fa-fw"></i> Aprovações</a></li>';
+            }
             ?>
         </ul>
     </div>

@@ -31,11 +31,15 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
         <link href="css/demo.css" rel="stylesheet" />
         <link href="css/introjs.css" rel="stylesheet" />
+        <link href="bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet" />
+        <link href="bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet" />
         <link rel="shortcut icon" href="favicon.ico"/>
 
         <!-- jQuery -->
         <script src="js/jquery-2.1.3.js"></script>
         <script src="js/intro.js"></script>
+        <script src="bower_components/DataTables/media/js/jquery.dataTables.min.js"></script>
+        <script src="bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
 
         <!-- Bootstrap Core JavaScript -->
         <script src="js/bootstrap.min.js"></script>
@@ -87,6 +91,9 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
             ;
 
             $(document).ready(function () {
+                 $('#dataTables-example').DataTable({
+                    responsive: true                  
+                });
 
                 chat_init({userId: <?php echo $id_users; ?>});
 
@@ -556,9 +563,64 @@ $primeroAcesso = $pdo->select("SELECT primeiroacesso FROM users WHERE uid = {$id
                         <nav>
                             <a href="userProfile.php?id=<?php echo $id_users; ?>"><ul><i class="fa fa-user"></i> Perfil</ul></a>
                             <ul><i class="fa fa-gears"></i> Configura&ccedil;&otilde;es</ul>
-                            <ul><i class="fa fa-book"></i> Publica&ccedil;&otilde;es</ul>
+                            <a data-toggle="modal" data-target="#fileUnlock"><ul><i class="fa fa-book"></i> Publica&ccedil;&otilde;es</ul></a>
                             <a href="logout.php"><ul><i class="fa fa-sign-out"></i> Sair</ul></a>
                         </nav>
+                        <!-- Modal -->
+                        <div class="modal fade" id="fileUnlock" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="width: 90%">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-search"></i> Monografias disponíveis para consulta</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                       
+                                            <table class="table table-bordered table-hover table-responsive table-striped" id="dataTables-example">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Título da monografia</th>
+                                                        <th>Professor Orientador</th>
+                                                        <th>Data da Banca</th>
+                                                        <th>Nota</th>
+                                                        <th>Arquivo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    require_once './includes/Conexao.class.php';
+                                                    if ($pdo === NULL) {
+                                                        $pdo = new Conexao();
+                                                    }
+                                                    
+                                                    $sql = "SELECT * FROM atadefesa WHERE disponibilizar  = 1";
+                                                    $resultAta = $pdo->select($sql);
+                                                    
+                                                    foreach($resultAta as $resAta){
+                                                        echo "<tr class='gradeA'>";
+                                                            echo "<td>{$resAta['titulo']}</td>";
+                                                            echo "<td>{$resAta['prof1']}</td>";
+                                                            echo "<td style='text-align:center'>".date('d-m-Y', strtotime($resAta['dia']))."</td>";
+                                                            echo "<td style='text-align:center'>{$resAta['nota']}</td>";
+                                                            echo "<td style='text-align:center'><a href='download.php?path={$resAta['arqFinal']}&nome={$resAta['titulo']}.pdf'> <i class='fa fa-file-pdf-o fa-2x'></i></a></td>";
+                                                        echo "</tr>";
+                                                    }
+                                                    
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                       
+                                        <br style="clear:both;"/>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline btn-success" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal 2-->
                     </div>
                     <div data-step="6" data-intro="Nesse bloco você encontrará nosso bate papo privado para trocar ideias com quem desejar da plataforma.">
                         <br clear="all"/>
