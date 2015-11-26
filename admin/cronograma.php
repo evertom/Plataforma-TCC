@@ -101,7 +101,7 @@ if (count($result)) {
 
                 $('#idTipoEvento').on('change', function () {
                     var select = $(this).val();
-                    if (select[0] === "2") {
+                    if (parseInt(select[0]) <= 2) {
                         $("#opcionalHorario").fadeIn(550);
                         $("#opcionalData").fadeOut(550);
                         $("#allday").val("false");
@@ -171,7 +171,7 @@ if (count($result)) {
                         $(".selectpicker").selectpicker('refresh');
                         
                         var select = $("#idTipoEvento").val();
-                        if ( select[0] === "2") {
+                        if ( parseInt(select[0]) <= 2) {
                             if (!$("#opcionalHorario").is(":visible"))
                                 $("#opcionalHorario").fadeIn(550);
                             if ($("#opcionalData").is(":visible"))
@@ -265,11 +265,8 @@ if (count($result)) {
                     valores += "&idTipoEvento=" + idTipoEvento;
                     valores += "&isClonclusion=" + isClonclusion;
 
-                    var ok = false;
-
                     $.ajax
                     ({
-                        async: false,
                         type: "POST", //metodo POST
                         dataType: 'json',
                         url: "ajax/control_cronograma.php",
@@ -279,28 +276,27 @@ if (count($result)) {
                         data: valores,
                         success: function (data)
                         {
-                            ok = data.msg;
+                            if (data.msg === true) {
+                                $('.alert-success').fadeIn('fast');
+                                reset();
+                                if(data.idcronograma !== null){
+                                    $("#idcronograma").val(data.idcronocrama);
+                                }
+                            } else {
+                                $('.alert-danger').fadeIn('fast');
+                            }
+
+                            $('.calender').fullCalendar('removeEventSource', SOURCE);
+                            $('.calender').fullCalendar('addEventSource', SOURCE);
                         },
                         error: function (data) {
                             $('.alert-danger').fadeIn('fast');
-                            console.log(data);
-                            ok = false;
                         },
                         complete: function () {
                             loading_hide();
-                            return ok;
                         }
                     });
 
-                    if (ok === true) {
-                        $('.alert-success').fadeIn('fast');
-                        reset();
-                    } else {
-                        $('.alert-danger').fadeIn('fast');
-                    }
-
-                    $('.calender').fullCalendar('removeEventSource', SOURCE);
-                    $('.calender').fullCalendar('addEventSource', SOURCE);
                     return false;
                 });
             });
@@ -327,11 +323,8 @@ if (count($result)) {
                     return false;
                 }
 
-                var ok = false;
-
                 $.ajax
                 ({
-                    async: false,
                     type: "POST", //metodo POST
                     dataType: 'json',
                     url: "ajax/control_cronograma.php",
@@ -341,7 +334,6 @@ if (count($result)) {
                     data: valores,
                     success: function (data)
                     {
-                        ok = data.msg;
                         $('#analises').val("");
                         $('.alert-success').fadeIn('fast');
                         $('body').scrollTop(100, 'slow');
@@ -349,11 +341,9 @@ if (count($result)) {
                     error: function (data) {
                         $('.alert-danger').fadeIn('fast');
                         console.log(data);
-                        ok = false;
                     },
                     complete: function () {
                         loading_hide();
-                        return ok;
                     }
                 });
 
@@ -366,10 +356,8 @@ if (count($result)) {
                 if (idEvento !== "" && idEvento !== null) {
                     var valores = "operation=CRUD&case=DELETE";
                     valores += "&idEvento=" + idEvento;
-                    var ok = false;
                     $.ajax
                     ({
-                        async: false,
                         type: "POST", //metodo POST
                         dataType: 'json',
                         url: "ajax/control_cronograma.php",
@@ -379,27 +367,23 @@ if (count($result)) {
                         data: valores,
                         success: function (data)
                         {
-                            ok = data.msg;
+                            if (data.msg === true) {
+                                $('.alert-success').fadeIn('fast');
+                                reset();
+                            } else {
+                                $('.alert-danger').fadeIn('fast');
+                            }
+                            $(".calender").fullCalendar('refetchEvents');
                         },
                         error: function (data) {
                             $('.alert-danger').fadeIn('fast');
                             console.log(data);
-                            ok = false;
                         },
                         complete: function () {
                             loading_hide();
-                            return ok;
                         }
                     });
-
-                    if (ok === true) {
-                        $('.alert-success').fadeIn('fast');
-                        reset();
-                    } else {
-                        $('.alert-danger').fadeIn('fast');
-                    }
-                    $(".calender").fullCalendar('refetchEvents');
-                    return ok;
+                    return false;
                 } else {
                     return false;
                 }

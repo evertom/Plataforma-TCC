@@ -53,9 +53,11 @@
 						$result = $Cronograma->insertCronograma();
 						if($result != false){
 							$res['msg'] = true;
+                                                        $res['idcronocrama'] = $Cronograma->idCronograma;
 							echo json_encode($res);
 						}else{
 							$res['msg'] = false;
+                                                        $res['idcronocrama'] = null;
 							echo json_encode($res);
 						}
 					}catch (PDOException $e){

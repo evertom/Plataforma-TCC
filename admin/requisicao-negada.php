@@ -12,8 +12,6 @@
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <meta http-equiv="cache-control" content="no-cache"/>
-        <meta http-equiv="pragma" content="no-cache" />
         <meta name="description" content=""/>
         <meta name="author" content=""/>
         <title>Admin</title>
@@ -21,20 +19,20 @@
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
         <!-- MetisMenu CSS -->
         <link href="metisMenu/dist/metisMenu.min.css" rel="stylesheet"/>
-        <script type="text/javascript" src="js/jquery.min.js"></script>
         <!-- Custom CSS -->
         <link href="sb-admin-2/css/sb-admin-2.css" rel="stylesheet"/>
         <!-- Custom Fonts -->
         <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"/></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"/></script>
         <![endif]-->
-        <!-- jQuery -->
         <link rel="stylesheet" href="bootstrap3-dialog-master/src/css/bootstrap-dialog.css"/>
-        
+        <!-- jQuery -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
         <!-- Bootstrap Core JavaScript -->
         <script src="js/bootstrap.min.js"></script>
         <!-- Metis Menu Plugin JavaScript -->
@@ -43,7 +41,6 @@
         <script src="js/sb-admin-2.js"></script>
         <script src="bootstrap3-dialog-master/src/js/bootstrap-dialog.js"></script>
         <script src="bootstrap3-dialog-master/alertsMsg.js"></script>
-        
         <script>
             $(document).ready(function () {
                 $("#contact").submit(function () {
@@ -68,7 +65,9 @@
                             ok = data.msg;
                         },
                         error: function (data) {
-                            $('.alert-danger').fadeIn('fast');
+                            showAlert('alert', {title: 'AVISO!!!',
+                                message: 'Falha no sistema, contate o administrador...',
+                                type: BootstrapDialog.TYPE_DANGER,location: 'panel.php'}, null);
                             ok = false;
                         },
                         complete: function () {
@@ -77,13 +76,16 @@
                         }
                     });
 
-                    if (ok == true) {
-                        
-                        $('.alert-success').fadeIn('fast');
+                    if (ok === true) {
                         limpa();
+                         showAlert('alert', {title: 'AVISO!!!',
+                                message: 'Requisição recusada com sucesso...',
+                                type: BootstrapDialog.TYPE_SUCCESS,location: 'panel.php'}, null);
                     } else {
-                        $('.alert-danger').fadeIn('fast');
                         limpa();
+                         showAlert('alert', {title: 'AVISO!!!',
+                                message: 'Falha ao recusar requisição...',
+                                type: BootstrapDialog.TYPE_DANGER,location: 'panel.php'}, null);
                     }
                     return false;
                 });
