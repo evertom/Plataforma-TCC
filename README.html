@@ -1,0 +1,114 @@
+<html DOCTYPE="HTML">
+<head>
+<meta charset="UTF-8">
+<title>README</title>
+</head>
+<body>
+<h1>INSTRUÇÕES DE INSTALAÇÃO DO AMBIENTE DE PRODUÇÃO DA PLATAFORMA TCC</h1>
+
+<section id="BEFORE">
+<ul>
+<li>O ambiente desta maquina virtual esta totalmente pronto para uso, porém segue a descrição passo a passo de como foi configurada.
+</li>
+<li>Antes de tudo, abriremos o terminal <b>shell</b> e faremos a atualização dos pacotes para instalações através do comando <b>sudo apt-get update</b>.
+Ele pedirá a senha de usuário root, coloque <b>'ifsp'</b> sem aspas.
+</li>
+</ul>
+</section>
+<h2>Configurações e instalações para ambiente de produção</h2>
+
+<section id="INSTALLS">
+
+<h3>Apache2</h3>
+<p><b>sudo apt-get install apache2</b></p>
+
+<h3>MySQL 5.*</h3>
+<p><b>sudo apt-get install mysql-server php5-mysql</b></p>
+<p>Agora instalaremos um conjunto instruções para o mysql, a primeira instrução irá criar a estrutura de diretório do banco de dados, logo depois a segunda instrução irá dar um pouco mais de segurança ao banco de dados.</p>
+<p><b>sudo mysql_install_db</b></p>
+<p><b>sudo mysql_secure_installation</b></p>
+
+<h3>PHP 5.6.*</h3>
+<p><b>sudo apt-get install php5 libapache2-mod-php5 php5-mcrypt</b></p>
+
+<p>Após a instalação temos algumas configurações a serem mudadas no apche2</p>
+<ul>
+<li>Vamos dizer ao apche2 para dar preferência de leitura ao arquivo index.php antes do arquivo index.html</li>
+<p>Para isso basta abrirmos o arquivo de configuração em <b>sudo nano /etc/apache2/mods-enabled/dir.conf</b></p>
+<p>O arquivo deve estar assim:</p>
+<code>
+<IfModule mod_dir.c>
+    DirectoryIndex index.html index.cgi index.pl <b>index.php</b> index.xhtml index.htm
+</IfModule>
+</code>
+<p>E passará a ficar assim:</p>
+<code>
+<IfModule mod_dir.c>
+    DirectoryIndex <b>index.php</b> index.html index.cgi index.pl index.xhtml index.htm
+</IfModule>
+</code>
+<p>Perceba que o DirectoryIndex passa a dar prioridade ao arquivo index.php.</p>
+</ul>
+
+<p>Grave as mudanças e saia do arquivo, logo depois restart o apache2 com o camando <b>sudo service apache2 restart</b></p>
+
+<h3>Môdulo PHP-CLI</h3>
+<p>Agora vamos instalar o modulo php-cli, com ele é possível executar paginas diretamente, sem a necessidade do apache. Será usado no websocket para chat e video confêrencia.</p>
+<p>Digite o camando <b>sudo apt-get install php5-cli</b> e pronto môdulo instalado.</p>
+
+<h3>Ativar MOD REWRITE (URL Amigavéis)</h3>
+<p>Basta executar o camando <b>sudo a2enmod rewrite</b></p>
+<p>Logo após restart o apache2 novamente <b>sudo service apache2 restart</b></p>
+
+<h3>PHPMYADMIN</h3>
+<p>Para podermos importar o banco de dados precisaremos do phpMyAdmin, para tanto execute no shell <b>sudo apt-get install phpmyadmin</b>.</p>
+<p>Durante a instalação algumas alterantivas surgiram, escolha como servidor o apache2, como senha e login 'root', sem aspas.</p>
+<p>Abra o arquivo <b>sudo nano /etc/apache2/apache2.conf</b> Inclua a linha <b>Include /etc/phpmyadmin/apache.conf</b>, salve e feche o arquivo, agora restart o apache2 <b>sudo service apache2 restart</b>.
+</p>
+
+</section>
+
+<h3>Pronto!!! Ambiente ok, vamos a aplicação Plataforma TCC agora.</h3>
+
+<section id="APLICATION">
+
+<h4>O primeiro passo é entrar no <i>github</i> e baixar a aplicação.</h4>
+<p>Acesse <a target="_blank" href="https://github.com/evertonpaula/Plataforma-TCC.git"><b>https://github.com/evertonpaula/Plataforma-TCC.git</b></a> e faço o download no botão <i><b>Download ZIP</i></b>.</p>
+
+<h4>Instalando Plataforma TCC</h4>
+<p>O arquivo zip baixado do github deve estar na pasta download do usuário, o processo agora é desconpactar, mover e renomear a pasta que contem os arquivos fontes.</p>
+<p>Agora vamos descompactar o arquivo .zip <b>sudo unzip /home/plataformatcc/Downloads/Plataforma-TCC-master.zip</b></p>
+<p>Para mover e renomear o arquivo execute o seguinte comando <b>sudo mv /home/plataformatcc/Plataforma-TCC-master /var/www/html/Plataforma-TCC</b></p>
+
+<h4>Instalando Banco de dados</h4>
+<p>O primeiro passo para instalação do banco de dados é abrir o <b>phpmyadmin</b>, acesse no browser <a target="_blank" href="http://localhost/phpmyadmin/"><b><i>localhost/phpmyadmin/</b></i></a> e coloque a senha e usuário de acesso que configuramos na instalação, <i>root root </i></p> 
+<p>Após acessar a pagina de administração do phpmyadmin, clique na aba <b>imports</b> e selecione o arquivo <b>tcc-update.sql</b> que esta localizado dentro da pasta do projeto, <b>/var/www/html/Plataforma-TCC/admin/bd/tcc-update.sql</b></p>
+<p>Clique em importar e pronto, o banco de dados já esta instalado e a base de informações já inserida.</p>
+<p>Para todos os efeitos é melhor conferir a classe de conexao, execute o seguinte comando: <b>sudo nano /var/www/html/Plataforma-TCC/admin/include/Conexao.class.php</b></p>
+<p>Verifique na <code>public function conecatar(){}</code> se a variável <b>$pass</b> e <b>$user</b> estão corretas, ambas deve ter valor de root, valores que foram salvos na instalação do banco de dados.</p>
+<p>Faça o mesmo procedimento na classe Conexao localizada em <b>sudo nano /var/www/html/Plataforma-TCC/class/Conexao.class.php</b></p>
+
+<h4>CHAT E VÍDEO CONFÊRENCIA</h4>
+<p>Para a aplicação de chat e vídeo confência funcione, precisamos criar dois serviços <b>websockte</b>.</p>
+<p>Para isso existem dois scripts prontos em php para inicialização do serviço.</p>
+<p>Em dois shell seprados execute os seguintes comandos um em cada shell aberto:</p>
+<p><b>php /var/www/html/Plataforma-TCC/admin/bin/chat-server.php</b></p>
+<p><b>php /var/www/html/Plataforma-TCC/admin/bin/video-server.php</b></p>
+<p>Em ambos shell você notará que o serviços estaram rodando, eles exibem informações de conexões de usuários, bem como, as trocas de mensagens entre eles</p>
+<p>Para para-los aparte <i>Ctrl+C</i></p>
+</section>
+
+<h3>Pronto acesse o sistema pelo browser <a href="http://localhost/Plataforma-TCC" target="_blank">localhost/Plataforma-TCC</a> e o veja funcionando.</h3>
+
+<footer>
+<h5>IFSP-BRA</h5>
+<p>Trabalho de conclusão de curso: Plataforma TCC</p>
+<p>Ana Carolina Bianchi</p>
+<p>Everton José de Paula</p>
+<p>Leonardo Bueno Martins</p>
+<p>Orientadora Dra. Ana Paula M. Giancolli</p>
+
+<p>Bragança Paulista, 2016</pex>
+</footer>
+</body>
+</html>
