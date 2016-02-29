@@ -1,6 +1,6 @@
 # INSTRUÇÕES DE INSTALAÇÃO DO AMBIENTE DE PRODUÇÃO DA PLATAFORMA TCC
 
-*   O ambiente desta maquina virtual esta totalmente pronto para uso, porém segue a descrição passo a passo de como foi configurada.
+*   O ambiente desta máquina virtual esta totalmente pronto para uso, porém segue a descrição passo a passo de como foi configurada.
 *   Antes de tudo, abriremos o terminal **shell** e faremos a atualização dos pacotes para instalações através do comando **sudo apt-get update**. Ele pedirá a senha de usuário root, coloque **'ifsp'** sem aspas.
 
 
@@ -28,7 +28,7 @@ Após a instalação temos algumas configurações a serem mudadas no apche2
 
 *   Vamos dizer ao apche2 para dar preferência de leitura ao arquivo index.php antes do arquivo index.html
 
-Para isso basta abrirmos o arquivo de configuração em **sudo nano /etc/apache2/mods-enabled/dir.conf**
+Para isso basta abrir o arquivo de configuração em **sudo nano /etc/apache2/mods-enabled/dir.conf**
 
 O arquivo deve estar assim:
 
@@ -48,7 +48,7 @@ Grave as mudanças e saia do arquivo, logo depois restart o apache2 com o camand
 
 ### Môdulo PHP-CLI
 
-Agora vamos instalar o modulo php-cli, com ele é possível executar paginas diretamente, sem a necessidade do apache. Será usado no websocket para chat e video confêrencia.
+Agora vamos instalar o modulo php-cli, com ele é possível executar páginas diretamente, sem a necessidade do apache. Será usado no websocket para chat e vídeo conferência.
 
 Digite o camando **sudo apt-get install php5-cli** e pronto môdulo instalado.
 
@@ -85,7 +85,7 @@ Para mover e renomear o arquivo execute o seguinte comando **sudo mv /home/plata
 
 O primeiro passo para instalação do banco de dados é abrir o **phpmyadmin**, acesse no browser [**_localhost/phpmyadmin/_**](http://localhost/phpmyadmin/) e coloque a senha e usuário de acesso que configuramos na instalação, _root root_
 
-Após acessar a pagina de administração do phpmyadmin, clique na aba **imports** e selecione o arquivo **tcc-update.sql** que esta localizado dentro da pasta do projeto, **/var/www/html/Plataforma-TCC/admin/bd/tcc-update.sql**
+Após acessar a página de administração do phpmyadmin, clique na aba **imports** e selecione o arquivo **tcc-update.sql** que esta localizado dentro da pasta do projeto, **/var/www/html/Plataforma-TCC/admin/bd/tcc-update.sql**
 
 Clique em importar e pronto, o banco de dados já esta instalado e a base de informações já inserida.
 
@@ -97,7 +97,7 @@ Faça o mesmo procedimento na classe Conexao localizada em **sudo nano /var/www/
 
 #### CHAT E VÍDEO CONFÊRENCIA
 
-Para a aplicação de chat e vídeo confência funcione, precisamos criar dois serviços **websockte**.
+Para a aplicação de chat e vídeo conferência funcione, precisamos criar dois serviços **websocket**.
 
 Para isso existem dois scripts prontos em php para inicialização do serviço.
 
@@ -109,7 +109,7 @@ Em dois shell seprados execute os seguintes comandos um em cada shell aberto:
 
 Em ambos shell você notará que o serviços estaram rodando, eles exibem informações de conexões de usuários, bem como, as trocas de mensagens entre eles
 
-Para para-los aparte _Ctrl+C_
+Para pará-los aparte _Ctrl+C_
 
 
 ### Pronto acesse o sistema pelo browser [localhost/Plataforma-TCC](http://localhost/Plataforma-TCC) e o veja funcionando.
